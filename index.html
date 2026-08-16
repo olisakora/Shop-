@@ -303,7 +303,12 @@ header{background:rgba(251,248,242,.92);backdrop-filter:blur(10px);border-bottom
 table.data-table{width:100%;border-collapse:collapse;min-width:560px;font-size:13px;}
 table.data-table th{background:linear-gradient(180deg,var(--pink-pale),var(--gold-light));color:var(--ink);font-weight:800;padding:10px 12px;text-align:start;white-space:nowrap;position:sticky;top:0;}
 table.data-table td{padding:10px 12px;border-top:1px solid var(--line);white-space:nowrap;color:var(--ink-soft);}
+/* zebra striping — long admin lists (orders, products) are far easier to scan
+   row-by-row with alternating tints; kept extremely subtle so it reads as
+   structure, not decoration */
+table.data-table tbody tr:nth-child(even) td{background:rgba(43,26,34,.025);}
 table.data-table tr:hover td{background:rgba(126,71,90,.08);}
+table.data-table tbody tr:first-child td{border-top:none;}
 .kpi-card{background:linear-gradient(180deg,#fff,var(--pearl-shell));border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow-soft);position:relative;overflow:hidden;}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--foil);opacity:.7;}
 
@@ -384,9 +389,35 @@ table.data-table tr:hover td{background:rgba(126,71,90,.08);}
 
 .fade-in{animation:fadeIn .4s cubic-bezier(.2,.8,.2,1);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.search-suggest{position:absolute;top:calc(100% + 8px);right:0;left:0;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 34px -12px rgba(35,26,28,.28);z-index:60;max-height:360px;overflow-y:auto;padding:6px;}
+.search-suggest-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:12px;cursor:pointer;text-align:right;width:100%;background:none;border:none;}
+.search-suggest-item:hover,.search-suggest-item.active{background:var(--pink-pale);}
+.search-suggest-item img{width:38px;height:44px;object-fit:cover;border-radius:8px;flex:none;}
+.search-suggest-hint{padding:8px 10px;font-size:10px;font-weight:700;color:var(--ink-soft);}
+.hero-spotlight{position:absolute;top:6px;left:0;width:172px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:22px;padding:10px;box-shadow:0 16px 36px -14px rgba(35,26,28,.35);z-index:2;backdrop-filter:blur(4px);}
+.hero-spotlight-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:900;color:#fff;background:var(--pink-deep);padding:3px 8px;border-radius:999px;}
+.hero-spotlight img{width:100%;height:112px;object-fit:cover;border-radius:14px;margin-top:8px;cursor:pointer;}
+.hero-spotlight-name{font-size:11px;font-weight:800;line-height:1.4;margin-top:6px;cursor:pointer;}
+.hero-spotlight-price{font-size:12px;font-weight:900;color:var(--pink-deep);}
+.hero-spotlight-old{font-size:9px;color:var(--ink-soft);text-decoration:line-through;}
+.hero-spotlight-dots{display:flex;gap:4px;justify-content:center;margin-top:8px;}
+.hero-spotlight-dots span{width:5px;height:5px;border-radius:50%;background:var(--line);transition:.25s;}
+.hero-spotlight-dots span.active{background:var(--pink-deep);width:14px;border-radius:3px;}
+.hero-spotlight-add{width:100%;margin-top:7px;font-size:10px;font-weight:800;padding:6px;border-radius:999px;background:var(--pink-pale);color:var(--pink-deep);border:none;cursor:pointer;}
+@media (max-width:640px){ .hero-spotlight{position:static;width:100%;margin-top:14px;} }
 .hidden{display:none!important;}
 .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* disabled controls — buttons like "add to cart" on an out-of-stock card
+   carry the disabled attribute already, but nothing ever showed it: they
+   looked fully active. This is the one visual state missing site-wide. */
+button:disabled,.btn-cute:disabled,.btn-gold:disabled,.btn-outline:disabled,.btn-sky:disabled{
+  opacity:.45;cursor:not-allowed;filter:grayscale(.3);
+}
+button:disabled:hover,.btn-cute:disabled:hover,.btn-gold:disabled:hover,.btn-outline:disabled:hover,.btn-sky:disabled:hover{
+  transform:none!important;box-shadow:none!important;
+}
 input,select,textarea{font-family:'IBM Plex Sans Arabic',sans-serif;}
+input:disabled,select:disabled,textarea:disabled{opacity:.55;cursor:not-allowed;background:var(--pink-pale);}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink-deep)!important;box-shadow:0 0 0 3px var(--pink-pale);}
 /* ============================================================
    Admin control room — a fully separate full-screen interface.
@@ -601,8 +632,9 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     </nav>
     <div class="flex-1 hidden sm:flex items-center relative">
       <i class="fa-solid fa-magnifying-glass absolute right-4 text-[var(--ink-soft)] text-sm"></i>
-      <input id="search-input" type="text" placeholder="ابحثي عن بيجامة، عباية، فستان..." class="w-full bg-white border border-[var(--line)] rounded-full py-2.5 pr-11 pl-4 text-sm focus-ring">
+      <input id="search-input" type="text" autocomplete="off" placeholder="ابحثي عن بيجامة، عباية، فستان..." class="w-full bg-white border border-[var(--line)] rounded-full py-2.5 pr-11 pl-4 text-sm focus-ring">
       <button id="btn-cmdk" class="absolute left-2 text-[10px] bg-[var(--pink-pale)] text-[var(--pink-deep)] font-bold px-2 py-1 rounded-full hidden lg:block">Ctrl K</button>
+      <div id="search-suggest" class="search-suggest hidden"></div>
     </div>
     <div class="flex items-center gap-1 sm:gap-2 mr-auto">
       <button id="btn-search-mobile" class="sm:hidden w-9 h-9 rounded-full flex items-center justify-center focus-ring"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -635,7 +667,8 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   <div id="mobile-search" class="sm:hidden hidden px-4 pb-3">
     <div class="relative">
       <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ink-soft)] text-sm"></i>
-      <input id="search-input-mobile" type="text" placeholder="ابحثي عن بيجامة، عباية، فستان..." class="w-full bg-white border border-[var(--line)] rounded-full py-2.5 pr-11 pl-4 text-sm focus-ring">
+      <input id="search-input-mobile" type="text" autocomplete="off" placeholder="ابحثي عن بيجامة، عباية، فستان..." class="w-full bg-white border border-[var(--line)] rounded-full py-2.5 pr-11 pl-4 text-sm focus-ring">
+      <div id="search-suggest-mobile" class="search-suggest hidden"></div>
     </div>
   </div>
 </header>
@@ -677,6 +710,12 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     <div class="relative h-64 sm:h-80">
       <div id="lottie-hero-cat" class="mascot-peek lottie-tint" style="bottom:-14px;left:6%;width:150px;height:150px;"></div>
       <div id="lottie-cherry-blossom" aria-hidden="true"></div>
+      <!-- ============ hero product spotlight — real marketing surface,
+           not decoration. Auto-rotates through actual on-sale / top-rated
+           products pulled live from PRODUCTS, with real price/discount and
+           working add-to-cart + quickview, so the hero visual actually
+           sells instead of just looking pretty. ============ -->
+      <div id="hero-spotlight" class="hero-spotlight hidden"></div>
     </div>
   </div>
   <div class="scallop max-w-7xl mx-auto"></div>
@@ -705,6 +744,17 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       </div>
     </div>
   </div>
+</section>
+
+<!-- ============ recently viewed — tracked locally in this browser only
+     (localStorage), never sent anywhere and no relation to Supabase.
+     Hidden entirely until the visitor has actually opened a quickview. ============ -->
+<section id="recently-viewed-section" class="max-w-7xl mx-auto px-4 pt-2 hidden">
+  <div class="flex items-center justify-between mb-2">
+    <span class="eyebrow"><i class="fa-solid fa-clock-rotate-left"></i> شاهدتِه مؤخراً</span>
+    <button type="button" id="btn-clear-recently-viewed" class="text-[10px] font-bold underline" style="color:var(--ink-soft);">مسح</button>
+  </div>
+  <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2" id="recently-viewed-row"></div>
 </section>
 
 <!-- ============ shop / product grid ============ -->
@@ -872,6 +922,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     </div>
     <nav class="admin-nav" id="admin-nav">
       <button type="button" class="admin-nav-btn active" data-tab="dashboard"><i class="fa-solid fa-gauge-high"></i> لوحة القيادة</button>
+      <button type="button" class="admin-nav-btn" data-tab="insights"><i class="fa-solid fa-chart-line"></i> تحليلات ذكية</button>
       <button type="button" class="admin-nav-btn" data-tab="products"><i class="fa-solid fa-shirt"></i> المنتجات</button>
       <button type="button" class="admin-nav-btn" data-tab="categories"><i class="fa-solid fa-layer-group"></i> الفئات</button>
       <button type="button" class="admin-nav-btn" data-tab="reviews"><i class="fa-solid fa-comment-dots"></i> التقييمات</button>
@@ -895,23 +946,32 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
         <div class="font-display text-lg" id="admin-tab-title" style="color:var(--ink);">لوحة القيادة</div>
       </div>
       <a href="./" target="_blank" class="btn-outline px-4 py-2 text-xs hidden sm:inline-flex items-center gap-2"><i class="fa-solid fa-arrow-up-right-from-square"></i> عرض المتجر</a>
+      <button type="button" id="btn-admin-cmdk" class="btn-outline px-4 py-2 text-xs hidden sm:inline-flex items-center gap-2" title="بحث سريع عن طلب، منتج، أو أي قسم بلوحة التحكم"><i class="fa-solid fa-magnifying-glass"></i> بحث سريع <span class="text-[10px] opacity-70">Ctrl K</span></button>
     </div>
     <div class="admin-content">
 
   <div class="admin-tab-panel active" id="tab-dashboard">
-  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-6">
     <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">إجمالي الطلبات</div><div class="font-display text-3xl mt-1" style="color:var(--pink-deep);" id="kpi-orders">0</div></div>
     <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">إجمالي المبيعات</div><div class="font-display text-3xl mt-1" style="color:var(--gold);" id="kpi-sales">0 دج</div></div>
     <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">عناصر في المفضلة</div><div class="font-display text-3xl mt-1" style="color:var(--sky-deep);" id="kpi-wishlist">0</div></div>
     <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">طلبات توظيف</div><div class="font-display text-3xl mt-1" style="color:var(--ink);" id="kpi-jobs">0</div></div>
     <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">منتجات على وشك النفاد</div><div class="font-display text-3xl mt-1" style="color:#c94f4f;" id="kpi-lowstock">0</div></div>
+    <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">طلبات مشبوهة</div><div class="font-display text-3xl mt-1" style="color:#a15c00;" id="kpi-suspicious">0</div></div>
   </div>
   <div class="glass-card p-4 mb-6 hidden" id="lowstock-panel">
     <div class="flex items-center gap-2 mb-2">
       <i class="fa-solid fa-triangle-exclamation" style="color:#c94f4f;"></i>
-      <h4 class="font-display text-sm" style="color:var(--ink);">منتجات تحتاج تجديد المخزون</h4>
+      <h4 class="font-display text-sm" style="color:var(--ink);">منتجات تحتاج تجديد المخزون (بناءً على الكمية وسرعة البيع)</h4>
     </div>
     <div id="lowstock-list" class="flex flex-wrap gap-2"></div>
+  </div>
+  <div class="glass-card p-4 mb-6 hidden" id="suspicious-panel">
+    <div class="flex items-center gap-2 mb-2">
+      <i class="fa-solid fa-shield-halved" style="color:#a15c00;"></i>
+      <h4 class="font-display text-sm" style="color:var(--ink);">طلبات يُحتمل أنها مشبوهة — راجعيها قبل التجهيز</h4>
+    </div>
+    <div id="suspicious-list" class="flex flex-wrap gap-2"></div>
   </div>
   <div class="flex flex-wrap gap-2 mb-3" id="orders-status-tabs"></div>
   <div class="flex flex-wrap gap-2 mb-3">
@@ -923,6 +983,48 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <thead><tr><th>رقم الطلب</th><th>العميلة</th><th>المدينة</th><th>المنتجات</th><th>الإجمالي</th><th>كود الخصم</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
       <tbody id="admin-orders-body"></tbody>
     </table>
+  </div>
+  </div>
+
+  <div class="admin-tab-panel" id="tab-insights">
+  <div class="glass-card p-6 mb-6" id="insights-empty">
+    <p class="text-sm text-[var(--ink-soft)] text-center py-8"><i class="fa-solid fa-chart-line text-2xl mb-2 block" style="color:var(--pink-pale);"></i>ما وصلت طلبات كافية بعد لتوليد تحليلات — التحليلات تظهر تلقائياً أول ما تبدأ الطلبات بالتجميع.</p>
+  </div>
+  <div id="insights-body" class="hidden">
+    <div class="glass-card p-5 mb-6">
+      <div class="flex items-center gap-2 mb-3">
+        <i class="fa-solid fa-lightbulb" style="color:var(--gold-deep);"></i>
+        <h4 class="font-display text-sm" style="color:var(--ink);">نصائح ذكية بناءً على طلباتك الفعلية</h4>
+      </div>
+      <ul id="insights-tips" class="text-xs leading-6 space-y-2" style="color:var(--ink);"></ul>
+    </div>
+    <div class="glass-card p-5 mb-6">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-chart-line" style="color:var(--pink-deep);"></i> اتجاه المبيعات — آخر 14 يوم</h4>
+        <span id="insights-trend-total" class="text-[11px] font-bold" style="color:var(--ink-soft);"></span>
+      </div>
+      <canvas id="insights-trend-canvas" height="90" style="width:100%;max-width:100%;"></canvas>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-4 mb-6">
+      <div class="glass-card p-5">
+        <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-shirt" style="color:var(--pink-deep);"></i> الفئات الأكثر مبيعاً</h4>
+        <div id="insights-categories"></div>
+      </div>
+      <div class="glass-card p-5">
+        <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-location-dot" style="color:var(--sky-deep);"></i> أكثر المدن طلباً</h4>
+        <div id="insights-cities"></div>
+      </div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-4 mb-6">
+      <div class="glass-card p-5">
+        <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-calendar-week" style="color:var(--gold-deep);"></i> نشاط الطلبات حسب أيام الأسبوع</h4>
+        <div id="insights-weekday"></div>
+      </div>
+      <div class="glass-card p-5">
+        <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-trophy" style="color:var(--gold-deep);"></i> أفضل 5 منتجات مبيعاً</h4>
+        <div id="insights-products"></div>
+      </div>
+    </div>
   </div>
   </div>
 
@@ -942,6 +1044,12 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <input id="prod-stock" type="number" min="0" placeholder="الكمية" required class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
       <input id="prod-img" placeholder="رابط الصورة" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring sm:col-span-2">
       <input id="prod-tag" placeholder="شارة (مثلاً: الأكثر مبيعاً)" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring sm:col-span-2">
+      <div class="sm:col-span-3 lg:col-span-6 flex items-center gap-2 mt-1">
+        <button type="button" id="prod-ai-generate" class="btn-sky px-3 py-2 text-xs"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد وصف وهاشتاقات تلقائياً</button>
+        <span class="text-[10px] text-[var(--ink-soft)]">يعتمد على الاسم والفئة والسعر — عدّليه بعدها كما تحبين</span>
+      </div>
+      <textarea id="prod-desc" placeholder="وصف المنتج (تقدرين تولّديه تلقائياً بالزر أعلاه)" rows="2" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring sm:col-span-3 lg:col-span-4"></textarea>
+      <input id="prod-hashtags" placeholder="هاشتاقات #مثال #مثال2" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring sm:col-span-3 lg:col-span-2">
       <div class="flex gap-2 sm:col-span-2">
         <button type="submit" class="btn-cute px-4 py-2 text-xs flex-1"><i class="fa-solid fa-floppy-disk"></i> <span id="prod-submit-label">إضافة منتج</span></button>
         <button type="button" id="prod-cancel-edit" class="btn-outline px-4 py-2 text-xs hidden">إلغاء</button>
@@ -951,9 +1059,18 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <input id="prod-search" placeholder="ابحثي عن منتج..." class="flex-1 min-w-[160px] bg-white border border-[var(--line)] rounded-full px-4 py-2 text-xs focus-ring">
       <button id="btn-export-products" type="button" class="btn-sky px-4 py-2 text-xs"><i class="fa-solid fa-file-arrow-down"></i> تصدير CSV</button>
     </div>
+    <div id="prod-bulk-toolbar" class="hidden flex flex-wrap items-center gap-2 mb-3 p-3 rounded-xl" style="background:var(--pink-pale);">
+      <span class="text-xs font-bold" id="prod-bulk-count">0 محدد</span>
+      <input id="prod-bulk-stock-delta" type="number" placeholder="+/- كمية" class="w-24 bg-white border border-[var(--line)] rounded-full px-3 py-1.5 text-xs focus-ring">
+      <button id="btn-bulk-stock" type="button" class="btn-outline px-3 py-1.5 text-[11px]">تعديل الكمية</button>
+      <select id="prod-bulk-cat" class="bg-white border border-[var(--line)] rounded-full px-3 py-1.5 text-[11px] focus-ring"></select>
+      <button id="btn-bulk-cat" type="button" class="btn-outline px-3 py-1.5 text-[11px]">تغيير الفئة</button>
+      <button id="btn-bulk-delete" type="button" class="px-3 py-1.5 text-[11px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;"><i class="fa-solid fa-trash"></i> حذف المحدد</button>
+      <button id="btn-bulk-clear" type="button" class="text-[11px] font-bold" style="color:var(--ink-soft);text-decoration:underline;">إلغاء التحديد</button>
+    </div>
     <div class="data-table-wrap">
       <table class="data-table">
-        <thead><tr><th>الصورة</th><th>الاسم</th><th>الفئة</th><th>السعر</th><th>الكمية</th><th>الشارة</th><th>إجراء</th></tr></thead>
+        <thead><tr><th><input type="checkbox" id="prod-select-all" title="تحديد الكل"></th><th>الصورة</th><th class="prod-sort-th" data-sort="name" style="cursor:pointer;user-select:none;">الاسم <i class="fa-solid fa-sort" style="font-size:9px;opacity:.5;"></i></th><th class="prod-sort-th" data-sort="cat" style="cursor:pointer;user-select:none;">الفئة <i class="fa-solid fa-sort" style="font-size:9px;opacity:.5;"></i></th><th class="prod-sort-th" data-sort="price" style="cursor:pointer;user-select:none;">السعر <i class="fa-solid fa-sort" style="font-size:9px;opacity:.5;"></i></th><th class="prod-sort-th" data-sort="stock" style="cursor:pointer;user-select:none;">الكمية <i class="fa-solid fa-sort" style="font-size:9px;opacity:.5;"></i></th><th>تنبؤ النفاد</th><th>الشارة</th><th>إجراء</th></tr></thead>
         <tbody id="admin-products-body"></tbody>
       </table>
     </div>
@@ -1303,6 +1420,17 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <span id="admin-pass-msg" class="text-xs font-bold" style="color:var(--pink-deep);"></span>
     </form>
   </div>
+  <div class="glass-card p-6 mt-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left text-lg" style="color:var(--gold);"></i>
+        <h3 class="font-display text-xl" style="color:var(--ink);">سجل نشاط الإدارة (على هذا الجهاز)</h3>
+      </div>
+      <button id="btn-clear-activity-log" type="button" class="text-[11px] font-bold" style="color:var(--ink-soft);text-decoration:underline;">مسح السجل</button>
+    </div>
+    <p class="text-[11px] text-[var(--ink-soft)] mb-3">يُسجَّل محلياً في متصفحك فقط لمتابعة آخر التعديلات (منتجات، طلبات، إعدادات) — لا يُرسل لأي خادم ولا علاقة له بـ Supabase.</p>
+    <div id="admin-activity-log" class="max-h-80 overflow-y-auto"></div>
+  </div>
   </div>
 
     </div>
@@ -1369,6 +1497,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <button class="drawer-close w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring" data-target="cart"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="flex-1 overflow-y-auto px-5 py-4" id="cart-items"></div>
+    <div id="cart-upsell" class="hidden px-5 pb-4"></div>
     <div id="cart-empty" class="hidden flex-1 flex flex-col items-center justify-center px-6 text-center">
       <div id="lottie-cart-empty" class="lottie-tint" style="width:150px;height:150px;"></div>
       <p class="text-sm text-[var(--ink-soft)] mt-2">سلّتك فاضية، ضيفي أول قطعة لك</p>
@@ -1763,6 +1892,16 @@ const LOTTIE_DATA = {
 const $ = (id) => document.getElementById(id);
 const qs = (sel, root) => (root||document).querySelector(sel);
 const qsa = (sel, root) => Array.from((root||document).querySelectorAll(sel));
+/* display-only currency formatter — adds thousands separators to every
+   price shown across the store/admin (e.g. 9000 -> 9,000). Purely
+   presentational: only wraps values right before they're printed, never
+   touches the underlying numbers used for calculations, storage or
+   Supabase sync. */
+const fmtDZD = (n, d) => {
+  const num = Number(n) || 0;
+  const digits = d || 0;
+  return num.toLocaleString('en-US', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+};
 
 /* ---------------------------------------------------------------
    Product catalog
@@ -2160,6 +2299,7 @@ async function hydrateCloudState(adminMode=false){
       if(jobs.error) throw jobs.error;
       if(priv.error) throw priv.error;
       state.orders=(orders.data||[]).map(r=>r.payload).filter(Boolean);
+      invalidateCoPurchaseCache();
       state.jobs=(jobs.data||[]).map(r=>r.payload).filter(Boolean);
       if(priv.data?.data){
         if(Array.isArray(priv.data.data.employees)) state.employees=priv.data.data.employees;
@@ -2346,8 +2486,8 @@ function productCard(p){
       ${lowStock ? `<div class="text-[9px] font-bold mt-1" style="color:#c94f4f;"><i class="fa-solid fa-triangle-exclamation"></i> باقي ${p.stock} فقط</div>` : ''}
       <div class="flex items-center justify-between mt-2">
         <div class="flex items-baseline gap-1.5">
-          <span class="font-black text-sm" style="color:var(--pink-deep);">${p.price} دج</span>
-          ${p.oldPrice ? `<span class="text-[10px] text-[var(--ink-soft)] line-through">${p.oldPrice}</span>` : ''}
+          <span class="font-black text-sm" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</span>
+          ${p.oldPrice ? `<span class="text-[10px] text-[var(--ink-soft)] line-through">${fmtDZD(p.oldPrice)}</span>` : ''}
         </div>
         <button class="w-8 h-8 rounded-full flex items-center justify-center focus-ring add-cart-btn" style="background:var(--pink-pale);color:var(--pink-deep);" data-add="${p.id}" aria-label="أضيفي للسلة" ${outOfStock?'disabled':''}><i class="fa-solid fa-plus text-xs"></i></button>
       </div>
@@ -2413,7 +2553,7 @@ function renderWishlistDrawer(){
       <img src="${p.img}" class="w-16 h-20 object-cover rounded-xl" alt="${p.name}" onerror="${OLI_IMG_ONERROR}">
       <div class="flex-1">
         <div class="text-xs font-bold line-clamp-2">${p.name}</div>
-        <div class="text-xs font-black mt-1" style="color:var(--pink-deep);">${p.price} دج</div>
+        <div class="text-xs font-black mt-1" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</div>
         <div class="flex gap-2 mt-2">
           <button class="btn-cute px-3 py-1.5 text-[10px]" data-add="${p.id}">أضيفي للسلة</button>
           <button class="text-[10px] text-[var(--ink-soft)] underline" data-wish="${p.id}">إزالة</button>
@@ -2473,7 +2613,7 @@ function renderCartDrawer(){
       <img src="${l.p.img}" class="w-16 h-20 object-cover rounded-xl" alt="${l.p.name}" onerror="${OLI_IMG_ONERROR}">
       <div class="flex-1">
         <div class="text-xs font-bold line-clamp-2">${l.p.name}</div>
-        <div class="text-xs font-black mt-1" style="color:var(--pink-deep);">${l.p.price} دج</div>
+        <div class="text-xs font-black mt-1" style="color:var(--pink-deep);">${fmtDZD(l.p.price)} دج</div>
         <div class="flex items-center gap-2 mt-2">
           <button class="w-6 h-6 rounded-full bg-[var(--pink-pale)] text-xs font-bold" data-qty-minus="${l.p.id}">−</button>
           <span class="text-xs font-bold w-4 text-center">${l.qty}</span>
@@ -2485,22 +2625,23 @@ function renderCartDrawer(){
   $('cart-empty').classList.toggle('hidden', lines.length>0);
   $('cart-items').classList.toggle('hidden', lines.length===0);
   $('cart-footer').classList.toggle('hidden', lines.length===0);
-  if(lines.length===0) mountLottie('lottie-cart-empty', 'cartEmpty');
+  if(lines.length===0){ mountLottie('lottie-cart-empty', 'cartEmpty'); $('cart-upsell').innerHTML=''; $('cart-upsell').classList.add('hidden'); }
+  else { renderRecommendationRow('cart-upsell', lines.map(l=>l.p.id), 'كمّلي طلبك بهالقطع'); }
 
   qsa('[data-qty-plus]').forEach(b=>b.addEventListener('click', ()=>setQty(b.dataset.qtyPlus, (state.cart[b.dataset.qtyPlus]||0)+1)));
   qsa('[data-qty-minus]').forEach(b=>b.addEventListener('click', ()=>setQty(b.dataset.qtyMinus, (state.cart[b.dataset.qtyMinus]||0)-1)));
   qsa('[data-remove]').forEach(b=>b.addEventListener('click', ()=>setQty(b.dataset.remove, 0)));
 
   const t = cartTotals();
-  $('sum-subtotal').textContent = t.subtotal + ' دج';
+  $('sum-subtotal').textContent = fmtDZD(t.subtotal) + ' دج';
   $('sum-giftwrap-row').style.display = t.giftWrapFee>0 ? 'flex' : 'none';
-  $('sum-giftwrap').textContent = '+' + t.giftWrapFee + ' دج';
-  $('sum-delivery').textContent = t.delivery===0 ? 'مجاني' : t.delivery + ' دج';
+  $('sum-giftwrap').textContent = '+' + fmtDZD(t.giftWrapFee) + ' دج';
+  $('sum-delivery').textContent = t.delivery===0 ? 'مجاني' : fmtDZD(t.delivery) + ' دج';
   $('sum-discount-row').style.display = t.discount>0 ? 'flex' : 'none';
-  $('sum-discount').textContent = '-' + t.discount + ' دج';
+  $('sum-discount').textContent = '-' + fmtDZD(t.discount) + ' دج';
   $('sum-reward-row').style.display = t.rewardApplied>0 ? 'flex' : 'none';
-  $('sum-reward').textContent = '-' + t.rewardApplied + ' دج';
-  $('sum-total').textContent = t.total + ' دج';
+  $('sum-reward').textContent = '-' + fmtDZD(t.rewardApplied) + ' دج';
+  $('sum-total').textContent = fmtDZD(t.total) + ' دج';
   updateGiftWrapCartLabel();
 }
 function updateCounts(){
@@ -2534,7 +2675,7 @@ function renderCompareTable(){
   const rows = [
     ['الصورة', p=>`<img src="${p.img}" class="w-16 h-20 object-cover rounded-lg" onerror="${OLI_IMG_ONERROR}">`],
     ['الاسم', p=>p.name],
-    ['السعر', p=>p.price+' دج'],
+    ['السعر', p=>fmtDZD(p.price)+' دج'],
     ['التقييم', p=>'<i class="fa-solid fa-star" style="color:var(--gold)"></i> '+p.rating],
     ['المخزون', p=>p.stock+' قطعة'],
   ];
@@ -2549,9 +2690,172 @@ function renderCompareTable(){
 /* ---------------------------------------------------------------
    Quickview
 --------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+   توصيات ذكية: "يُشترى غالباً معه" — مبنية على بيانات الطلبات
+   الحقيقية (لا بيانات وهمية). كل طلب فيه أكثر من منتج يعتبر إشارة
+   على أن هذي المنتجات تُشترى مع بعض. النتيجة تتحسّن تلقائياً كل
+   ما تراكمت طلبات أكثر، بدون أي تدخل يدوي من الإدارة.
+   لو ما فيه بيانات كافية بعد (متجر جديد)، نكمّل بمنتجات من نفس
+   الفئة الأعلى تقييماً، عشان الصف ما يطلع فاضي.
+--------------------------------------------------------------- */
+let _coPurchaseCache = null;
+function invalidateCoPurchaseCache(){ _coPurchaseCache = null; }
+function computeCoPurchaseMap(){
+  const map = {};
+  (state.orders||[]).forEach(o=>{
+    const ids = (Array.isArray(o.items)?o.items:[]).map(it=>it.id).filter(Boolean);
+    for(let i=0;i<ids.length;i++){
+      for(let j=0;j<ids.length;j++){
+        if(i===j) continue;
+        map[ids[i]] = map[ids[i]] || {};
+        map[ids[i]][ids[j]] = (map[ids[i]][ids[j]]||0) + 1;
+      }
+    }
+  });
+  return map;
+}
+function getFrequentlyBoughtWith(excludeIds, limit){
+  excludeIds = Array.isArray(excludeIds) ? excludeIds : [excludeIds];
+  limit = limit || 4;
+  if(!_coPurchaseCache) _coPurchaseCache = computeCoPurchaseMap();
+  const scores = {};
+  excludeIds.forEach(id=>{
+    const row = _coPurchaseCache[id];
+    if(!row) return;
+    Object.entries(row).forEach(([otherId, count])=>{
+      if(excludeIds.includes(otherId)) return;
+      scores[otherId] = (scores[otherId]||0) + count;
+    });
+  });
+  let ranked = Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(([pid])=>findProduct(pid)).filter(Boolean);
+  if(ranked.length < limit){
+    const haveIds = new Set([...excludeIds, ...ranked.map(p=>p.id)]);
+    const cats = new Set(excludeIds.map(id=>findProduct(id)?.cat).filter(Boolean));
+    const fallback = PRODUCTS
+      .filter(p=>!haveIds.has(p.id) && cats.has(p.cat))
+      .sort((a,b)=>(b.rating||0)-(a.rating||0));
+    for(const p of fallback){
+      if(ranked.length>=limit) break;
+      ranked.push(p); haveIds.add(p.id);
+    }
+  }
+  return ranked.slice(0, limit);
+}
+function renderRecommendationRow(containerId, productIds, heading){
+  const el = $(containerId);
+  if(!el) return;
+  const recs = getFrequentlyBoughtWith(productIds, 4);
+  if(!recs.length){ el.innerHTML=''; el.classList.add('hidden'); return; }
+  el.classList.remove('hidden');
+  el.innerHTML = `
+    <div class="text-[11px] font-black mb-2" style="color:var(--ink-soft);"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--pink-deep);"></i> ${heading}</div>
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      ${recs.map(p=>`
+        <button type="button" class="rec-card flex-shrink-0 w-24 text-right focus-ring rounded-xl" data-rec-id="${p.id}">
+          <img src="${p.img}" class="w-24 h-28 object-cover rounded-xl" alt="${p.name}" onerror="${OLI_IMG_ONERROR}">
+          <div class="text-[10px] font-bold line-clamp-2 mt-1">${p.name}</div>
+          <div class="text-[10px] font-black" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</div>
+        </button>`).join('')}
+    </div>`;
+  qsa('.rec-card', el).forEach(btn=>btn.addEventListener('click', ()=> openQuickview(btn.dataset.recId)));
+}
+
+/* ---------------------------------------------------------------
+   Recently viewed — purely a client-side convenience. Stored in this
+   browser's localStorage only (key below), never written to the
+   `state` object and never touches Supabase in any way. Just makes
+   it easy for a shopper to get back to something she opened earlier.
+--------------------------------------------------------------- */
+const OLI_RECENT_KEY = 'oli_recently_viewed_v1';
+function getRecentlyViewed(){
+  try{
+    const raw = localStorage.getItem(OLI_RECENT_KEY);
+    const ids = raw ? JSON.parse(raw) : [];
+    return Array.isArray(ids) ? ids.filter(id=>findProduct(id)) : [];
+  }catch(e){ return []; }
+}
+function trackRecentlyViewed(id){
+  try{
+    let ids = getRecentlyViewed().filter(x=>x!==id);
+    ids.unshift(id);
+    ids = ids.slice(0, 10);
+    localStorage.setItem(OLI_RECENT_KEY, JSON.stringify(ids));
+  }catch(e){ /* private browsing / storage disabled — just skip silently */ }
+}
+function renderRecentlyViewedRow(){
+  const section = $('recently-viewed-section');
+  const row = $('recently-viewed-row');
+  if(!section || !row) return;
+  const ids = getRecentlyViewed();
+  const items = ids.map(findProduct).filter(Boolean);
+  if(!items.length){ section.classList.add('hidden'); row.innerHTML=''; return; }
+  section.classList.remove('hidden');
+  row.innerHTML = items.map(p=>`
+    <button type="button" class="recent-card flex-shrink-0 w-24 text-right focus-ring rounded-xl" data-recent-id="${p.id}">
+      <img src="${p.img}" class="w-24 h-28 object-cover rounded-xl" alt="${p.name}" loading="lazy" onerror="${OLI_IMG_ONERROR}">
+      <div class="text-[10px] font-bold line-clamp-2 mt-1">${p.name}</div>
+      <div class="text-[10px] font-black" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</div>
+    </button>`).join('');
+  qsa('.recent-card', row).forEach(btn=>btn.addEventListener('click', ()=> openQuickview(btn.dataset.recentId)));
+}
+$('btn-clear-recently-viewed')?.addEventListener('click', ()=>{
+  try{ localStorage.removeItem(OLI_RECENT_KEY); }catch(e){}
+  renderRecentlyViewedRow();
+});
+
+/* ---------------------------------------------------------------
+   Live search suggestions — a lightweight dropdown that previews
+   matches as she types, reusing the same Arabic NLU parser already
+   used for the full "Enter" search so the preview understands
+   category/color/price phrases too. Pure front-end UI sugar, no
+   change to the existing Enter-key search behaviour above.
+--------------------------------------------------------------- */
+function bindSearchSuggestions(inputEl, suggestEl){
+  if(!inputEl || !suggestEl) return;
+  let debounceTimer = null, activeIndex = -1;
+  const hide = ()=>{ suggestEl.classList.add('hidden'); suggestEl.innerHTML=''; activeIndex=-1; };
+  const renderList = (q)=>{
+    const parsed = parseArabicShoppingQuery(q);
+    const matches = parsed.list.slice(0,6);
+    if(!matches.length){
+      suggestEl.innerHTML = `<div class="search-suggest-hint"><i class="fa-solid fa-magnifying-glass"></i> ما لقينا "${q}"</div>`;
+    } else {
+      suggestEl.innerHTML = matches.map((p,i)=>`
+        <button type="button" class="search-suggest-item${i===0?' active':''}" data-sid="${p.id}">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="${OLI_IMG_ONERROR}">
+          <span class="flex-1 min-w-0">
+            <span class="block text-[11px] font-bold line-clamp-1">${p.name}</span>
+            <span class="block text-[10px] font-black" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</span>
+          </span>
+        </button>`).join('') +
+        `<div class="search-suggest-hint"><i class="fa-solid fa-turn-down" style="transform:scaleX(-1);"></i> اضغطي Enter لعرض كل النتائج</div>`;
+      activeIndex = 0;
+    }
+    suggestEl.classList.remove('hidden');
+    qsa('.search-suggest-item', suggestEl).forEach(btn=>btn.addEventListener('click', ()=>{ openQuickview(btn.dataset.sid); hide(); }));
+  };
+  inputEl.addEventListener('input', ()=>{
+    clearTimeout(debounceTimer);
+    const q = inputEl.value.trim();
+    if(q.length < 2){ hide(); return; }
+    debounceTimer = setTimeout(()=> renderList(q), 180);
+  });
+  inputEl.addEventListener('keydown', (e)=>{
+    const items = qsa('.search-suggest-item', suggestEl);
+    if(!items.length || suggestEl.classList.contains('hidden')) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); activeIndex = Math.min(activeIndex+1, items.length-1); items.forEach((it,i)=>it.classList.toggle('active', i===activeIndex)); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); activeIndex = Math.max(activeIndex-1, 0); items.forEach((it,i)=>it.classList.toggle('active', i===activeIndex)); }
+    else if(e.key==='Escape'){ hide(); }
+  });
+  inputEl.addEventListener('blur', ()=> setTimeout(hide, 150));
+  inputEl.addEventListener('focus', ()=>{ if(inputEl.value.trim().length>=2) renderList(inputEl.value.trim()); });
+}
+
 function openQuickview(id){
   const p = findProduct(id);
   if(!p) return;
+  trackRecentlyViewed(p.id);
+  renderRecentlyViewedRow();
   const isWished = state.wishlist.includes(p.id);
   $('quickview-sheet').innerHTML = `
     <div class="grid sm:grid-cols-2">
@@ -2563,10 +2867,11 @@ function openQuickview(id){
         <div class="text-lg font-black">${p.name}</div>
         <div class="stars flex gap-0.5 mt-2">${Array.from({length:5}).map((_,i)=>`<i class="fa-solid fa-star ${i<Math.round(p.rating)?'filled':''}"></i>`).join('')}<span class="text-[10px] text-[var(--ink-soft)] mr-1">(${p.reviews} تقييم)</span></div>
         <div class="flex items-baseline gap-2 mt-3">
-          <span class="font-black text-xl" style="color:var(--pink-deep);">${p.price} دج</span>
-          ${p.oldPrice ? `<span class="text-xs text-[var(--ink-soft)] line-through">${p.oldPrice} دج</span>` : ''}
+          <span class="font-black text-xl" style="color:var(--pink-deep);">${fmtDZD(p.price)} دج</span>
+          ${p.oldPrice ? `<span class="text-xs text-[var(--ink-soft)] line-through">${fmtDZD(p.oldPrice)} دج</span>` : ''}
         </div>
-        <p class="text-xs text-[var(--ink-soft)] mt-3 leading-6">قطعة مريحة وناعمة من تشكيلة oli، خامة عالية الجودة ومناسبة لكل الفصول. متوفر توصيل سريع واستبدال مجاني خلال 14 يوم.</p>
+        <p class="text-xs text-[var(--ink-soft)] mt-3 leading-6">${p.desc || 'قطعة مريحة وناعمة من تشكيلة oli، خامة عالية الجودة ومناسبة لكل الفصول. متوفر توصيل سريع واستبدال مجاني خلال 14 يوم.'}</p>
+        ${p.hashtags ? `<p class="text-[10px] mt-2" style="color:var(--sky-deep);">${p.hashtags}</p>` : ''}
         <div class="flex items-center gap-2 mt-4 flex-wrap">
           <span class="text-xs font-bold text-[var(--ink-soft)]">المقاس:</span>
           ${['S','M','L','XL'].map((s,i)=>`<button class="size-opt w-9 h-9 rounded-full border border-[var(--line)] text-xs font-bold ${i===1?'!border-[var(--pink-deep)] !text-[var(--pink-deep)]':''}">${s}</button>`).join('')}
@@ -2577,8 +2882,10 @@ function openQuickview(id){
           <button class="w-12 h-12 rounded-full flex items-center justify-center border border-[var(--line)] ${isWished?'text-[var(--pink-deep)]':''}" id="qv-wish"><i class="fa-${isWished?'solid':'regular'} fa-heart"></i></button>
         </div>
         <div class="text-[10px] text-[var(--gold)] font-bold mt-3">${p.stock<10?`<i class="fa-solid fa-bolt"></i> باقي ${p.stock} قطع فقط`:'متوفر بكمية جيدة'}</div>
+        <div id="qv-upsell" class="hidden mt-4 pt-4 border-t border-[var(--line)]"></div>
       </div>
     </div>`;
+  renderRecommendationRow('qv-upsell', [p.id], 'يُشترى غالباً معه');
   qsa('.size-opt', $('quickview-sheet')).forEach(btn=>btn.addEventListener('click', ()=>{
     qsa('.size-opt', $('quickview-sheet')).forEach(b=>b.classList.remove('!border-[var(--pink-deep)]','!text-[var(--pink-deep)]'));
     btn.classList.add('!border-[var(--pink-deep)]','!text-[var(--pink-deep)]');
@@ -2751,7 +3058,7 @@ function toggleAdmin(){
   openAdminLogin();
 }
 const ADMIN_TAB_LABELS = {
-  dashboard:'لوحة القيادة', products:'المنتجات', categories:'الفئات', reviews:'التقييمات',
+  dashboard:'لوحة القيادة', insights:'تحليلات ذكية', products:'المنتجات', categories:'الفئات', reviews:'التقييمات',
   marketing:'التسويق والتفاعل', settings:'إعدادات الموقع', jobs:'طلبات التوظيف',
   employees:'فريق العمل', coupons:'أكواد الخصم', wheel:'عجلة الحظ', music:'موسيقى الخلفية', security:'الأمان'
 };
@@ -2991,7 +3298,7 @@ function renderReferralModal(){
   $('referral-link-display').value = entry.code ? referralLink() : 'جارٍ تجهيز رابط الدعوة...';
   $('btn-share-whatsapp-referral').href = 'https://wa.me/?text=' + encodeURIComponent('جربي متجر oli وخذي خصم 15% على أول طلب من رابط دعوتي 💕 ' + referralLink());
   $('referral-stat-count').textContent = entry.redeemed || 0;
-  $('referral-stat-balance').textContent = getReferralBalance() + ' دج';
+  $('referral-stat-balance').textContent = fmtDZD(getReferralBalance()) + ' دج';
   $('referral-balance-note').classList.toggle('hidden',getReferralBalance()<=0);
 }
 $('card-referral').addEventListener('click', async ()=>{ await ensureReferralAccount(); renderReferralModal(); openModal('referral'); });
@@ -3095,15 +3402,15 @@ $('btn-save-giftwrap').addEventListener('click', ()=>{
 $('btn-checkout').addEventListener('click', ()=>{
   if(cartLines().length===0){ toast('سلّتك فاضية!', 'fa-bag-shopping'); return; }
   const t = cartTotals();
-  $('co-subtotal').textContent = t.subtotal + ' دج';
+  $('co-subtotal').textContent = fmtDZD(t.subtotal) + ' دج';
   $('co-giftwrap-row').style.display = t.giftWrapFee>0 ? 'flex' : 'none';
-  $('co-giftwrap').textContent = '+' + t.giftWrapFee + ' دج';
-  $('co-delivery').textContent = t.delivery===0 ? 'مجاني' : t.delivery + ' دج';
+  $('co-giftwrap').textContent = '+' + fmtDZD(t.giftWrapFee) + ' دج';
+  $('co-delivery').textContent = t.delivery===0 ? 'مجاني' : fmtDZD(t.delivery) + ' دج';
   $('co-discount-row').style.display = t.discount>0 ? 'flex' : 'none';
-  $('co-discount').textContent = '-' + t.discount + ' دج';
+  $('co-discount').textContent = '-' + fmtDZD(t.discount) + ' دج';
   $('co-reward-row').style.display = t.rewardApplied>0 ? 'flex' : 'none';
-  $('co-reward').textContent = '-' + t.rewardApplied + ' دج';
-  $('co-total').textContent = t.total + ' دج';
+  $('co-reward').textContent = '-' + fmtDZD(t.rewardApplied) + ' دج';
+  $('co-total').textContent = fmtDZD(t.total) + ' دج';
   closeDrawer('cart');
   openModal('checkout');
 });
@@ -3184,6 +3491,7 @@ $('checkout-form').addEventListener('submit', async (e)=>{
   const promoSnapshot = activePromo;
 
   state.orders.push(order);
+  invalidateCoPurchaseCache();
   state.cart = {}; activePromo = null;
   state.giftWrap = {enabled:false, color:'pink', from:'', to:'', message:''};
   // NOTE: spendReferralBalance() calls a server-side RPC that only ever
@@ -3288,9 +3596,9 @@ function openOrderDetails(orderId){
       <img src="${it.img||''}" alt="${it.name||''}" class="w-16 h-20 object-cover rounded-xl" onerror="${OLI_IMG_ONERROR}">
       <div class="flex-1">
         <div class="text-xs font-bold line-clamp-2">${it.name||'منتج'}</div>
-        <div class="text-[11px] text-[var(--ink-soft)] mt-1">الكمية: ${it.qty||1}${it.price!=null?` — ${it.price} دج للقطعة`:''}</div>
+        <div class="text-[11px] text-[var(--ink-soft)] mt-1">الكمية: ${it.qty||1}${it.price!=null?` — ${fmtDZD(it.price)} دج للقطعة`:''}</div>
       </div>
-      ${it.price!=null?`<div class="text-xs font-black" style="color:var(--pink-deep);">${it.price*(it.qty||1)} دج</div>`:''}
+      ${it.price!=null?`<div class="text-xs font-black" style="color:var(--pink-deep);">${fmtDZD(it.price*(it.qty||1))} دج</div>`:''}
     </div>`).join('') : '<p class="text-xs text-[var(--ink-soft)] py-4">ما فيه تفاصيل منتجات مسجّلة لهذا الطلب.</p>';
   $('orderdetails-sheet').innerHTML = `
     <div class="flex items-center justify-between p-5 pb-2">
@@ -3298,7 +3606,10 @@ function openOrderDetails(orderId){
         <h3 class="font-display text-lg" style="color:var(--ink);">تفاصيل الطلب ${order.id}</h3>
         <p class="text-[11px] text-[var(--ink-soft)] mt-0.5">${order.date} — ${statusLabels[order.status]||'قيد التجهيز'}</p>
       </div>
-      <button onclick="closeModal('orderdetails')" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring"><i class="fa-solid fa-xmark"></i></button>
+      <div class="flex items-center gap-1">
+        <button onclick="printOrderInvoice('${order.id}')" title="طباعة فاتورة" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring"><i class="fa-solid fa-print"></i></button>
+        <button onclick="closeModal('orderdetails')" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring"><i class="fa-solid fa-xmark"></i></button>
+      </div>
     </div>
     <div class="px-5 pb-3 grid sm:grid-cols-2 gap-2 text-xs">
       <div><span class="font-bold" style="color:var(--ink-soft);">العميلة:</span> ${order.name||'—'}</div>
@@ -3315,7 +3626,7 @@ function openOrderDetails(orderId){
     </div>
     <div class="flex items-center justify-between px-5 py-4 mt-2 border-t border-[var(--line)]">
       <span class="text-xs font-bold" style="color:var(--ink-soft);">الإجمالي</span>
-      <span class="font-display text-lg" style="color:var(--pink-deep);">${order.total} دج</span>
+      <span class="font-display text-lg" style="color:var(--pink-deep);">${fmtDZD(order.total)} دج</span>
     </div>
   `;
   openModal('orderdetails');
@@ -3448,6 +3759,222 @@ $('newsletter-form').addEventListener('submit', async (e)=>{
 });
 
 /* ---------------------------------------------------------------
+   ✨ ذكاء المتجر: وصف تلقائي، تنبؤ بالمخزون، كشف طلبات مشبوهة
+   (كل هذا منطق محلي في المتصفح — بدون أي خدمة خارجية أو تحميل بيانات)
+--------------------------------------------------------------- */
+
+/* ---- 1) توليد وصف المنتج + الهاشتاقات تلقائياً ---- */
+const AI_COPY_ADJ = {
+  pajamas: ['ناعمة ومريحة لنوم هادئ', 'خامة طرية تحتضن جسمك طول الليل'],
+  abaya: ['أنيقة وفخمة', 'بقصة تناسب جميع المناسبات'],
+  dresses: ['جذابة وعصرية', 'تُبرز إطلالتك بثقة'],
+  'home-sets': ['مريحة وكيوت', 'مثالية ليوم استرخاء بالبيت'],
+  underwear: ['ناعمة على البشرة', 'مريحة طوال اليوم'],
+  accessories: ['تكمّلين بها إطلالتك', 'لمسة فخامة إضافية'],
+  'plus-size': ['مصممة بعناية لراحتك', 'بقصة تناسب جميع القوامات']
+};
+const AI_COPY_TAGS = {
+  pajamas: ['بيجامات', 'ملابس_نوم'], abaya: ['عبايات', 'عباية_فخمة'],
+  dresses: ['فساتين', 'فستان_سهرة'], 'home-sets': ['طقم_منزلي', 'لبس_البيت'],
+  underwear: ['ملابس_داخلية'], accessories: ['اكسسوارات', 'موضة'],
+  'plus-size': ['مقاسات_كبيرة', 'بلس_سايز']
+};
+function generateProductCopy(data){
+  const adj = AI_COPY_ADJ[data.cat] || ['مميزة وأنيقة', 'اختيار يليق بذوقك'];
+  const discount = (data.oldPrice && data.oldPrice > data.price) ? Math.round((1 - data.price/data.oldPrice)*100) : 0;
+  const priceLine = discount>0 ? `بخصم ${discount}% لفترة محدودة — لا تفوّتيه! 🔥` : `بسعر مناسب وجودة تستاهل 💕`;
+  const desc = `${data.name||'هذه القطعة'} من تشكيلة oli — ${adj[0]}، ${adj[1]}. ${priceLine} توصيل سريع لجميع الولايات، واستبدال مجاني خلال 14 يوم.`;
+  const tags = [...(AI_COPY_TAGS[data.cat]||['اختيار_مميز']), 'oli_store', 'موضة_جزائرية', 'تسوق_اونلاين'];
+  if(discount>0) tags.unshift('تخفيضات');
+  const hashtags = tags.slice(0,6).map(t=>'#'+t).join(' ');
+  return {desc, hashtags};
+}
+
+/* ---- 2) تنبؤ بموعد نفاد المخزون بناءً على سرعة البيع الفعلية ---- */
+function salesVelocity(productId, windowDays){
+  windowDays = windowDays || 30;
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - windowDays);
+  let qty = 0;
+  state.orders.forEach(o=>{
+    const d = new Date(o.date);
+    if(isNaN(d.getTime()) || d < cutoff) return;
+    (o.items||[]).forEach(it=>{ if(it.id===productId) qty += (it.qty||0); });
+  });
+  return qty / windowDays; // قطع في اليوم
+}
+function stockForecastDays(p){
+  const v = salesVelocity(p.id);
+  if(v<=0) return null;
+  return p.stock / v;
+}
+function stockForecastLabel(p){
+  const days = stockForecastDays(p);
+  if(days===null) return null;
+  if(days<1) return {text:'⚠️ متوقّع نفاده اليوم أو غداً', level:'danger'};
+  const d = Math.max(1, Math.round(days));
+  if(d<=7) return {text:`متوقّع نفاده خلال ${d} أيام تقريباً`, level:'danger'};
+  if(d<=14) return {text:`متوقّع نفاده خلال ${d} يوم تقريباً`, level:'warn'};
+  return null;
+}
+
+/* ---- 3) كشف الطلبات المشبوهة (تكرار نفس الرقم/نمط احتيال) ---- */
+function normalizePhone(ph){ return (ph||'').replace(/[^0-9]/g,''); }
+function detectSuspiciousOrders(){
+  const flags = {}; // orderId -> سبب
+  const byPhone = {};
+  state.orders.forEach(o=>{
+    const ph = normalizePhone(o.phone);
+    if(!ph) return;
+    (byPhone[ph] = byPhone[ph] || []).push(o);
+  });
+  Object.values(byPhone).forEach(list=>{
+    if(list.length<2) return;
+    const sameDayCount = {};
+    list.forEach(o=>{ sameDayCount[o.date] = (sameDayCount[o.date]||0) + 1; });
+    const burst = Object.values(sameDayCount).some(c=>c>=3);
+    const distinctNames = new Set(list.map(o=>(o.name||'').trim().toLowerCase()).filter(Boolean));
+    if(burst){
+      list.forEach(o=> flags[o.id] = 'نفس رقم الهاتف كرّر عدة طلبات في نفس اليوم');
+    } else if(distinctNames.size>=2 && list.length>=3){
+      list.forEach(o=> flags[o.id] = 'نفس رقم الهاتف استُخدم بأكثر من اسم مختلف');
+    }
+  });
+  state.orders.forEach(o=>{
+    const ph = normalizePhone(o.phone);
+    if(ph && !flags[o.id] && (ph.length<9 || /^(\d)\1+$/.test(ph))){
+      flags[o.id] = 'رقم الهاتف يبدو غير حقيقي';
+    }
+  });
+  return flags;
+}
+
+/* ---- 4) مساعد بحث نصي بالعربية (فهم فئة + لون + سعر من جملة واحدة) ---- */
+const NLU_CAT_KEYWORDS = {
+  pajamas: ['بيجام', 'بجام', 'نوم'],
+  abaya: ['عباي', 'عباء'],
+  dresses: ['فستان', 'فساتين'],
+  'home-sets': ['طقم منزل', 'طقم بيت', 'منزلي'],
+  underwear: ['داخلي', 'ملابس داخل'],
+  accessories: ['اكسسوار', 'إكسسوار', 'حقيبة', 'طرح'],
+  'plus-size': ['مقاس كبير', 'مقاسات كبيرة', 'بلس سايز', 'plus']
+};
+const NLU_COLOR_GROUPS = [
+  ['أسود','اسود','سوداء'], ['أبيض','ابيض','بيضاء'], ['وردي','وردية'],
+  ['أزرق','ازرق','زرقاء'], ['سماوي','سماوية'], ['ذهبي','ذهبية'],
+  ['أحمر','احمر','حمراء'], ['بني','بنية'], ['رمادي','رمادية'],
+  ['بيج'], ['أخضر','اخضر','خضراء'], ['بنفسجي','بنفسجية'], ['كحلي','كحلية']
+];
+function parseArabicShoppingQuery(qRaw){
+  const q = (qRaw||'').trim();
+  const result = {list: PRODUCTS.slice(), cat:null, color:null, priceMax:null, priceMin:null, understood:false};
+  if(!q) return result;
+  let cat = null;
+  for(const [id, kws] of Object.entries(NLU_CAT_KEYWORDS)){
+    if(kws.some(k=>q.includes(k))){ cat = id; break; }
+  }
+  let colorGroup = null, color = null;
+  for(const g of NLU_COLOR_GROUPS){ if(g.some(v=>q.includes(v))){ colorGroup = g; color = g[0]; break; } }
+  // استخراج السعر: يدعم "8000" أو "8 الاف/آلاف"
+  let priceMax = null, priceMin = null;
+  const kNumRe = /(\d+(?:\.\d+)?)\s*(الف|آلاف|الاف|ألف)/;
+  const plainNumRe = /(\d{2,6})/;
+  const toNumber = (text)=>{
+    const kMatch = kNumRe.exec(text);
+    if(kMatch) return parseFloat(kMatch[1]) * 1000;
+    const pMatch = plainNumRe.exec(text);
+    if(pMatch) return parseFloat(pMatch[1]);
+    return null;
+  };
+  const underIdx = q.search(/تحت|أقل من|اقل من|دون/);
+  const overIdx = q.search(/فوق|أكثر من|اكثر من/);
+  if(underIdx>-1) priceMax = toNumber(q.slice(underIdx));
+  if(overIdx>-1) priceMin = toNumber(q.slice(overIdx));
+  if(priceMax===null && priceMin===null){
+    // "بين 3000 و 8000"
+    const between = /بين\s*(\d+(?:\.\d+)?)\s*(?:الف|آلاف|الاف|ألف)?\s*و\s*(\d+(?:\.\d+)?)\s*(الف|آلاف|الاف|ألف)?/.exec(q);
+    if(between){
+      priceMin = parseFloat(between[1]) * (parseFloat(between[1])<100 ? 1000 : 1);
+      priceMax = parseFloat(between[2]) * (parseFloat(between[2])<100 ? 1000 : 1);
+    }
+  }
+  let list = PRODUCTS.slice();
+  if(cat) list = list.filter(p=>p.cat===cat);
+  if(colorGroup) list = list.filter(p=>colorGroup.some(v=>p.name.includes(v)));
+  if(priceMax!==null) list = list.filter(p=>p.price<=priceMax);
+  if(priceMin!==null) list = list.filter(p=>p.price>=priceMin);
+  const understood = !!(cat || color || priceMax!==null || priceMin!==null);
+  if(!understood){
+    // ما فهمنا فلتر محدد — نرجع لبحث نصي عادي بالاسم
+    list = PRODUCTS.filter(p=>p.name.includes(q));
+  }
+  return {list, cat, color, priceMax, priceMin, understood};
+}
+
+/* ---- 5) تحليلات ذكية للأدمن: أفضل الفئات/المدن/المنتجات + نمط أيام الأسبوع + نصائح تلقائية ---- */
+function computeStoreInsights(){
+  const orders = state.orders;
+  const catQty = {}, productQty = {}, productRevenue = {}, cityCount = {}, cityRevenue = {};
+  const weekdayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const weekdayCount = [0,0,0,0,0,0,0];
+  orders.forEach(o=>{
+    if(o.city){ cityCount[o.city] = (cityCount[o.city]||0)+1; cityRevenue[o.city] = (cityRevenue[o.city]||0) + (o.total||0); }
+    const d = new Date(o.date);
+    if(!isNaN(d.getTime())) weekdayCount[d.getDay()]++;
+    (o.items||[]).forEach(it=>{
+      const p = findProduct(it.id);
+      if(p) catQty[p.cat] = (catQty[p.cat]||0) + (it.qty||0);
+      productQty[it.id] = (productQty[it.id]||0) + (it.qty||0);
+      productRevenue[it.id] = (productRevenue[it.id]||0) + (it.qty||0)*(it.price||0);
+    });
+  });
+  const topCategories = Object.entries(catQty).sort((a,b)=>b[1]-a[1]).slice(0,5)
+    .map(([id,qty])=>({id, name:(CATEGORIES.find(c=>c.id===id)||{}).name||id, qty}));
+  const topCities = Object.entries(cityCount).sort((a,b)=>b[1]-a[1]).slice(0,5)
+    .map(([city,count])=>({city, count, revenue:cityRevenue[city]||0}));
+  const topProducts = Object.entries(productQty).sort((a,b)=>b[1]-a[1]).slice(0,5)
+    .map(([id,qty])=>{ const p = findProduct(id); return {id, name: p?p.name:id, qty, revenue: productRevenue[id]||0}; });
+  const weekday = weekdayNames.map((name,i)=>({name, count:weekdayCount[i]}));
+  const busiestDay = weekday.slice().sort((a,b)=>b.count-a.count)[0];
+  return {topCategories, topCities, topProducts, weekday, busiestDay};
+}
+function renderInsights(){
+  if(!$('tab-insights')) return;
+  const hasOrders = state.orders.length>0;
+  $('insights-empty').classList.toggle('hidden', hasOrders);
+  $('insights-body').classList.toggle('hidden', !hasOrders);
+  if(!hasOrders) return;
+  const ins = computeStoreInsights();
+  const bar = (label, value, max, color, unit)=>`
+    <div class="mb-2.5">
+      <div class="flex justify-between text-[11px] font-bold mb-1"><span>${label}</span><span style="color:${color};">${value} ${unit}</span></div>
+      <div class="w-full rounded-full h-2.5" style="background:rgba(0,0,0,.06);"><div class="h-2.5 rounded-full" style="width:${Math.max(4, value/max*100)}%;background:${color};"></div></div>
+    </div>`;
+  const maxCat = Math.max(1, ...ins.topCategories.map(c=>c.qty));
+  $('insights-categories').innerHTML = ins.topCategories.map(c=>bar(c.name, c.qty, maxCat, 'var(--pink-deep)', 'قطعة')).join('') || `<p class="text-xs text-[var(--ink-soft)]">لا توجد بيانات كافية بعد</p>`;
+  const maxCity = Math.max(1, ...ins.topCities.map(c=>c.count));
+  $('insights-cities').innerHTML = ins.topCities.map(c=>bar(c.city, c.count, maxCity, 'var(--sky-deep)', 'طلب')).join('') || `<p class="text-xs text-[var(--ink-soft)]">لا توجد بيانات كافية بعد</p>`;
+  const maxWeekday = Math.max(1, ...ins.weekday.map(w=>w.count));
+  $('insights-weekday').innerHTML = `<div class="flex items-end gap-2" style="height:110px;">` + ins.weekday.map(w=>`
+    <div class="flex-1 flex flex-col items-center justify-end h-full">
+      <div class="w-full rounded-t-lg" style="height:${Math.max(4, w.count/maxWeekday*100)}%;background:var(--gold);min-height:4px;"></div>
+      <span class="text-[9px] font-bold mt-1" style="color:var(--ink-soft);">${w.name.slice(0,3)}</span>
+    </div>`).join('') + `</div>`;
+  $('insights-products').innerHTML = ins.topProducts.map((p,i)=>`
+    <div class="flex items-center justify-between py-2 border-b border-[var(--line)] last:border-0">
+      <span class="text-[11px] font-bold">${i+1}. ${p.name}</span>
+      <span class="text-[11px] font-bold" style="color:var(--gold-deep);">${p.qty} قطعة · ${fmtDZD(p.revenue)} دج</span>
+    </div>`).join('') || `<p class="text-xs text-[var(--ink-soft)]">لا توجد بيانات كافية بعد</p>`;
+  const tips = [];
+  if(ins.busiestDay && ins.busiestDay.count>0) tips.push(`يوم ${ins.busiestDay.name} هو الأكثر ازدحاماً بالطلبات — جهّزي فريقك وخصصي عروض خاصة به.`);
+  if(ins.topCities[0]) tips.push(`${ins.topCities[0].city} هي مدينتك الأكثر طلباً (${ins.topCities[0].count} طلب) — فكّري بعرض شحن مخفّض لباقي المدن لتحفيز الطلب منها.`);
+  if(ins.topCategories[0]) tips.push(`فئة "${ins.topCategories[0].name}" هي الأكثر مبيعاً — تأكدي إن مخزونها كافٍ دائماً ووسّعي فيها.`);
+  const coldCats = CATEGORIES.filter(c=> !ins.topCategories.some(tc=>tc.id===c.id));
+  if(coldCats.length) tips.push(`فئة "${coldCats[0].name}" ما شافت مبيعات ملحوظة بعد — جربي تسويق أو خصم مؤقت لها لتنشيطها.`);
+  if(!tips.length) tips.push('أضيفي المزيد من الطلبات لتظهر هنا نصائح أدق حول أداء متجرك.');
+  $('insights-tips').innerHTML = tips.map(t=>`<li class="flex gap-2 items-start"><i class="fa-solid fa-lightbulb mt-0.5" style="color:var(--gold-deep);"></i><span>${t}</span></li>`).join('');
+}
+
+/* ---------------------------------------------------------------
    Admin panel
 --------------------------------------------------------------- */
 // أي تبويب حالة طلبات مفعّل حالياً في لوحة القيادة — يبدأ على "طلبات
@@ -3456,17 +3983,33 @@ $('newsletter-form').addEventListener('submit', async (e)=>{
 let adminOrderStatusFilter = '0';
 function renderAdmin(){
   $('kpi-orders').textContent = state.orders.length;
-  $('kpi-sales').textContent = state.orders.reduce((s,o)=>s+o.total,0) + ' دج';
+  $('kpi-sales').textContent = fmtDZD(state.orders.reduce((s,o)=>s+o.total,0)) + ' دج';
   $('kpi-wishlist').textContent = state.wishlist.length;
   $('kpi-jobs').textContent = state.jobs.length;
+  renderInsights();
   const lowStockMin = state.settings.lowStockThreshold||6;
   const lowStockItems = PRODUCTS.filter(p=>p.stock<=lowStockMin);
-  $('kpi-lowstock').textContent = lowStockItems.length;
+  // منتجات ما وصلتش للحد الثابت بعد، لكن سرعة بيعها الفعلية تنذر بنفاد قريب
+  const forecastOnlyItems = PRODUCTS.filter(p=> !lowStockItems.includes(p) && (()=>{ const d=stockForecastDays(p); return d!==null && d<=7; })());
+  const allFlaggedItems = lowStockItems.concat(forecastOnlyItems);
+  $('kpi-lowstock').textContent = allFlaggedItems.length;
   const lowStockPanel = $('lowstock-panel');
   if(lowStockPanel){
-    lowStockPanel.classList.toggle('hidden', lowStockItems.length===0);
-    $('lowstock-list').innerHTML = lowStockItems.map(p=>`
-      <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background:#fde3e3;color:#c94f4f;">${p.name} — ${p.stock} قطع متبقية</span>
+    lowStockPanel.classList.toggle('hidden', allFlaggedItems.length===0);
+    $('lowstock-list').innerHTML = allFlaggedItems.map(p=>{
+      const fc = stockForecastLabel(p);
+      return `<span class="text-[11px] font-bold px-3 py-1.5 rounded-full inline-flex items-center gap-2" style="background:#fde3e3;color:#c94f4f;">${p.name} — ${p.stock} قطع متبقية${fc?` · ${fc.text}`:''}<button onclick="quickRestock('${p.id}')" title="إضافة 10 قطع فوراً" style="background:#fff;color:#c94f4f;border-radius:9999px;width:18px;height:18px;line-height:18px;text-align:center;font-weight:900;">+</button></span>`;
+    }).join('');
+  }
+  const suspiciousFlags = detectSuspiciousOrders();
+  const suspiciousCount = new Set(Object.keys(suspiciousFlags)).size;
+  if($('kpi-suspicious')) $('kpi-suspicious').textContent = suspiciousCount;
+  const suspiciousPanel = $('suspicious-panel');
+  if(suspiciousPanel){
+    const flaggedOrders = state.orders.filter(o=>suspiciousFlags[o.id]);
+    suspiciousPanel.classList.toggle('hidden', flaggedOrders.length===0);
+    $('suspicious-list').innerHTML = flaggedOrders.map(o=>`
+      <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background:#fff0d6;color:#a15c00;" title="${suspiciousFlags[o.id]}">${o.id} — ${o.name||''} <i class="fa-solid fa-triangle-exclamation"></i></span>
     `).join('');
   }
   const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
@@ -3512,22 +4055,25 @@ function renderAdmin(){
     const thumbsHtml = shownThumbs.map(it=>`<img src="${it.img||''}" alt="${it.name||''}" title="${it.name||''} × ${it.qty||1}" class="order-item-thumb" onerror="${OLI_IMG_ONERROR}">`).join('');
     const namesText = items.map(it=>`${it.name||'منتج'} ×${it.qty||1}`).join('، ');
     const moreCount = items.length - shownThumbs.length;
+    const suspiciousReason = suspiciousFlags[o.id];
     return `
-    <tr>
-      <td class="font-bold">${o.id}</td><td>${o.name}</td><td>${o.city}</td>
+    <tr${suspiciousReason?' style="background:#fff8ee;"':''}>
+      <td class="font-bold">${o.id}${suspiciousReason?` <i class="fa-solid fa-triangle-exclamation" style="color:#a15c00;" title="${suspiciousReason}"></i>`:''}</td><td>${o.name}</td><td>${o.city}</td>
       <td style="white-space:normal;max-width:220px;">
         ${items.length ? `
           <div class="flex items-center gap-1 mb-1">${thumbsHtml}${moreCount>0?`<span class="text-[10px] font-bold" style="color:var(--ink-soft);">+${moreCount}</span>`:''}</div>
           <div class="text-[11px] font-bold leading-5" style="color:var(--ink-soft);">${namesText}</div>
         ` : '<span class="text-[11px]" style="color:var(--ink-soft);">لا توجد تفاصيل منتجات</span>'}
       </td>
-      <td>${o.total} دج</td>
+      <td>${fmtDZD(o.total)} دج</td>
       <td>${o.promoCode ? `<span class="font-bold" style="color:var(--pink-deep);">${o.promoCode}</span>${o.couponCounted?' <i class=\"fa-solid fa-circle-check\" style=\"color:var(--gold);\" title=\"احتُسب بعد التوصيل\"></i>':''}` : '—'}</td>
       <td>${statusLabels[o.status]||'قيد التجهيز'}</td><td>${o.date}</td>
       <td>
         <div class="flex items-center gap-1.5">
           <button onclick="openOrderDetails('${o.id}')" class="btn-outline px-3 py-1.5 text-[11px]">التفاصيل</button>
           ${o.status<3 ? `<button onclick="updateOrderStatus('${o.id}', ${o.status+1})" class="btn-sky px-3 py-1.5 text-[11px]">ترقية الحالة</button>` : '<span class="text-[11px] font-bold" style="color:var(--gold);">مكتمل</span>'}
+          <button onclick="printOrderInvoice('${o.id}')" title="طباعة فاتورة" class="w-7 h-7 rounded-full flex items-center justify-center focus-ring" style="background:var(--pink-pale);color:var(--pink-deep);"><i class="fa-solid fa-print text-[11px]"></i></button>
+          <button onclick="copyOrderDetails('${o.id}')" title="نسخ تفاصيل الطلب" class="w-7 h-7 rounded-full flex items-center justify-center focus-ring" style="background:var(--pink-pale);color:var(--pink-deep);"><i class="fa-solid fa-copy text-[11px]"></i></button>
         </div>
       </td>
     </tr>
@@ -3827,7 +4373,7 @@ function renderAdminEmployees(){
       <td class="font-bold">${Math.round((e.commissionRate!=null?e.commissionRate:EMPLOYEE_COMMISSION_RATE)*100)}%</td>
       <td class="font-bold">${Math.round((e.codeDiscount!=null?e.codeDiscount:EMPLOYEE_CODE_DISCOUNT)*100)}%</td>
       <td class="font-bold">${e.commissionOrders||0}</td>
-      <td class="font-black" style="color:var(--gold);">${(e.commissionEarned||0).toFixed(2)} دج</td>
+      <td class="font-black" style="color:var(--gold);">${fmtDZD(e.commissionEarned||0,2)} دج</td>
       <td><span class="text-[11px] font-bold" style="color:${statusColor[e.status]};">${statusLabel[e.status]||'نشطة'}</span></td>
       <td><div class="flex flex-wrap gap-1">
         <button onclick="openEditEmployeeCodeModal('${e.id}')" class="btn-outline px-2 py-1 text-[10px]">تعديل الكود</button>
@@ -3929,22 +4475,37 @@ function renderAdminProducts(){
   const search = ($('prod-search')?.value||'').trim().toLowerCase();
   let list = PRODUCTS.slice();
   if(search) list = list.filter(p=>p.name.toLowerCase().includes(search));
+  if(typeof oliProdSort !== 'undefined' && oliProdSort.key){
+    const dir = oliProdSort.dir;
+    list.sort((a,b)=>{
+      let va, vb;
+      if(oliProdSort.key==='cat'){
+        va = (CATEGORIES.find(c=>c.id===a.cat)||{}).name || a.cat;
+        vb = (CATEGORIES.find(c=>c.id===b.cat)||{}).name || b.cat;
+      } else { va = a[oliProdSort.key]; vb = b[oliProdSort.key]; }
+      if(typeof va === 'string') return va.localeCompare(vb, 'ar') * dir;
+      return ((va||0) - (vb||0)) * dir;
+    });
+  }
   tbody.innerHTML = list.map(p=>{
     const cat = CATEGORIES.find(c=>c.id===p.cat);
     return `
     <tr>
+      <td><input type="checkbox" class="prod-select-cb" data-id="${p.id}" ${oliSelectedProducts.has(p.id)?'checked':''}></td>
       <td><img src="${p.img}" class="w-10 h-12 object-cover rounded-lg" onerror="${OLI_IMG_ONERROR}"></td>
       <td class="font-bold">${p.name}</td>
       <td>${cat?cat.name:p.cat}</td>
-      <td>${p.price} دج${p.oldPrice?` <span class="line-through text-[var(--ink-soft)]">${p.oldPrice}</span>`:''}</td>
+      <td>${fmtDZD(p.price)} دج${p.oldPrice?` <span class="line-through text-[var(--ink-soft)]">${fmtDZD(p.oldPrice)}</span>`:''}</td>
       <td>${p.stock<=(state.settings.lowStockThreshold||6) ? `<span class="font-bold" style="color:#c94f4f;">${p.stock} <i class="fa-solid fa-triangle-exclamation" title="على وشك النفاد"></i></span>` : p.stock}</td>
+      <td>${(()=>{ const fc = stockForecastLabel(p); if(!fc) return '<span class="text-[var(--ink-soft)]">—</span>'; return `<span class="text-[10px] font-bold" style="color:${fc.level==='danger'?'#c94f4f':'#a15c00'};">${fc.text}</span>`; })()}</td>
       <td>${p.tag||'—'}</td>
       <td><div class="flex gap-1">
         <button onclick="editProduct('${p.id}')" class="btn-outline px-2 py-1 text-[10px]">تعديل</button>
+        <button onclick="duplicateProduct('${p.id}')" title="تكرار المنتج" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:var(--pink-pale);color:var(--pink-deep);"><i class="fa-solid fa-clone"></i></button>
         <button onclick="deleteProduct('${p.id}')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">حذف</button>
       </div></td>
     </tr>`;
-  }).join('') || '<tr><td colspan="7" class="text-center py-6 text-[var(--ink-soft)]">لا توجد منتجات مطابقة</td></tr>';
+  }).join('') || '<tr><td colspan="9" class="text-center py-6 text-[var(--ink-soft)]">لا توجد منتجات مطابقة</td></tr>';
 }
 function editProduct(id){
   const p = findProduct(id);
@@ -3957,6 +4518,8 @@ function editProduct(id){
   $('prod-stock').value = p.stock;
   $('prod-img').value = p.img;
   $('prod-tag').value = p.tag||'';
+  $('prod-desc').value = p.desc||'';
+  $('prod-hashtags').value = p.hashtags||'';
   $('prod-submit-label').textContent = 'حفظ التعديل';
   $('prod-cancel-edit').classList.remove('hidden');
   $('admin-product-form').scrollIntoView({behavior:'smooth', block:'center'});
@@ -3971,6 +4534,18 @@ function deleteProduct(id){
   renderProducts();
   toast('تم حذف المنتج', 'fa-trash');
 }
+$('prod-ai-generate')?.addEventListener('click', ()=>{
+  const draft = {
+    name: $('prod-name').value.trim() || 'قطعة من oli',
+    cat: $('prod-cat').value,
+    price: parseFloat($('prod-price').value) || 0,
+    oldPrice: $('prod-oldprice').value ? parseFloat($('prod-oldprice').value) : null
+  };
+  const copy = generateProductCopy(draft);
+  $('prod-desc').value = copy.desc;
+  $('prod-hashtags').value = copy.hashtags;
+  toast('تم توليد وصف وهاشتاقات — راجعيها وعدّليها إذا حبيتي', 'fa-wand-magic-sparkles');
+});
 $('admin-product-form')?.addEventListener('submit', (e)=>{
   e.preventDefault();
   const editId = $('prod-edit-id').value;
@@ -3981,7 +4556,9 @@ $('admin-product-form')?.addEventListener('submit', (e)=>{
     oldPrice: $('prod-oldprice').value ? parseFloat($('prod-oldprice').value) : null,
     stock: parseInt($('prod-stock').value)||0,
     img: $('prod-img').value.trim() || IMG('photo-1600180758890-6b94519a8ba6',600,800),
-    tag: $('prod-tag').value.trim() || null
+    tag: $('prod-tag').value.trim() || null,
+    desc: $('prod-desc').value.trim() || null,
+    hashtags: $('prod-hashtags').value.trim() || null
   };
   if(editId){
     const p = findProduct(editId);
@@ -4353,6 +4930,62 @@ function renderReviews(){
 }
 
 /* ---------------------------------------------------------------
+   Hero product spotlight — turns the decorative hero visual into an
+   actual selling surface. Picks real products (prioritising ones on
+   sale, then by rating) straight from PRODUCTS and auto-rotates
+   through them with a working add-to-cart + quickview. Pure front-end,
+   reads only from the existing PRODUCTS/state, writes nothing new to
+   Supabase.
+--------------------------------------------------------------- */
+let heroSpotlightTimer = null, heroSpotlightIdx = 0, heroSpotlightList = [];
+function pickHeroSpotlightProducts(){
+  return PRODUCTS
+    .filter(p=>(p.stock||0) > 0)
+    .sort((a,b)=>{
+      const discA = a.oldPrice ? (a.oldPrice-a.price)/a.oldPrice : 0;
+      const discB = b.oldPrice ? (b.oldPrice-b.price)/b.oldPrice : 0;
+      return (discB*2 + (b.rating||0)*0.3) - (discA*2 + (a.rating||0)*0.3);
+    })
+    .slice(0, 5);
+}
+function renderHeroSpotlightSlide(){
+  const el = $('hero-spotlight');
+  if(!el || !heroSpotlightList.length) return;
+  const p = heroSpotlightList[heroSpotlightIdx];
+  const discount = p.oldPrice ? Math.round((p.oldPrice-p.price)/p.oldPrice*100) : null;
+  el.innerHTML = `
+    <span class="hero-spotlight-badge"><i class="fa-solid fa-fire"></i> ${discount ? 'خصم ' + discount + '%' : 'مختارة لكِ'}</span>
+    <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="${OLI_IMG_ONERROR}" data-hs-open>
+    <div class="hero-spotlight-name line-clamp-2" data-hs-open>${p.name}</div>
+    <div class="flex items-baseline gap-1.5 mt-1">
+      <span class="hero-spotlight-price">${fmtDZD(p.price)} دج</span>
+      ${p.oldPrice ? `<span class="hero-spotlight-old">${fmtDZD(p.oldPrice)}</span>` : ''}
+    </div>
+    <button type="button" class="hero-spotlight-add" data-hs-add><i class="fa-solid fa-bag-shopping"></i> أضيفي للسلة</button>
+    <div class="hero-spotlight-dots">${heroSpotlightList.map((_,i)=>`<span class="${i===heroSpotlightIdx?'active':''}"></span>`).join('')}</div>`;
+  qsa('[data-hs-open]', el).forEach(node=> node.addEventListener('click', ()=> openQuickview(p.id)));
+  $('hero-spotlight').querySelector('[data-hs-add]').addEventListener('click', (e)=>{ e.stopPropagation(); addToCart(p.id); });
+}
+function advanceHeroSpotlight(){
+  if(!heroSpotlightList.length) return;
+  heroSpotlightIdx = (heroSpotlightIdx + 1) % heroSpotlightList.length;
+  renderHeroSpotlightSlide();
+}
+function initHeroSpotlight(){
+  const el = $('hero-spotlight');
+  if(!el) return;
+  heroSpotlightList = pickHeroSpotlightProducts();
+  if(!heroSpotlightList.length){ el.classList.add('hidden'); return; }
+  el.classList.remove('hidden');
+  heroSpotlightIdx = 0;
+  renderHeroSpotlightSlide();
+  clearInterval(heroSpotlightTimer);
+  heroSpotlightTimer = setInterval(advanceHeroSpotlight, 4500);
+  el.addEventListener('mouseenter', ()=> clearInterval(heroSpotlightTimer));
+  el.addEventListener('mouseleave', ()=> { clearInterval(heroSpotlightTimer); heroSpotlightTimer = setInterval(advanceHeroSpotlight, 4500); });
+}
+
+/* ---------------------------------------------------------------
    Countdown timer
 --------------------------------------------------------------- */
 function startCountdown(){
@@ -4431,28 +5064,61 @@ function renderCmdk(q){
   q = q.trim().toLowerCase();
   const prods = q ? PRODUCTS.filter(p=>p.name.toLowerCase().includes(q)).slice(0,6) : [];
   const pages = q ? CMDK_PAGES.filter(p=>p.label.toLowerCase().includes(q)) : CMDK_PAGES;
+  // لوحة تحكم الأدمن: لو مسجّلة دخول كأدمن، نضيف نتائج من داخل لوحة
+  // التحكم نفسها (تبويبات + طلبات بالاسم/الرقم/المدينة) عشان توصلين
+  // لأي شي بضغطة Ctrl+K وحدة، بدل ما تدوّري بين التبويبات يدوياً.
+  const adminOn = typeof isAdminAuthed==='function' && isAdminAuthed();
+  let adminTabs = [], adminOrders = [];
+  if(adminOn){
+    adminTabs = Object.entries(ADMIN_TAB_LABELS).filter(([id,label])=> !q || label.toLowerCase().includes(q) || id.includes(q));
+    if(q){
+      adminOrders = (state.orders||[]).filter(o=>
+        (o.id||'').toLowerCase().includes(q) || (o.name||'').toLowerCase().includes(q) || (o.city||'').toLowerCase().includes(q)
+      ).slice(0,5);
+    }
+  }
   let html = '';
+  if(adminOn && adminTabs.length){
+    html += '<div class="text-[10px] font-bold text-[var(--ink-soft)] px-3 py-1">لوحة التحكم</div>';
+    html += adminTabs.map(([id,label])=>`<button type="button" class="cmdk-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--pink-pale)] text-sm w-full text-right" data-cmdk-admin-tab="${id}"><i class="fa-solid fa-gauge-high text-[var(--sky-deep)] w-4"></i>${label}</button>`).join('');
+  }
+  if(adminOn && adminOrders.length){
+    html += '<div class="text-[10px] font-bold text-[var(--ink-soft)] px-3 py-1 mt-1">طلبات</div>';
+    html += adminOrders.map(o=>`<button type="button" class="cmdk-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--pink-pale)] text-sm w-full text-right" data-cmdk-order="${o.id}"><i class="fa-solid fa-receipt text-[var(--gold-deep)] w-4"></i>#${o.id} — ${o.name||'بدون اسم'}${o.city?(' · '+o.city):''}</button>`).join('');
+  }
   if(pages.length){
-    html += '<div class="text-[10px] font-bold text-[var(--ink-soft)] px-3 py-1">صفحات</div>';
+    html += '<div class="text-[10px] font-bold text-[var(--ink-soft)] px-3 py-1 mt-1">صفحات</div>';
     html += pages.map(p=>`<a href="${p.anchor}" class="cmdk-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--pink-pale)] text-sm"><i class="fa-solid ${p.icon} text-[var(--pink-deep)] w-4"></i>${p.label}</a>`).join('');
   }
   if(prods.length){
     html += '<div class="text-[10px] font-bold text-[var(--ink-soft)] px-3 py-1 mt-1">منتجات</div>';
     html += prods.map(p=>`<button class="cmdk-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--pink-pale)] text-sm w-full text-right" data-cmdk-product="${p.id}"><img src="${p.img}" class="w-8 h-10 object-cover rounded-lg" onerror="${OLI_IMG_ONERROR}">${p.name}</button>`).join('');
   }
-  if(!pages.length && !prods.length){
+  if(!html){
     html = `<div class="text-center py-8 text-xs text-[var(--ink-soft)]">ما لقينا نتائج... جربي كلمة ثانية</div>`;
   }
   $('cmdk-results').innerHTML = html;
   qsa('.cmdk-item[href]', $('cmdk-results')).forEach(a=>a.addEventListener('click', closeCmdk));
   qsa('[data-cmdk-product]', $('cmdk-results')).forEach(btn=>btn.addEventListener('click', ()=>{ closeCmdk(); openQuickview(btn.dataset.cmdkProduct); }));
+  qsa('[data-cmdk-admin-tab]', $('cmdk-results')).forEach(btn=>btn.addEventListener('click', ()=>{ closeCmdk(); switchAdminTab(btn.dataset.cmdkAdminTab); }));
+  qsa('[data-cmdk-order]', $('cmdk-results')).forEach(btn=>btn.addEventListener('click', ()=>{ closeCmdk(); switchAdminTab('dashboard'); openOrderDetails(btn.dataset.cmdkOrder); }));
 }
 $('btn-cmdk')?.addEventListener('click', openCmdk);
+$('btn-admin-cmdk')?.addEventListener('click', openCmdk);
 $('cmdk-input').addEventListener('input', (e)=> renderCmdk(e.target.value));
 $('cmdk-backdrop').addEventListener('click', (e)=>{ if(e.target.id==='cmdk-backdrop') closeCmdk(); });
 document.addEventListener('keydown', (e)=>{
   if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openCmdk(); }
   if(e.key==='Escape') closeCmdk();
+  // "/" focuses the storefront search box — skipped while typing in any
+  // field, and while the admin panel is open (Ctrl/⌘+K already covers it there).
+  if(e.key==='/' && !document.documentElement.classList.contains('admin-mode')){
+    const tag = (e.target.tagName||'').toLowerCase();
+    if(tag!=='input' && tag!=='textarea' && !e.target.isContentEditable){
+      const box = $('search-input-mobile').offsetParent ? $('search-input-mobile') : $('search-input');
+      if(box){ e.preventDefault(); box.focus(); }
+    }
+  }
 });
 
 /* ---------------------------------------------------------------
@@ -4466,19 +5132,31 @@ function bindSearch(inputEl){
       state.activeCat='all';
       saveState('بحث المنتجات');
       renderChips();
-      $('product-grid').innerHTML = PRODUCTS.filter(p=>p.name.includes(q)).map(productCard).join('') ||
+      // مساعد بحث ذكي: يفهم فئة/لون/سعر من جملة عربية كاملة، وإلا يرجع لبحث بالاسم كالمعتاد
+      const parsed = parseArabicShoppingQuery(q);
+      const results = parsed.list;
+      const summaryParts = [];
+      if(parsed.cat){ const c = CATEGORIES.find(c=>c.id===parsed.cat); if(c) summaryParts.push(c.name); }
+      if(parsed.color) summaryParts.push(parsed.color);
+      if(parsed.priceMax!==null) summaryParts.push('أقل من ' + fmtDZD(parsed.priceMax) + ' دج');
+      if(parsed.priceMin!==null) summaryParts.push('أكثر من ' + fmtDZD(parsed.priceMin) + ' دج');
+      const summaryHtml = (parsed.understood && summaryParts.length) ?
+        `<div class="col-span-full text-[11px] font-bold mb-1" style="color:var(--pink-deep);"><i class="fa-solid fa-wand-magic-sparkles"></i> فهمت طلبك: ${summaryParts.join(' · ')}</div>` : '';
+      $('product-grid').innerHTML = results.length ? (summaryHtml + results.map(productCard).join('')) :
         `<div class="col-span-full text-center py-10">
           <div id="lottie-search-empty" class="lottie-tint mx-auto" style="width:130px;height:130px;"></div>
           <p class="text-sm text-[var(--ink-soft)] mt-2">ما لقينا "${q}"... جربي كلمة ثانية</p>
         </div>`;
       bindProductEvents();
-      if(!PRODUCTS.some(p=>p.name.includes(q))) mountLottie('lottie-search-empty','lurking');
+      if(!results.length) mountLottie('lottie-search-empty','lurking');
       document.getElementById('shop').scrollIntoView({behavior:'smooth'});
     }
   });
 }
 bindSearch($('search-input'));
 bindSearch($('search-input-mobile'));
+bindSearchSuggestions($('search-input'), $('search-suggest'));
+bindSearchSuggestions($('search-input-mobile'), $('search-suggest-mobile'));
 $('sort-select').addEventListener('change', renderProducts);
 $('btn-load-more').addEventListener('click', ()=>{ visibleCount += 8; renderProducts(); });
 
@@ -4509,6 +5187,8 @@ async function init(){
   renderReviews();
   renderCartDrawer();
   renderWishlistDrawer();
+  renderRecentlyViewedRow();
+  initHeroSpotlight();
   updateCounts();
   applySiteSettings();
   applyColorTheme();
@@ -4553,6 +5233,479 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
 else init();
 
 /* ---------------------------------------------------------------
+   ✨ تحسينات ذكية إضافية للوحة التحكم — أُضيفت لجعل الإدارة أسهل
+   وأسرع وأذكى. كل شيء هنا يعمل محلياً في المتصفح فوق البيانات
+   الموجودة أصلاً في state (بنفس أسلوب saveState() المستخدم أصلاً
+   في باقي الموقع) أو في localStorage الخاص بالجهاز فقط — بدون أي
+   إضافة أو تعديل على Supabase أو على طريقة الاتصال بقاعدة البيانات.
+--------------------------------------------------------------- */
+
+/* ==== 1) طباعة فاتورة/إيصال الطلب + نسخ تفاصيله بضغطة واحدة ==== */
+function printOrderInvoice(orderId){
+  const order = state.orders.find(o=>o.id===orderId);
+  if(!order) return;
+  const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
+  const items = Array.isArray(order.items) ? order.items : [];
+  const rowsHtml = items.map(it=>`
+    <tr>
+      <td>${it.name||'منتج'}</td>
+      <td style="text-align:center;">${it.qty||1}</td>
+      <td style="text-align:center;">${it.price!=null?fmtDZD(it.price)+' دج':'—'}</td>
+      <td style="text-align:center;">${it.price!=null?fmtDZD(it.price*(it.qty||1))+' دج':'—'}</td>
+    </tr>`).join('');
+  const win = window.open('', '_blank', 'width=480,height=640');
+  if(!win){ toast('يرجى السماح بالنوافذ المنبثقة لطباعة الفاتورة', 'fa-triangle-exclamation'); return; }
+  const scriptTag = '<' + 'script>window.onload=function(){ setTimeout(function(){ window.print(); }, 300); };</' + 'script>';
+  win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+    <title>فاتورة ${order.id}</title>
+    <style>
+      body{font-family:Tahoma,Arial,sans-serif;padding:24px;color:#2b2b2b;}
+      h1{font-size:20px;margin:0 0 4px;}
+      .muted{color:#888;font-size:12px;}
+      table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px;}
+      th,td{border-bottom:1px solid #eee;padding:8px 4px;text-align:right;}
+      .totals{margin-top:14px;text-align:left;font-size:14px;}
+      .totals b{font-size:17px;}
+      .info{margin-top:14px;font-size:13px;line-height:1.9;}
+      .no-print button{padding:8px 18px;border-radius:20px;border:0;background:#c9689e;color:#fff;font-weight:bold;cursor:pointer;}
+      @media print{ .no-print{display:none;} }
+    </style></head><body>
+    <h1>oli — فاتورة الطلب ${order.id}</h1>
+    <div class="muted">${order.date} — الحالة: ${statusLabels[order.status]||'قيد التجهيز'}</div>
+    <div class="info">
+      <div><b>العميلة:</b> ${order.name||'—'}</div>
+      <div><b>الجوال:</b> ${order.phone||'—'}</div>
+      <div><b>المدينة:</b> ${order.city||'—'}</div>
+      <div><b>العنوان:</b> ${order.address||'—'}</div>
+      ${order.promoCode?`<div><b>كود الخصم:</b> ${order.promoCode}</div>`:''}
+    </div>
+    <table><thead><tr><th>المنتج</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead>
+    <tbody>${rowsHtml || '<tr><td colspan="4">لا توجد تفاصيل منتجات</td></tr>'}</tbody></table>
+    <div class="totals">${order.delivery?`<div class="muted">التوصيل: ${fmtDZD(order.delivery)} دج</div>`:''}<b>الإجمالي الكلي: ${fmtDZD(order.total)} دج</b></div>
+    <p class="no-print" style="margin-top:20px;"><button onclick="window.print()">طباعة</button></p>
+    ${scriptTag}
+    </body></html>`);
+  win.document.close();
+}
+function copyOrderDetails(orderId){
+  const order = state.orders.find(o=>o.id===orderId);
+  if(!order) return;
+  const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
+  const items = Array.isArray(order.items) ? order.items : [];
+  const lines = [
+    `طلب ${order.id} — ${statusLabels[order.status]||'قيد التجهيز'}`,
+    `العميلة: ${order.name||'—'} — ${order.phone||'—'}`,
+    `المدينة: ${order.city||'—'} — ${order.address||'—'}`,
+    ...items.map(it=>`• ${it.name||'منتج'} ×${it.qty||1}${it.price!=null?` (${fmtDZD(it.price)} دج)`:''}`),
+    `الإجمالي: ${fmtDZD(order.total)} دج`
+  ];
+  const text = lines.join('\n');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(
+      ()=> toast('تم نسخ تفاصيل الطلب', 'fa-copy'),
+      ()=> toast('تعذر النسخ — جرّبي يدوياً', 'fa-triangle-exclamation')
+    );
+  } else {
+    toast('النسخ غير مدعوم في هذا المتصفح', 'fa-triangle-exclamation');
+  }
+}
+
+/* ==== 2) تحديد متعدد وإجراءات جماعية على المنتجات ==== */
+let oliSelectedProducts = new Set();
+function renderBulkToolbar(){
+  const bar = $('prod-bulk-toolbar');
+  if(!bar) return;
+  const count = oliSelectedProducts.size;
+  bar.classList.toggle('hidden', count===0);
+  const countEl = $('prod-bulk-count');
+  if(countEl) countEl.textContent = count + ' محدد';
+  const catSel = $('prod-bulk-cat');
+  if(catSel && !catSel.dataset.filled){
+    catSel.innerHTML = CATEGORIES.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    catSel.dataset.filled = '1';
+  }
+  const selectAll = $('prod-select-all');
+  if(selectAll){
+    const visibleIds = qsa('.prod-select-cb').map(cb=>cb.dataset.id);
+    selectAll.checked = visibleIds.length>0 && visibleIds.every(id=>oliSelectedProducts.has(id));
+  }
+}
+document.addEventListener('change', (e)=>{
+  if(e.target && e.target.id==='prod-select-all'){
+    qsa('.prod-select-cb').forEach(cb=>{
+      cb.checked = e.target.checked;
+      if(e.target.checked) oliSelectedProducts.add(cb.dataset.id);
+      else oliSelectedProducts.delete(cb.dataset.id);
+    });
+    renderBulkToolbar();
+  } else if(e.target && e.target.classList && e.target.classList.contains('prod-select-cb')){
+    if(e.target.checked) oliSelectedProducts.add(e.target.dataset.id);
+    else oliSelectedProducts.delete(e.target.dataset.id);
+    renderBulkToolbar();
+  }
+});
+$('btn-bulk-clear')?.addEventListener('click', ()=>{
+  oliSelectedProducts.clear();
+  renderAdminProducts();
+});
+$('btn-bulk-delete')?.addEventListener('click', ()=>{
+  if(!oliSelectedProducts.size) return;
+  if(!confirm(`حذف ${oliSelectedProducts.size} منتج نهائياً؟`)) return;
+  const names = PRODUCTS.filter(p=>oliSelectedProducts.has(p.id)).map(p=>p.name).join('، ');
+  const removedCount = oliSelectedProducts.size;
+  for(let i=PRODUCTS.length-1;i>=0;i--){ if(oliSelectedProducts.has(PRODUCTS[i].id)) PRODUCTS.splice(i,1); }
+  oliSelectedProducts.clear();
+  saveState();
+  renderAdminProducts();
+  renderProducts();
+  toast('تم حذف المنتجات المحددة', 'fa-trash');
+  oliLogActivity('حذف جماعي لمنتجات', `${removedCount} منتج: ${names}`);
+});
+$('btn-bulk-stock')?.addEventListener('click', ()=>{
+  if(!oliSelectedProducts.size) return;
+  const delta = parseInt($('prod-bulk-stock-delta')?.value, 10);
+  if(!Number.isFinite(delta) || delta===0){ toast('اكتبي رقم صحيح للتعديل (موجب أو سالب)', 'fa-circle-exclamation'); return; }
+  PRODUCTS.forEach(p=>{ if(oliSelectedProducts.has(p.id)) p.stock = Math.max(0, (p.stock||0) + delta); });
+  saveState();
+  renderAdminProducts();
+  renderProducts();
+  toast('تم تعديل كمية المنتجات المحددة', 'fa-boxes-stacked');
+  oliLogActivity('تعديل كمية جماعي', `${oliSelectedProducts.size} منتج، تغيير ${delta>0?'+':''}${delta}`);
+});
+$('btn-bulk-cat')?.addEventListener('click', ()=>{
+  if(!oliSelectedProducts.size) return;
+  const catId = $('prod-bulk-cat')?.value;
+  if(!catId) return;
+  PRODUCTS.forEach(p=>{ if(oliSelectedProducts.has(p.id)) p.cat = catId; });
+  saveState();
+  renderAdminProducts();
+  renderProducts();
+  const catName = (CATEGORIES.find(c=>c.id===catId)||{}).name || catId;
+  toast('تم تغيير فئة المنتجات المحددة', 'fa-layer-group');
+  oliLogActivity('تغيير فئة جماعي', `${oliSelectedProducts.size} منتج → ${catName}`);
+});
+if(typeof renderAdminProducts === 'function'){
+  const _origRenderAdminProducts = renderAdminProducts;
+  renderAdminProducts = function(){ _origRenderAdminProducts(); renderBulkToolbar(); refreshHeroSpotlightData(); };
+}
+// Keeps the storefront hero spotlight in sync with real product/price/stock
+// changes made from the admin panel, without resetting its rotation timer.
+function refreshHeroSpotlightData(){
+  if(!$('hero-spotlight')) return;
+  heroSpotlightList = pickHeroSpotlightProducts();
+  if(!heroSpotlightList.length){ $('hero-spotlight').classList.add('hidden'); return; }
+  $('hero-spotlight').classList.remove('hidden');
+  if(heroSpotlightIdx >= heroSpotlightList.length) heroSpotlightIdx = 0;
+  renderHeroSpotlightSlide();
+}
+
+/* ==== 3) سجل نشاط الإدارة — محلي بالكامل في localStorage الخاص
+   بالجهاز، بدون أي إرسال أو تخزين في Supabase ==== */
+const OLI_LOG_KEY = 'oli_admin_activity_log';
+function oliLogActivity(action, detail){
+  try{
+    const log = JSON.parse(localStorage.getItem(OLI_LOG_KEY) || '[]');
+    log.unshift({ t: Date.now(), action, detail: detail||'' });
+    if(log.length > 200) log.length = 200;
+    localStorage.setItem(OLI_LOG_KEY, JSON.stringify(log));
+    renderActivityLog();
+  }catch(e){}
+}
+function renderActivityLog(){
+  const wrap = $('admin-activity-log');
+  if(!wrap) return;
+  let log = [];
+  try{ log = JSON.parse(localStorage.getItem(OLI_LOG_KEY) || '[]'); }catch(e){}
+  wrap.innerHTML = log.length ? log.slice(0,60).map(e=>`
+    <div class="flex items-start gap-2 py-2 border-b border-[var(--line)] last:border-0">
+      <i class="fa-solid fa-clock-rotate-left mt-0.5" style="color:var(--pink-deep);font-size:11px;"></i>
+      <div class="flex-1">
+        <div class="text-[11px] font-bold">${e.action}</div>
+        ${e.detail?`<div class="text-[10px]" style="color:var(--ink-soft);">${e.detail}</div>`:''}
+        <div class="text-[9px]" style="color:var(--ink-soft);">${new Date(e.t).toLocaleString('ar-DZ')}</div>
+      </div>
+    </div>`).join('') : '<p class="text-xs text-[var(--ink-soft)] text-center py-4">لا يوجد نشاط مسجّل بعد على هذا الجهاز</p>';
+}
+$('btn-clear-activity-log')?.addEventListener('click', ()=>{
+  if(!confirm('مسح سجل النشاط بالكامل من هذا الجهاز؟')) return;
+  localStorage.removeItem(OLI_LOG_KEY);
+  renderActivityLog();
+});
+// نلتقط أهم أفعال الإدارة تلقائياً بلف بسيط حول الدوال الأصلية —
+// دون تعديل أي سطر من منطقها الأصلي أو من طريقة حفظها.
+if(typeof deleteProduct === 'function'){
+  const _origDeleteProduct = deleteProduct;
+  deleteProduct = function(id){
+    const p = findProduct(id);
+    const name = p ? p.name : id;
+    const before = PRODUCTS.length;
+    _origDeleteProduct(id);
+    if(PRODUCTS.length < before) oliLogActivity('حذف منتج', name);
+  };
+}
+if(typeof updateOrderStatus === 'function'){
+  const _origUpdateOrderStatus = updateOrderStatus;
+  updateOrderStatus = async function(orderId, newStatus){
+    const labels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
+    await _origUpdateOrderStatus(orderId, newStatus);
+    oliLogActivity('ترقية حالة طلب', `${orderId} → ${labels[newStatus]||newStatus}`);
+  };
+}
+if(typeof deleteCategory === 'function'){
+  const _origDeleteCategory = deleteCategory;
+  deleteCategory = function(id){
+    const cat = CATEGORIES.find(c=>c.id===id);
+    const name = cat ? cat.name : id;
+    _origDeleteCategory(id);
+    oliLogActivity('حذف فئة', name);
+  };
+}
+if(typeof deleteCoupon === 'function'){
+  const _origDeleteCoupon = deleteCoupon;
+  deleteCoupon = function(code){
+    _origDeleteCoupon(code);
+    oliLogActivity('حذف كود خصم', code);
+  };
+}
+// الاستماع لحفظ نموذج المنتج في طور الالتقاط (capture) على document —
+// ينفّذ قبل معالج الفورم الأصلي (الذي يفرغ الحقول)، فنقرأ القيم قبل تصفيرها.
+document.addEventListener('submit', (e)=>{
+  if(e.target && e.target.id==='admin-product-form'){
+    const name = ($('prod-name')?.value||'').trim();
+    const isEdit = !!($('prod-edit-id')?.value);
+    oliLogActivity(isEdit?'تعديل منتج':'إضافة منتج', name);
+  }
+}, true);
+$('btn-save-settings')?.addEventListener('click', ()=> oliLogActivity('حفظ إعدادات الموقع العامة'));
+$('btn-save-marketing')?.addEventListener('click', ()=> oliLogActivity('حفظ إعدادات التسويق'));
+$('admin-pass-form')?.addEventListener('submit', ()=> oliLogActivity('تغيير كلمة مرور لوحة التحكم'));
+
+/* ==== 4) اتجاه المبيعات لآخر 14 يوم — رسم بسيط بـ canvas بدون أي
+   مكتبة خارجية، محسوب من state.orders الموجودة أصلاً ==== */
+function renderSalesTrend(){
+  const canvas = $('insights-trend-canvas');
+  if(!canvas) return;
+  const days = 14;
+  const today = new Date();
+  const buckets = [];
+  for(let i=days-1;i>=0;i--){
+    const d = new Date(today);
+    d.setDate(d.getDate()-i);
+    buckets.push({ key: d.toISOString().slice(0,10), label: d.getDate()+'/'+(d.getMonth()+1), total: 0 });
+  }
+  const byKey = {};
+  buckets.forEach(b=> byKey[b.key]=b);
+  state.orders.forEach(o=>{
+    const key = (o.date||'').slice(0,10);
+    if(byKey[key]) byKey[key].total += (o.total||0);
+  });
+  const totalSum = buckets.reduce((s,b)=>s+b.total,0);
+  const totalEl = $('insights-trend-total');
+  if(totalEl) totalEl.textContent = totalSum ? (fmtDZD(totalSum) + ' دج خلال 14 يوم') : 'لا مبيعات خلال آخر 14 يوم';
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth || (canvas.parentElement && canvas.parentElement.clientWidth) || 300;
+  const h = 90;
+  canvas.width = w*dpr; canvas.height = h*dpr;
+  canvas.style.height = h+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,h);
+  const max = Math.max(1, ...buckets.map(b=>b.total));
+  const padL = 6, padR = 6, padT = 8, padB = 16;
+  const chartW = w - padL - padR, chartH = h - padT - padB;
+  const stepX = chartW / (buckets.length-1 || 1);
+  ctx.beginPath();
+  buckets.forEach((b,i)=>{
+    const x = padL + i*stepX;
+    const y = padT + chartH - (b.total/max)*chartH;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle = '#c9689e';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.lineTo(padL+chartW, padT+chartH);
+  ctx.lineTo(padL, padT+chartH);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(201,104,158,0.12)';
+  ctx.fill();
+  buckets.forEach((b,i)=>{
+    if(b.total<=0) return;
+    const x = padL + i*stepX;
+    const y = padT + chartH - (b.total/max)*chartH;
+    ctx.beginPath();
+    ctx.arc(x,y,2.5,0,Math.PI*2);
+    ctx.fillStyle = '#c9689e';
+    ctx.fill();
+  });
+  ctx.fillStyle = '#9b8f8f';
+  ctx.font = '9px Tahoma, Arial';
+  ctx.textAlign = 'center';
+  buckets.forEach((b,i)=>{
+    if(i%2===0 || i===buckets.length-1){
+      ctx.fillText(b.label, padL + i*stepX, h-4);
+    }
+  });
+}
+if(typeof renderInsights === 'function'){
+  const _origRenderInsights = renderInsights;
+  renderInsights = function(){ _origRenderInsights(); renderSalesTrend(); };
+}
+
+// نعرض سجل النشاط أول ما تفتح الصفحة (حتى قبل فتح لوحة التحكم)
+renderActivityLog();
+
+/* ---------------------------------------------------------------
+   ✨ دفعة تحسينات ثانية — تراجع عن الحذف، تكرار منتج، ترتيب الجدول،
+   تجديد سريع للمخزون، وقفل تلقائي عند عدم النشاط. كل شيء محلي في
+   المتصفح فوق نفس آلية الحفظ الموجودة أصلاً (saveState) أو بدون أي
+   حفظ إطلاقاً (الترتيب، القفل) — بدون أي علاقة بـ Supabase.
+--------------------------------------------------------------- */
+
+/* ==== 5) تراجع عن حذف منتج خلال 6 ثوانٍ (بدل نافذة تأكيد مزعجة) ====
+   المنتج يُزال من الواجهة فوراً، لكن الحفظ الفعلي (saveState) يتأخر
+   حتى تنتهي مهلة التراجع — فإذا ضغطتِ "تراجع" يرجع المنتج كأن شيئاً
+   لم يحدث، وإن لم تفعلي يُحفظ الحذف بنفس الطريقة المعتادة تماماً. */
+let _oliPendingDeletes = {};
+deleteProduct = function(id){
+  const idx = PRODUCTS.findIndex(p=>p.id===id);
+  if(idx===-1) return;
+  const [removed] = PRODUCTS.splice(idx,1);
+  renderAdminProducts();
+  renderProducts();
+  const timer = setTimeout(()=>{
+    delete _oliPendingDeletes[id];
+    saveState();
+    oliLogActivity('حذف منتج', removed.name);
+  }, 6000);
+  _oliPendingDeletes[id] = {product:removed, index:idx, timer};
+  toast(`تم حذف «${removed.name}» — <button onclick="undoDeleteProduct('${id}')" style="text-decoration:underline;font-weight:900;">تراجع</button>`, 'fa-trash', 6000);
+};
+function undoDeleteProduct(id){
+  const pending = _oliPendingDeletes[id];
+  if(!pending) return;
+  clearTimeout(pending.timer);
+  delete _oliPendingDeletes[id];
+  const insertAt = Math.min(pending.index, PRODUCTS.length);
+  PRODUCTS.splice(insertAt, 0, pending.product);
+  renderAdminProducts();
+  renderProducts();
+  toast('تم التراجع عن الحذف', 'fa-rotate-left');
+}
+// نفس أسلوب التراجع لكن للحذف الجماعي (يستبدل السلوك السابق للحذف الفوري)
+$('btn-bulk-delete')?.addEventListener('click', (e)=>{
+  e.stopImmediatePropagation();
+  if(!oliSelectedProducts.size) return;
+  const ids = Array.from(oliSelectedProducts);
+  const removedItems = [];
+  ids.forEach(id=>{
+    const idx = PRODUCTS.findIndex(p=>p.id===id);
+    if(idx>-1){ removedItems.push(PRODUCTS[idx]); PRODUCTS.splice(idx,1); }
+  });
+  oliSelectedProducts.clear();
+  renderAdminProducts();
+  renderProducts();
+  const groupId = 'bulk-' + Date.now();
+  const timer = setTimeout(()=>{
+    delete _oliPendingDeletes[groupId];
+    saveState();
+    oliLogActivity('حذف جماعي لمنتجات', `${removedItems.length} منتج: ${removedItems.map(p=>p.name).join('، ')}`);
+  }, 6000);
+  _oliPendingDeletes[groupId] = {items:removedItems, timer};
+  toast(`تم حذف ${removedItems.length} منتج — <button onclick="undoBulkDeleteProducts('${groupId}')" style="text-decoration:underline;font-weight:900;">تراجع</button>`, 'fa-trash', 6000);
+}, true);
+function undoBulkDeleteProducts(groupId){
+  const pending = _oliPendingDeletes[groupId];
+  if(!pending) return;
+  clearTimeout(pending.timer);
+  delete _oliPendingDeletes[groupId];
+  pending.items.forEach(p=> PRODUCTS.push(p));
+  renderAdminProducts();
+  renderProducts();
+  toast('تم التراجع عن الحذف الجماعي', 'fa-rotate-left');
+}
+// إن غادرت الإدارة الصفحة قبل انتهاء المهلة، ننفّذ كل الحذوفات المعلّقة
+// فوراً بدل ما تُفقد (تماشياً مع flushPendingSave الأصلية في الموقع).
+window.addEventListener('pagehide', ()=>{
+  Object.values(_oliPendingDeletes).forEach(p=>{ clearTimeout(p.timer); });
+  if(Object.keys(_oliPendingDeletes).length) saveState();
+});
+
+/* ==== 6) تكرار منتج (نسخة فورية بنفس البيانات لتسهيل إضافة متغيّرات) ==== */
+function duplicateProduct(id){
+  const p = findProduct(id);
+  if(!p) return;
+  const copy = Object.assign({}, p, { id: uid('p'), name: p.name + ' (نسخة)' });
+  PRODUCTS.push(copy);
+  saveState();
+  renderAdminProducts();
+  renderProducts();
+  toast('تم تكرار المنتج — عدّلي النسخة الجديدة كما تحبين', 'fa-clone');
+  oliLogActivity('تكرار منتج', p.name);
+}
+
+/* ==== 7) ترتيب جدول المنتجات بالنقر على عناوين الأعمدة ==== */
+let oliProdSort = {key:null, dir:1};
+document.addEventListener('click', (e)=>{
+  const th = e.target.closest && e.target.closest('.prod-sort-th');
+  if(!th) return;
+  const key = th.dataset.sort;
+  if(oliProdSort.key===key) oliProdSort.dir *= -1;
+  else { oliProdSort.key = key; oliProdSort.dir = 1; }
+  qsa('.prod-sort-th i').forEach(ic=>{ ic.className = 'fa-solid fa-sort'; ic.style.opacity = .5; });
+  const icon = th.querySelector('i');
+  if(icon){ icon.className = 'fa-solid ' + (oliProdSort.dir===1?'fa-sort-up':'fa-sort-down'); icon.style.opacity = 1; }
+  renderAdminProducts();
+});
+
+/* ==== 8) تجديد سريع للمخزون من لوحة القيادة مباشرة (+10 قطع) ==== */
+function quickRestock(id){
+  const p = findProduct(id);
+  if(!p) return;
+  p.stock = (p.stock||0) + 10;
+  saveState();
+  renderAdmin();
+  renderProducts();
+  toast(`تمت إضافة 10 قطع لـ «${p.name}»`, 'fa-boxes-stacked');
+  oliLogActivity('تجديد سريع للمخزون', `${p.name} +10 (الرصيد الآن: ${p.stock})`);
+}
+
+/* ==== 9) قفل تلقائي للوحة التحكم عند عدم النشاط (حماية إضافية إن
+   تُركت الشاشة مفتوحة) — قفل محلي بحت في الواجهة، لا يسجّل خروجاً من
+   Supabase ولا يمس الجلسة إطلاقاً، فقط يخفي المحتوى الحساس خلف شاشة
+   "انقر للمتابعة" حتى تُثبتي حضورك مجدداً. ==== */
+let _oliIdleTimer = null;
+const OLI_IDLE_LIMIT_MS = 6 * 60 * 1000; // 6 دقائق
+function oliShowLockScreen(){
+  if($('oli-lock-screen')) return;
+  const panel = $('admin-panel');
+  if(!panel || panel.classList.contains('hidden')) return;
+  const lock = document.createElement('div');
+  lock.id = 'oli-lock-screen';
+  lock.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(255,247,250,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;';
+  lock.innerHTML = `<i class="fa-solid fa-lock" style="font-size:34px;color:var(--pink-deep);"></i>
+    <div class="font-display text-lg" style="color:var(--ink);">تم قفل لوحة التحكم لعدم النشاط</div>
+    <div class="text-xs" style="color:var(--ink-soft);">انقري في أي مكان للمتابعة</div>`;
+  lock.addEventListener('click', ()=>{ lock.remove(); resetOliIdleTimer(); });
+  document.body.appendChild(lock);
+}
+function resetOliIdleTimer(){
+  clearTimeout(_oliIdleTimer);
+  if(!isAdminAuthed() || $('admin-panel')?.classList.contains('hidden')) return;
+  _oliIdleTimer = setTimeout(oliShowLockScreen, OLI_IDLE_LIMIT_MS);
+}
+['mousemove','keydown','click','touchstart','scroll'].forEach(evt=>{
+  document.addEventListener(evt, resetOliIdleTimer, {passive:true});
+});
+if(typeof showAdminPanel === 'function'){
+  const _origShowAdminPanel = showAdminPanel;
+  showAdminPanel = function(){ _origShowAdminPanel(); resetOliIdleTimer(); };
+}
+if(typeof hideAdminPanel === 'function'){
+  const _origHideAdminPanel = hideAdminPanel;
+  hideAdminPanel = function(){ _origHideAdminPanel(); clearTimeout(_oliIdleTimer); $('oli-lock-screen')?.remove(); };
+}
+
+/* ---------------------------------------------------------------
    Expose functions referenced by inline onclick="" attributes.
    The whole app lives inside this IIFE, but inline HTML handlers
    always run in global (window) scope — without this bridge every
@@ -4573,6 +5726,12 @@ window.openAcceptJobModal = openAcceptJobModal;
 window.openOrderDetails = openOrderDetails;
 window.closeModal = closeModal;
 window.deleteCoupon = deleteCoupon;
+window.printOrderInvoice = printOrderInvoice;
+window.copyOrderDetails = copyOrderDetails;
+window.undoDeleteProduct = undoDeleteProduct;
+window.undoBulkDeleteProducts = undoBulkDeleteProducts;
+window.duplicateProduct = duplicateProduct;
+window.quickRestock = quickRestock;
 
 // Emergency fallback: never leave the whole page hidden behind the splash.
 setTimeout(()=>{ const s=document.getElementById('splash'); if(s) s.classList.add('hide'); }, 3000);
