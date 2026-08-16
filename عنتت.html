@@ -259,6 +259,7 @@ header{background:rgba(251,248,242,.92);backdrop-filter:blur(10px);border-bottom
 
 /* toast */
 #toast-wrap{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center;width:92%;max-width:380px;}
+#maintenance-overlay{left:0!important;right:0!important;transform:none;width:auto;max-width:none;}
 .toast{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 16px;box-shadow:var(--shadow-pink);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;animation:toastIn .35s cubic-bezier(.34,1.56,.64,1);width:100%;}
 .toast-ic{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--pink-pale);color:var(--pink-deep);font-size:12px;flex:none;}
 @keyframes toastIn{from{opacity:0;transform:translateY(14px) scale(.9);}to{opacity:1;transform:translateY(0) scale(1);}}
@@ -298,8 +299,6 @@ header{background:rgba(251,248,242,.92);backdrop-filter:blur(10px);border-bottom
 
 /* data table (fixed — no distortion, responsive scroll container) */
 .data-table-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:#fff;}
-.order-item-thumb{width:30px;height:38px;object-fit:cover;border-radius:8px;border:2px solid #fff;box-shadow:0 1px 4px rgba(35,26,28,.25);margin-inline-start:-10px;flex:none;}
-.order-item-thumb:first-child{margin-inline-start:0;}
 table.data-table{width:100%;border-collapse:collapse;min-width:560px;font-size:13px;}
 table.data-table th{background:linear-gradient(180deg,var(--pink-pale),var(--gold-light));color:var(--ink);font-weight:800;padding:10px 12px;text-align:start;white-space:nowrap;position:sticky;top:0;}
 table.data-table td{padding:10px 12px;border-top:1px solid var(--line);white-space:nowrap;color:var(--ink-soft);}
@@ -432,7 +431,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
    with zero math, which is what actually fixes the gap on real
    Android/iOS devices. */
 @media(min-width:481px){
-  .tabbar,.admin-shell{left:50%!important;right:auto!important;transform:translateX(-50%);width:100%;max-width:var(--frame-w);}
+  .tabbar,#maintenance-overlay,.admin-shell{left:50%!important;right:auto!important;transform:translateX(-50%);width:100%;max-width:var(--frame-w);}
   .drawer-backdrop,.modal-backdrop,.aurora-veil,#cmdk-backdrop,#splash{left:50%;right:auto;transform:translateX(-50%);width:100%;max-width:var(--frame-w);}
   .drawer{max-width:420px;}
   #purchase-notif{inset-inline-start:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
@@ -574,6 +573,13 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 <div id="toast-wrap"></div>
 <div id="purchase-notif"><span class="pn-close" id="pn-close"><i class="fa-solid fa-xmark"></i></span></div>
 
+<div id="maintenance-overlay" class="hidden" style="position:fixed;inset:0;z-index:200;background:var(--pearl);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
+  <i class="fa-solid fa-heart-crack" style="font-size:40px;color:var(--pink-deep);"></i>
+  <div class="font-wordmark text-3xl mt-3" id="site-name-maint" style="color:var(--ink);">oli</div>
+  <p id="maintenance-msg" class="text-sm text-[var(--ink-soft)] mt-3 max-w-xs">سنعود قريباً...</p>
+  <button onclick="enterAdminFromMaintenance()" class="btn-outline px-5 py-2 text-xs mt-5"><i class="fa-solid fa-key"></i> دخول كمسؤولة</button>
+</div>
+
 <div class="content">
 
 <!-- ============ header ============ -->
@@ -597,7 +603,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <a href="#reviews" class="nav-link">آراء بناتنا</a>
       <a href="#careers" class="nav-link">انضمي لفريقنا</a>
       <a href="#track" class="nav-link">تتبع الطلب</a>
-      <a href="#coupon-check" class="nav-link">استخدام كود</a>
     </nav>
     <div class="flex-1 hidden sm:flex items-center relative">
       <i class="fa-solid fa-magnifying-glass absolute right-4 text-[var(--ink-soft)] text-sm"></i>
@@ -629,7 +634,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     <a href="#reviews" class="nav-link py-2">آراء بناتنا</a>
     <a href="#careers" class="nav-link py-2">انضمي لفريقنا</a>
     <a href="#track" class="nav-link py-2">تتبع الطلب</a>
-    <a href="#coupon-check" class="nav-link py-2">استخدام كود</a>
     <a href="#" id="btn-admin-mobile" class="nav-link py-2">لوحة تحكم أولي</a>
   </div>
   <div id="mobile-search" class="sm:hidden hidden px-4 pb-3">
@@ -838,27 +842,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   </div>
 </section>
 
-<!-- ============ public coupon usage check ============ -->
-<section id="coupon-check" class="max-w-7xl mx-auto px-4 section-band">
-  <h2 class="font-display stack-head" style="color:var(--ink);font-size:var(--fs-h2);">استخدام كود الخصم</h2>
-  <div class="glass-card p-6">
-    <p class="text-xs text-[var(--ink-soft)] mb-4">اكتبي أي كود خصم عندك وشوفي نسبة الخصم وعدد مرات استخدامه الفعلي — نفس الرقم اللي تشوفه إدارة المتجر بالضبط.</p>
-    <div class="flex gap-3 mb-2">
-      <input id="coupon-check-input" placeholder="اكتبي الكود هنا مثال: OLI10" class="flex-1 bg-white border border-[var(--line)] rounded-xl px-4 py-3 text-sm focus-ring uppercase">
-      <button id="btn-coupon-check" class="btn-gold px-6 text-sm">تحقّقي</button>
-    </div>
-    <div id="coupon-check-result" class="hidden mt-4 flex flex-wrap items-center gap-3 p-4 rounded-2xl" style="background:var(--pink-pale);">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-ticket" style="color:var(--pink-deep);"></i>
-        <span class="font-black text-sm" id="coupon-check-code"></span>
-      </div>
-      <span class="pill px-3 py-1 text-[11px] font-bold" style="background:#fff;color:var(--gold-deep);" id="coupon-check-discount"></span>
-      <span class="pill px-3 py-1 text-[11px] font-bold" style="background:#fff;color:var(--pink-deep);" id="coupon-check-usage"></span>
-    </div>
-    <p id="coupon-check-empty" class="text-sm text-[var(--ink-soft)] mt-4 hidden"><i class="fa-solid fa-circle-info"></i> ما لقينا هذا الكود، تأكدي من كتابته صح.</p>
-  </div>
-</section>
-
 <!-- ============ admin panel ============ -->
 <section id="admin-panel" class="hidden">
 <div class="admin-shell" id="admin-shell">
@@ -913,14 +896,13 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     </div>
     <div id="lowstock-list" class="flex flex-wrap gap-2"></div>
   </div>
-  <div class="flex flex-wrap gap-2 mb-3" id="orders-status-tabs"></div>
   <div class="flex flex-wrap gap-2 mb-3">
     <input id="order-search" placeholder="ابحثي برقم الطلب، اسم العميلة، أو المدينة..." class="flex-1 min-w-[220px] bg-white border border-[var(--line)] rounded-full px-4 py-2 text-xs focus-ring">
     <button id="btn-export-orders" type="button" class="btn-sky px-4 py-2 text-xs"><i class="fa-solid fa-file-arrow-down"></i> تصدير CSV</button>
   </div>
   <div class="data-table-wrap mb-8">
     <table class="data-table">
-      <thead><tr><th>رقم الطلب</th><th>العميلة</th><th>المدينة</th><th>المنتجات</th><th>الإجمالي</th><th>كود الخصم</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+      <thead><tr><th>رقم الطلب</th><th>العميلة</th><th>المدينة</th><th>الإجمالي</th><th>كود الخصم</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
       <tbody id="admin-orders-body"></tbody>
     </table>
   </div>
@@ -1127,6 +1109,11 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 
     <button id="btn-save-settings" class="btn-gold px-6 py-2.5 text-xs mt-4"><i class="fa-solid fa-floppy-disk"></i> حفظ الإعدادات</button>
     <span id="settings-save-msg" class="text-xs font-bold mr-2" style="color:var(--pink-deep);"></span>
+
+    <div class="mt-5 pt-4" style="border-top:1px dashed var(--line);">
+      <label class="flex items-center gap-2 text-xs font-bold mb-2"><input type="checkbox" id="set-maintenance"> تفعيل وضع الصيانة (يخفي الموقع عن الزائرات)</label>
+      <input id="set-maintenance-msg" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring" placeholder="رسالة الصيانة">
+    </div>
 
     <div class="mt-5 pt-4 flex flex-wrap gap-2" style="border-top:1px dashed var(--line);">
       <button id="btn-export-backup" type="button" class="btn-sky px-4 py-2 text-xs"><i class="fa-solid fa-download"></i> تصدير نسخة احتياطية كاملة</button>
@@ -1428,11 +1415,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 <!-- ============ quickview modal ============ -->
 <div class="modal-backdrop" id="quickview-backdrop">
   <div class="modal-sheet" id="quickview-sheet"></div>
-</div>
-
-<!-- ============ admin: order details modal ============ -->
-<div class="modal-backdrop" id="orderdetails-backdrop">
-  <div class="modal-sheet" id="orderdetails-sheet"></div>
 </div>
 
 <!-- ============ lucky wheel fab + modal ============ -->
@@ -1858,6 +1840,8 @@ const SETTINGS_DEFAULTS = {
   fakeViewsMin:8, fakeViewsMax:64,
   showPurchaseNotif:true,
   notifIntervalSec:9,
+  maintenanceMode:false,
+  maintenanceMsg:'سنعود قريباً... نجهّز لكِ إطلالة جديدة 💕',
   colorPink:'#F2789D',
   colorGold:'#D9A566',
   colorSky:'#FDEEF2',
@@ -1910,9 +1894,6 @@ function publicCloudData(){
     notifCities:state.notifCities,
     settings:state.settings,
     coupons:state.coupons || {},
-    // عداد استخدام الأكواد صار عام — أي زائرة تقدر تشوفه عبر "استخدام كود"
-    // في الموقع، مو بس الإدارة (كان قبل محصور في oli_private_state فقط).
-    couponUsage:state.couponUsage || {},
     wheel:{limitMode:state.wheel.limitMode,segments:state.wheel.segments},
     music:state.music
   };
@@ -2127,7 +2108,6 @@ async function hydrateCloudState(adminMode=false){
       if(Array.isArray(d.notifCities) && d.notifCities.length) state.notifCities=d.notifCities;
       if(d.settings) state.settings=Object.assign({},state.settings,d.settings);
       if(d.coupons) state.coupons=d.coupons;
-      if(d.couponUsage) state.couponUsage=d.couponUsage;
       if(d.wheel) state.wheel=Object.assign({},state.wheel,d.wheel);
       if(d.music) state.music=d.music;
     }
@@ -2769,6 +2749,11 @@ qsa('.admin-nav-btn', $('admin-nav')).forEach(btn=>{
 $('btn-admin-exit').addEventListener('click', logoutOliAdmin);
 $('btn-admin-sidebar-toggle').addEventListener('click', ()=> $('admin-shell').classList.toggle('sidebar-open'));
 
+async function enterAdminFromMaintenance(){
+  if(isAdminAuthed()){ applyMaintenanceMode(); return; }
+  await openAdminLogin();
+}
+
 /* ---------------------------------------------------------------
    Night/dark theme — permanently removed per store owner's request.
    The site is light-only now: no html.dark class, no OS
@@ -3137,10 +3122,7 @@ $('checkout-form').addEventListener('submit', async (e)=>{
     id: 'OLI-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase(),
     name: fd.get('fullname'), phone: fd.get('phone'), city: fd.get('city'), address: fd.get('address'),
     pay: fd.get('pay'), total: t.total, status: 0, date: new Date().toISOString().slice(0,10),
-    // نخزّن "لقطة" كاملة عن كل منتج وقت الشراء (الاسم + الصورة + السعر + الكمية)
-    // مش بس الاسم — عشان لوحة القيادة تقدر تعرض بالضبط وش اشترت العميلة حتى
-    // لو المنتج تعدّل أو انحذف من الكتالوج بعدين.
-    items: cartLines().map(l=>({id:l.p.id, name:l.p.name, qty:l.qty, price:l.p.price, img:l.p.img})),
+    items: cartLines().map(l=>({name:l.p.name, qty:l.qty})),
     // كود الخصم المستخدم في هذا الطلب — يُخزَّن هنا فقط، ولا يُحتسب في عداد
     // الاستخدام إلا بعد ما يوصّل الطلب فعلياً (شوفي countDeliveredCouponUsage)
     promoCode: activePromo ? activePromo.code : null,
@@ -3276,50 +3258,6 @@ async function updateOrderStatus(orderId, newStatus){
   await saveState('تحديث حالة الطلب');
   renderAdmin();
 }
-// تفاصيل الطلب كاملة (المنتجات بالصور والأسماء والكميات والأسعار +
-// بيانات العميلة والتوصيل) — تُعرض في مودال منفصل من زر "التفاصيل".
-function openOrderDetails(orderId){
-  const order = state.orders.find(o=>o.id===orderId);
-  if(!order) return;
-  const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
-  const items = Array.isArray(order.items) ? order.items : [];
-  const itemsHtml = items.length ? items.map(it=>`
-    <div class="flex gap-3 items-center border-b border-[var(--line)] py-3">
-      <img src="${it.img||''}" alt="${it.name||''}" class="w-16 h-20 object-cover rounded-xl" onerror="${OLI_IMG_ONERROR}">
-      <div class="flex-1">
-        <div class="text-xs font-bold line-clamp-2">${it.name||'منتج'}</div>
-        <div class="text-[11px] text-[var(--ink-soft)] mt-1">الكمية: ${it.qty||1}${it.price!=null?` — ${it.price} دج للقطعة`:''}</div>
-      </div>
-      ${it.price!=null?`<div class="text-xs font-black" style="color:var(--pink-deep);">${it.price*(it.qty||1)} دج</div>`:''}
-    </div>`).join('') : '<p class="text-xs text-[var(--ink-soft)] py-4">ما فيه تفاصيل منتجات مسجّلة لهذا الطلب.</p>';
-  $('orderdetails-sheet').innerHTML = `
-    <div class="flex items-center justify-between p-5 pb-2">
-      <div>
-        <h3 class="font-display text-lg" style="color:var(--ink);">تفاصيل الطلب ${order.id}</h3>
-        <p class="text-[11px] text-[var(--ink-soft)] mt-0.5">${order.date} — ${statusLabels[order.status]||'قيد التجهيز'}</p>
-      </div>
-      <button onclick="closeModal('orderdetails')" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="px-5 pb-3 grid sm:grid-cols-2 gap-2 text-xs">
-      <div><span class="font-bold" style="color:var(--ink-soft);">العميلة:</span> ${order.name||'—'}</div>
-      <div><span class="font-bold" style="color:var(--ink-soft);">الجوال:</span> ${order.phone||'—'}</div>
-      <div><span class="font-bold" style="color:var(--ink-soft);">المدينة:</span> ${order.city||'—'}</div>
-      <div><span class="font-bold" style="color:var(--ink-soft);">طريقة الدفع:</span> ${order.pay||'—'}</div>
-      <div class="sm:col-span-2"><span class="font-bold" style="color:var(--ink-soft);">العنوان:</span> ${order.address||'—'}</div>
-      ${order.promoCode?`<div class="sm:col-span-2"><span class="font-bold" style="color:var(--ink-soft);">كود الخصم:</span> <span style="color:var(--pink-deep);font-weight:800;">${order.promoCode}</span></div>`:''}
-      ${order.giftWrap?.enabled?`<div class="sm:col-span-2"><span class="font-bold" style="color:var(--ink-soft);">تغليف هدية:</span> نعم${order.giftWrap.message?` — "${order.giftWrap.message}"`:''}</div>`:''}
-    </div>
-    <div class="px-5">
-      <h4 class="font-display text-sm mb-1" style="color:var(--ink);">المنتجات المطلوبة (${items.length})</h4>
-      <div class="max-h-[45vh] overflow-y-auto">${itemsHtml}</div>
-    </div>
-    <div class="flex items-center justify-between px-5 py-4 mt-2 border-t border-[var(--line)]">
-      <span class="text-xs font-bold" style="color:var(--ink-soft);">الإجمالي</span>
-      <span class="font-display text-lg" style="color:var(--pink-deep);">${order.total} دج</span>
-    </div>
-  `;
-  openModal('orderdetails');
-}
 
 /* ---------------------------------------------------------------
    Order tracking
@@ -3342,32 +3280,6 @@ $('btn-track').addEventListener('click', async ()=>{
   const notes = ['استلمنا طلبك وجاري تجهيزه','طلبك يتجهّز بعناية في المستودع','طلبك في الطريق إليك','وصل طلبك! نتمنى يعجبك'];
   $('track-note').textContent = `طلب ${order.id} — ${notes[step]}`;
 });
-
-/* ---------------------------------------------------------------
-   Public coupon usage check — متاحة لجميع الزائرات (مو بس الإدارة).
-   تعرض نفس الرقم اللي تشوفه الإدارة في "أكواد الخصم — عداد الاستخدام"،
-   لأن state.couponUsage صار يُحمَّل من oli_public_state لكل زائرة
-   (شوفي publicCloudData / hydrateCloudState).
---------------------------------------------------------------- */
-$('btn-coupon-check')?.addEventListener('click', ()=>{
-  const code = ($('coupon-check-input').value||'').trim().toUpperCase();
-  const resultEl = $('coupon-check-result');
-  const emptyEl = $('coupon-check-empty');
-  if(!code){ toast('اكتبي كود الخصم أولاً','fa-ticket'); return; }
-  const rate = PROMO_CODES[code];
-  if(rate===undefined){
-    resultEl.classList.add('hidden');
-    emptyEl.classList.remove('hidden');
-    return;
-  }
-  emptyEl.classList.add('hidden');
-  resultEl.classList.remove('hidden');
-  $('coupon-check-code').textContent = code;
-  $('coupon-check-discount').textContent = code==='WHEELSHIP' ? 'شحن مجاني' : `خصم ${Math.round(rate*100)}%`;
-  const usage = (state.couponUsage && state.couponUsage[code]) || 0;
-  $('coupon-check-usage').textContent = `استُخدم ${usage} ${usage===1?'مرة':'مرات'} فعلياً`;
-});
-$('coupon-check-input')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); $('btn-coupon-check').click(); } });
 
 /* ---------------------------------------------------------------
    Careers form
@@ -3450,10 +3362,6 @@ $('newsletter-form').addEventListener('submit', async (e)=>{
 /* ---------------------------------------------------------------
    Admin panel
 --------------------------------------------------------------- */
-// أي تبويب حالة طلبات مفعّل حالياً في لوحة القيادة — يبدأ على "طلبات
-// جديدة" (0) عشان الأدمن يشوف أول شي الطلبات اللي ما زالت ما اتفتحش،
-// منفصلة تماماً عن اللي بدأ تجهيزها أو وصلت.
-let adminOrderStatusFilter = '0';
 function renderAdmin(){
   $('kpi-orders').textContent = state.orders.length;
   $('kpi-sales').textContent = state.orders.reduce((s,o)=>s+o.total,0) + ' دج';
@@ -3471,34 +3379,7 @@ function renderAdmin(){
   }
   const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
   const orderSearch = ($('order-search')?.value||'').trim().toLowerCase();
-  // ---------------------------------------------------------------
-  // تبويبات الحالة: كل طلب جديد يظهر في تبويب "طلبات جديدة" لوحده.
-  // أول ما الأدمن يضغط "ترقية الحالة"، status يتغيّر ويُعاد renderAdmin،
-  // فالطلب يختفي تلقائياً من تبويب "جديدة" وينتقل لتبويب الحالة التالية —
-  // يعني صار في قائمة منفصلة عن الطلبات الجديدة، بدون ما يختلط فيها.
-  // ---------------------------------------------------------------
-  const statusTabs = [
-    {key:'0', label:'طلبات جديدة', icon:'fa-bell'},
-    {key:'1', label:'يُجهّز', icon:'fa-box'},
-    {key:'2', label:'في الطريق', icon:'fa-truck-fast'},
-    {key:'3', label:'تم التوصيل', icon:'fa-circle-check'},
-    {key:'all', label:'الكل', icon:'fa-layer-group'}
-  ];
-  if(!['0','1','2','3','all'].includes(adminOrderStatusFilter)) adminOrderStatusFilter = '0';
-  const tabsEl = $('orders-status-tabs');
-  if(tabsEl){
-    tabsEl.innerHTML = statusTabs.map(t=>{
-      const count = t.key==='all' ? state.orders.length : state.orders.filter(o=>String(o.status)===t.key).length;
-      return `<button type="button" class="cat-chip pill px-4 py-2 text-xs font-bold shrink-0 ${adminOrderStatusFilter===t.key?'active':''}" data-order-status-tab="${t.key}">
-        <i class="fa-solid ${t.icon}"></i> ${t.label} <span class="font-black" style="color:var(--pink-deep);">(${count})</span>
-      </button>`;
-    }).join('');
-    qsa('[data-order-status-tab]', tabsEl).forEach(btn=>{
-      btn.addEventListener('click', ()=>{ adminOrderStatusFilter = btn.dataset.orderStatusTab; renderAdmin(); });
-    });
-  }
   let orderList = state.orders.slice().reverse();
-  if(adminOrderStatusFilter!=='all') orderList = orderList.filter(o=>String(o.status)===adminOrderStatusFilter);
   if(orderSearch){
     orderList = orderList.filter(o =>
       (o.id||'').toLowerCase().includes(orderSearch) ||
@@ -3506,32 +3387,14 @@ function renderAdmin(){
       (o.city||'').toLowerCase().includes(orderSearch)
     );
   }
-  $('admin-orders-body').innerHTML = orderList.map(o=>{
-    const items = Array.isArray(o.items) ? o.items : [];
-    const shownThumbs = items.slice(0,3);
-    const thumbsHtml = shownThumbs.map(it=>`<img src="${it.img||''}" alt="${it.name||''}" title="${it.name||''} × ${it.qty||1}" class="order-item-thumb" onerror="${OLI_IMG_ONERROR}">`).join('');
-    const namesText = items.map(it=>`${it.name||'منتج'} ×${it.qty||1}`).join('، ');
-    const moreCount = items.length - shownThumbs.length;
-    return `
+  $('admin-orders-body').innerHTML = orderList.map(o=>`
     <tr>
-      <td class="font-bold">${o.id}</td><td>${o.name}</td><td>${o.city}</td>
-      <td style="white-space:normal;max-width:220px;">
-        ${items.length ? `
-          <div class="flex items-center gap-1 mb-1">${thumbsHtml}${moreCount>0?`<span class="text-[10px] font-bold" style="color:var(--ink-soft);">+${moreCount}</span>`:''}</div>
-          <div class="text-[11px] font-bold leading-5" style="color:var(--ink-soft);">${namesText}</div>
-        ` : '<span class="text-[11px]" style="color:var(--ink-soft);">لا توجد تفاصيل منتجات</span>'}
-      </td>
-      <td>${o.total} دج</td>
+      <td class="font-bold">${o.id}</td><td>${o.name}</td><td>${o.city}</td><td>${o.total} دج</td>
       <td>${o.promoCode ? `<span class="font-bold" style="color:var(--pink-deep);">${o.promoCode}</span>${o.couponCounted?' <i class=\"fa-solid fa-circle-check\" style=\"color:var(--gold);\" title=\"احتُسب بعد التوصيل\"></i>':''}` : '—'}</td>
       <td>${statusLabels[o.status]||'قيد التجهيز'}</td><td>${o.date}</td>
-      <td>
-        <div class="flex items-center gap-1.5">
-          <button onclick="openOrderDetails('${o.id}')" class="btn-outline px-3 py-1.5 text-[11px]">التفاصيل</button>
-          ${o.status<3 ? `<button onclick="updateOrderStatus('${o.id}', ${o.status+1})" class="btn-sky px-3 py-1.5 text-[11px]">ترقية الحالة</button>` : '<span class="text-[11px] font-bold" style="color:var(--gold);">مكتمل</span>'}
-        </div>
-      </td>
+      <td>${o.status<3 ? `<button onclick="updateOrderStatus('${o.id}', ${o.status+1})" class="btn-sky px-3 py-1.5 text-[11px]">ترقية الحالة</button>` : '<span class="text-[11px] font-bold" style="color:var(--gold);">مكتمل</span>'}</td>
     </tr>
-  `;}).join('') || '<tr><td colspan="9" class="text-center py-6 text-[var(--ink-soft)]">لا توجد طلبات مطابقة</td></tr>';
+  `).join('') || '<tr><td colspan="8" class="text-center py-6 text-[var(--ink-soft)]">لا توجد طلبات مطابقة</td></tr>';
 
   $('kpi-jobs-pending').textContent = state.jobs.filter(j=>j.status==='pending'||j.status==='interview').length;
   $('kpi-jobs-accepted').textContent = state.jobs.filter(j=>j.status==='accepted').length;
@@ -4008,12 +3871,9 @@ $('prod-cancel-edit')?.addEventListener('click', ()=>{
 $('prod-search')?.addEventListener('input', renderAdminProducts);
 $('order-search')?.addEventListener('input', renderAdmin);
 $('btn-export-orders')?.addEventListener('click', ()=>{
-  const rows = [['رقم الطلب','العميلة','الجوال','المدينة','العنوان','المنتجات','الإجمالي','رسوم التوصيل','كود الخصم','الحالة','التاريخ']];
+  const rows = [['رقم الطلب','العميلة','الجوال','المدينة','العنوان','الإجمالي','رسوم التوصيل','كود الخصم','الحالة','التاريخ']];
   const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
-  state.orders.forEach(o=>{
-    const productsText = (Array.isArray(o.items)?o.items:[]).map(it=>`${it.name||'منتج'} ×${it.qty||1}`).join(' / ');
-    rows.push([o.id,o.name,o.phone||'',o.city,o.address||'',productsText,o.total,o.delivery||0,o.promoCode||'',statusLabels[o.status]||'قيد التجهيز',o.date]);
-  });
+  state.orders.forEach(o=>rows.push([o.id,o.name,o.phone||'',o.city,o.address||'',o.total,o.delivery||0,o.promoCode||'',statusLabels[o.status]||'قيد التجهيز',o.date]));
   downloadCSV('الطلبات.csv', rows);
 });
 $('btn-export-products')?.addEventListener('click', ()=>{
@@ -4116,6 +3976,8 @@ function fillAdminSettingsForm(){
   if($('set-ticker')) $('set-ticker').value = s.tickerText;
   if($('set-whatsapp')) $('set-whatsapp').value = s.whatsapp;
   if($('set-instagram')) $('set-instagram').value = s.instagram;
+  if($('set-maintenance')) $('set-maintenance').checked = !!s.maintenanceMode;
+  if($('set-maintenance-msg')) $('set-maintenance-msg').value = s.maintenanceMsg;
   if($('set-site-name')) $('set-site-name').value = s.siteName;
   if($('set-delivery-fee')) $('set-delivery-fee').value = s.deliveryFee;
   if($('set-free-delivery-min')) $('set-free-delivery-min').value = s.freeDeliveryMin;
@@ -4154,11 +4016,14 @@ $('btn-save-settings')?.addEventListener('click', ()=>{
   s.tickerText = $('set-ticker').value.trim() || SETTINGS_DEFAULTS.tickerText;
   s.whatsapp = $('set-whatsapp').value.trim();
   s.instagram = $('set-instagram').value.trim();
+  s.maintenanceMode = $('set-maintenance').checked;
+  s.maintenanceMsg = $('set-maintenance-msg').value.trim() || SETTINGS_DEFAULTS.maintenanceMsg;
   s.colorPink = $('set-color-pink').value || SETTINGS_DEFAULTS.colorPink;
   s.colorGold = $('set-color-gold').value || SETTINGS_DEFAULTS.colorGold;
   s.colorSky = $('set-color-sky').value || SETTINGS_DEFAULTS.colorSky;
   saveState();
   applySiteSettings();
+  applyMaintenanceMode();
   applyColorTheme();
   $('settings-save-msg').textContent = 'تم الحفظ ✓';
   setTimeout(()=> $('settings-save-msg').textContent='', 2000);
@@ -4414,6 +4279,17 @@ function applySiteSettings(){
   }
   renderProducts();
 }
+function applyMaintenanceMode(){
+  const overlay = $('maintenance-overlay');
+  if(!overlay) return;
+  if(state.settings.maintenanceMode && !isAdminAuthed()){
+    $('maintenance-msg').textContent = state.settings.maintenanceMsg || SETTINGS_DEFAULTS.maintenanceMsg;
+    overlay.classList.remove('hidden');
+  } else {
+    overlay.classList.add('hidden');
+  }
+}
+
 /* ---------------------------------------------------------------
    Command palette
 --------------------------------------------------------------- */
@@ -4511,6 +4387,7 @@ async function init(){
   renderWishlistDrawer();
   updateCounts();
   applySiteSettings();
+  applyMaintenanceMode();
   applyColorTheme();
   applyMusicSettings();
   startPurchaseNotifCycle();
@@ -4557,7 +4434,8 @@ else init();
    The whole app lives inside this IIFE, but inline HTML handlers
    always run in global (window) scope — without this bridge every
    button below silently failed (edit/delete product, upgrade order
-   status, job/employee actions, delete coupon/category/review).
+   status, job/employee actions, delete coupon/category/review,
+   admin entry from the maintenance screen).
 --------------------------------------------------------------- */
 window.editProduct = editProduct;
 window.deleteProduct = deleteProduct;
@@ -4568,11 +4446,8 @@ window.setJobRating = setJobRating;
 window.updateJobStatus = updateJobStatus;
 window.checkInEmployee = checkInEmployee;
 window.updateEmployeeStatus = updateEmployeeStatus;
-window.openEditEmployeeCodeModal = openEditEmployeeCodeModal;
-window.openAcceptJobModal = openAcceptJobModal;
-window.openOrderDetails = openOrderDetails;
-window.closeModal = closeModal;
 window.deleteCoupon = deleteCoupon;
+window.enterAdminFromMaintenance = enterAdminFromMaintenance;
 
 // Emergency fallback: never leave the whole page hidden behind the splash.
 setTimeout(()=>{ const s=document.getElementById('splash'); if(s) s.classList.add('hide'); }, 3000);
