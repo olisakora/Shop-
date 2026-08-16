@@ -1134,7 +1134,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <h3 class="font-display text-xl" style="color:var(--ink);">طلبات التوظيف</h3>
     </div>
     <p class="text-xs text-[var(--ink-soft)] mb-4">
-      عند الضغط على "قبول" تظهر لكِ نافذة تختارين فيها كود العمولة بنفسك (مو تلقائي)، ونسبة عمولة الموظفة، ونسبة الخصم اللي ياخذه العميل من نفس الكود. بعد التأكيد تتحوّل المتقدمة إلى موظفة في جدول "فريق العمل" أدناه — مرة واحدة فقط.
+      قبول الطلب يحوّل المتقدمة تلقائياً إلى موظفة في جدول "فريق العمل" أدناه — ويحدث هذا التحويل مرة واحدة فقط عند الضغط على "قبول"، وليس قبل ذلك.
     </p>
     <div class="grid sm:grid-cols-3 gap-3 mb-4">
       <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">قيد المراجعة</div><div class="font-display text-2xl mt-1" style="color:var(--sky-deep);" id="kpi-jobs-pending">0</div></div>
@@ -1174,7 +1174,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     </div>
     <p class="text-xs text-[var(--ink-soft)] mb-4">
       "تسجيل حضور" يزيد عداد أيام العمل مرة وحدة بس لكل يوم — إذا ضغطتِ الزر أكثر من مرة بنفس اليوم ما يُحسب مرتين.<br>
-      كود كل موظفة ونسبة عمولتها ونسبة خصم العميلة تُحدَّد يدوياً من طرفك عند قبولها (وتقدرين تعدّلينها لاحقاً بزر "تعديل الكود"). الكود يُحتسب "استخدام" ويُضاف للعمولة <b>فقط بعد أن يصل الطلب فعلياً</b> — بنفس منطق أكواد الخصم تماماً: لو عميلة استخدمت الكود ولم تكمل الشراء، ما يُحسب لها شي.
+      كل موظفة تحصل تلقائياً على كود عمولة خاص بها عند القبول. الكود يُحتسب "استخدام" ويُضاف للعمولة <b>فقط بعد أن يصل الطلب فعلياً</b> — بنفس منطق أكواد الخصم تماماً: لو عميلة استخدمت الكود ولم تكمل الشراء، ما يُحسب لها شي.
     </p>
     <div class="grid sm:grid-cols-3 gap-3 mb-4">
       <div class="kpi-card"><div class="text-xs text-[var(--ink-soft)] font-bold">إجمالي الموظفات</div><div class="font-display text-2xl mt-1" style="color:var(--pink-deep);" id="kpi-emp-total">0</div></div>
@@ -1193,7 +1193,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     </div>
     <div class="data-table-wrap">
       <table class="data-table">
-        <thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الدوام</th><th>المدينة</th><th>تاريخ التعيين</th><th>أيام الحضور</th><th>كود العمولة</th><th>نسبة العمولة</th><th>خصم الكود</th><th>طلبات عبر كودها</th><th>العمولة المستحقة</th><th>الحالة</th><th>إجراء</th></tr></thead>
+        <thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الدوام</th><th>المدينة</th><th>تاريخ التعيين</th><th>أيام الحضور</th><th>كود العمولة</th><th>طلبات عبر كودها</th><th>العمولة المستحقة</th><th>الحالة</th><th>إجراء</th></tr></thead>
         <tbody id="admin-employees-body"></tbody>
       </table>
     </div>
@@ -1458,37 +1458,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <input id="admin-auth-password" type="password" autocomplete="current-password" required placeholder="كلمة المرور" class="w-full bg-white border border-[var(--line)] rounded-xl px-4 py-3 text-sm focus-ring">
       <button id="admin-auth-submit" type="submit" class="btn-cute w-full py-3.5 text-sm"><i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول</button>
       <p id="admin-auth-error" class="text-xs font-bold text-center min-h-4" style="color:#c94f4f;"></p>
-    </form>
-  </div>
-</div>
-
-<!-- ============ employee commission code modal ============ -->
-<div class="modal-backdrop" id="employee-code-backdrop">
-  <div class="modal-sheet">
-    <div class="flex items-center justify-between p-5 pb-2">
-      <h3 class="font-display text-xl" style="color:var(--ink);" id="emp-code-modal-title"><i class="fa-solid fa-tag" style="color:var(--gold);"></i> ربط كود العمولة</h3>
-      <button class="modal-close w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring" data-target="employee-code"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <form id="employee-code-form" class="p-5 pt-2 space-y-3">
-      <p class="text-xs text-[var(--ink-soft)] leading-6">
-        اختاري بنفسك كود العمولة الخاص بـ <b id="emp-code-employee-name">—</b>، ونسبة العمولة التي تستحقها من كل طلب يُوصَّل بكودها، ونسبة الخصم التي يحصل عليها العميل عند استخدام نفس الكود.
-      </p>
-      <div>
-        <label class="text-[11px] font-bold text-[var(--ink-soft)] block mb-1">كود العمولة</label>
-        <input id="emp-code-input" placeholder="مثال: SARA10" required maxlength="20" class="w-full bg-white border border-[var(--line)] rounded-xl px-4 py-3 text-sm focus-ring uppercase">
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="text-[11px] font-bold text-[var(--ink-soft)] block mb-1">نسبة العمولة للموظفة %</label>
-          <input id="emp-commission-input" type="number" min="1" max="90" step="1" required class="w-full bg-white border border-[var(--line)] rounded-xl px-4 py-3 text-sm focus-ring">
-        </div>
-        <div>
-          <label class="text-[11px] font-bold text-[var(--ink-soft)] block mb-1">نسبة الخصم للعميلة %</label>
-          <input id="emp-discount-input" type="number" min="1" max="90" step="1" required class="w-full bg-white border border-[var(--line)] rounded-xl px-4 py-3 text-sm focus-ring">
-        </div>
-      </div>
-      <button id="emp-code-submit-btn" type="submit" class="btn-cute w-full py-3.5 text-sm"><i class="fa-solid fa-user-check"></i> قبول وربط الكود</button>
-      <p id="emp-code-error" class="text-xs font-bold text-center min-h-4" style="color:#c94f4f;"></p>
     </form>
   </div>
 </div>
@@ -3232,9 +3201,8 @@ function countDeliveredCouponUsage(order){
 function creditEmployeeCommission(order, code){
   const emp = state.employees.find(e=>e.commissionCode===code);
   if(!emp) return;
-  const rate = (emp.commissionRate!=null ? emp.commissionRate : EMPLOYEE_COMMISSION_RATE);
   emp.commissionOrders = (emp.commissionOrders||0) + 1;
-  emp.commissionEarned = Math.round(((emp.commissionEarned||0) + order.total*rate) * 100)/100;
+  emp.commissionEarned = Math.round(((emp.commissionEarned||0) + order.total*EMPLOYEE_COMMISSION_RATE) * 100)/100;
 }
 // تُحتسب مكافأة "ادعي صديقتك" فقط بعد ما يوصّل طلب صديقتك فعلياً، بنفس
 // منطق أكواد الخصم أعلاه — يمنع اللعب بالنظام عبر إلغاء الطلب لاحقاً.
@@ -3472,7 +3440,7 @@ function renderAdminJobs(){
       <td>${statusBadge[j.status]||statusBadge.pending}</td>
       <td><div class="flex flex-wrap gap-1">
         ${j.status==='pending'?`<button onclick="updateJobStatus('${j.id}','interview')" class="btn-outline px-2 py-1 text-[10px]">مقابلة</button>`:''}
-        ${(j.status==='pending'||j.status==='interview')?`<button onclick="openAcceptJobModal('${j.id}')" class="btn-gold px-2 py-1 text-[10px]">قبول</button><button onclick="updateJobStatus('${j.id}','rejected')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">رفض</button>`:''}
+        ${(j.status==='pending'||j.status==='interview')?`<button onclick="updateJobStatus('${j.id}','accepted')" class="btn-gold px-2 py-1 text-[10px]">قبول</button><button onclick="updateJobStatus('${j.id}','rejected')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">رفض</button>`:''}
       </div></td>
     </tr>
   `).join('') || '<tr><td colspan="10" class="text-center py-6 text-[var(--ink-soft)]">لا توجد طلبات توظيف مطابقة</td></tr>';
@@ -3486,42 +3454,30 @@ function setJobRating(jobId, stars){
 }
 /* ---------------------------------------------------------------
    Employee commission codes
-   — الأدمن هو من يختار كود العمولة يدوياً لكل موظفة عند قبولها (مو كود
-     عشوائي/تلقائي) عبر نافذة "ربط كود العمولة"، ويحدد بنفس النافذة نسبة
-     عمولتها من كل طلب، ونسبة الخصم اللي ياخذها العميل من نفس الكود —
-     كل موظفة ممكن تكون نسبتها مختلفة عن غيرها بالكامل.
-     الكود يُسجَّل في PROMO_CODES بالخصم المحدد لها، تماماً مثل كود
+   — كل موظفة تُقبل تحصل تلقائياً على كود شخصي (REP####) يُسجَّل في
+     PROMO_CODES بخصم بسيط للعميلة (تشجيع لاستخدامه)، تماماً مثل كود
      الإحالة "ادعي صديقتك". الكود نفسه *لا يعطي الموظفة شي* عند مجرد
      الاستخدام — العمولة تُحتسب فقط لما نفس منطق countDeliveredCouponUsage
      يشتغل، أي بعد ما الطلب يوصّل فعلياً (updateOrderStatus, status===3).
      هذا يمنع بالضبط الحالة اللي ذكرتيها: عميلة تكتب كود موظفة بس ما تشتري
      → صفر عمولة، لأنه أصلاً ما يتكوّن طلب لها للاحتساب عليه.
 --------------------------------------------------------------- */
-const EMPLOYEE_COMMISSION_RATE = 0.05; // نسبة افتراضية تُقترح في النافذة فقط + شبكة أمان لموظفات قديمات بدون نسبة محفوظة
-const EMPLOYEE_CODE_DISCOUNT = 0.05;   // نسبة خصم افتراضية تُقترح في النافذة فقط + نفس شبكة الأمان أعلاه
-function employeeCommissionCode(empId){ return 'REP' + String(empId).replace('EMP-',''); } // شبكة أمان فقط لموظفة قديمة بدون كود محفوظ أصلاً
+const EMPLOYEE_COMMISSION_RATE = 0.05; // 5% من قيمة الطلب لكل طلب تم توصيله عبر كودها
+const EMPLOYEE_CODE_DISCOUNT = 0.05;   // نفس الكود يعطي العميلة خصم 5% كحافز لاستخدامه
+function employeeCommissionCode(empId){ return 'REP' + String(empId).replace('EMP-',''); }
 function registerEmployeeCode(emp){
   if(!emp.commissionCode) return;
-  PROMO_CODES[emp.commissionCode] = (emp.codeDiscount!=null ? emp.codeDiscount : EMPLOYEE_CODE_DISCOUNT);
+  PROMO_CODES[emp.commissionCode] = EMPLOYEE_CODE_DISCOUNT;
   state.coupons = PROMO_CODES;
 }
-// شبكة أمان: أي موظفة قديمة (اتحفظت قبل إضافة نظام اختيار الكود يدوياً) أو
-// وصلت لتوّها من Supabase بدون كود/نسبة، تاخذ قيم افتراضية أول ما لوحة
-// "فريق العمل" تُعرض — بدون كذا كودها ما يكون مسجّل في PROMO_CODES فما
-// تشتغل عمولتها أبداً.
+// شبكة أمان: أي موظفة قديمة (اتحفظت قبل إضافة نظام العمولة) أو وصلت لتوّها
+// من Supabase بدون كود، تاخذ كود تلقائياً أول ما لوحة "فريق العمل" تُعرض —
+// بدون كذا كودها ما يكون مسجّل في PROMO_CODES فما تشتغل عمولتها أبداً.
 function ensureEmployeeCodes(){
   let changed = false;
   (state.employees||[]).forEach(emp=>{
     if(!emp.commissionCode){
       emp.commissionCode = employeeCommissionCode(emp.id);
-      changed = true;
-    }
-    if(emp.commissionRate==null){
-      emp.commissionRate = EMPLOYEE_COMMISSION_RATE;
-      changed = true;
-    }
-    if(emp.codeDiscount==null){
-      emp.codeDiscount = EMPLOYEE_CODE_DISCOUNT;
       changed = true;
     }
     if(typeof PROMO_CODES!=='undefined' && !(emp.commissionCode in PROMO_CODES)){
@@ -3531,10 +3487,7 @@ function ensureEmployeeCodes(){
   });
   if(changed) saveState();
 }
-// codeInfo تُمرَّر من نافذة "ربط كود العمولة" — الكود اللي كتبه الأدمن
-// يدوياً + نسبة العمولة + نسبة الخصم. بدونها (احتياطاً فقط، ما يفترض
-// يصير من واجهة الأدمن العادية) تُستخدم القيم الافتراضية القديمة.
-function createEmployeeFromJob(job, codeInfo){
+function createEmployeeFromJob(job){
   if(job.employeeCreated) return;
   const emp = {
     id: 'EMP-' + (1000 + state.employees.length + 1),
@@ -3545,110 +3498,19 @@ function createEmployeeFromJob(job, codeInfo){
     sourceJobId: job.id,
     commissionOrders: 0, commissionEarned: 0
   };
-  if(codeInfo && codeInfo.code){
-    emp.commissionCode = codeInfo.code;
-    emp.commissionRate = codeInfo.commissionRate;
-    emp.codeDiscount = codeInfo.discount;
-  } else {
-    emp.commissionCode = employeeCommissionCode(emp.id);
-    emp.commissionRate = EMPLOYEE_COMMISSION_RATE;
-    emp.codeDiscount = EMPLOYEE_CODE_DISCOUNT;
-  }
+  emp.commissionCode = employeeCommissionCode(emp.id);
   state.employees.push(emp);
   registerEmployeeCode(emp);
   job.employeeCreated = true;
 }
-/* ---------------------------------------------------------------
-   نافذة "ربط كود العمولة" — تُفتح عند الضغط على "قبول" لطلب توظيف
-   (mode:'accept')، أو عند الضغط على "تعديل الكود" لموظفة موجودة
-   (mode:'edit'). employeeCodeContext يحدد أي الحالتين نحن فيها.
---------------------------------------------------------------- */
-let employeeCodeContext = null;
-function openAcceptJobModal(jobId){
-  const job = state.jobs.find(j=>j.id===jobId);
-  if(!job) return;
-  employeeCodeContext = {mode:'accept', jobId};
-  $('emp-code-modal-title').innerHTML = '<i class="fa-solid fa-tag" style="color:var(--gold);"></i> ربط كود العمولة — قبول توظيف';
-  $('emp-code-employee-name').textContent = job.name;
-  $('employee-code-form').reset();
-  $('emp-commission-input').value = Math.round(EMPLOYEE_COMMISSION_RATE*100);
-  $('emp-discount-input').value = Math.round(EMPLOYEE_CODE_DISCOUNT*100);
-  $('emp-code-error').textContent = '';
-  $('emp-code-submit-btn').innerHTML = '<i class="fa-solid fa-user-check"></i> قبول وربط الكود';
-  openModal('employee-code');
-  setTimeout(()=>$('emp-code-input')?.focus(), 250);
-}
-function openEditEmployeeCodeModal(empId){
-  const emp = state.employees.find(e=>e.id===empId);
-  if(!emp) return;
-  employeeCodeContext = {mode:'edit', empId};
-  $('emp-code-modal-title').innerHTML = '<i class="fa-solid fa-tag" style="color:var(--gold);"></i> تعديل كود العمولة';
-  $('emp-code-employee-name').textContent = emp.name;
-  $('emp-code-input').value = emp.commissionCode || '';
-  $('emp-commission-input').value = Math.round((emp.commissionRate!=null ? emp.commissionRate : EMPLOYEE_COMMISSION_RATE)*100);
-  $('emp-discount-input').value = Math.round((emp.codeDiscount!=null ? emp.codeDiscount : EMPLOYEE_CODE_DISCOUNT)*100);
-  $('emp-code-error').textContent = '';
-  $('emp-code-submit-btn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات';
-  openModal('employee-code');
-  setTimeout(()=>$('emp-code-input')?.focus(), 250);
-}
-$('employee-code-form')?.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  if(!employeeCodeContext) return;
-  const errEl = $('emp-code-error');
-  errEl.textContent = '';
-  const code = $('emp-code-input').value.trim().toUpperCase();
-  const commissionPct = parseFloat($('emp-commission-input').value);
-  const discountPct = parseFloat($('emp-discount-input').value);
-
-  if(!/^[A-Z0-9_-]{2,20}$/.test(code)){
-    errEl.textContent = 'الكود لازم يكون 2-20 خانة، حروف/أرقام إنجليزية فقط (يُسمح بـ - و _)';
-    return;
-  }
-  if(!(commissionPct>=1 && commissionPct<=90)){
-    errEl.textContent = 'نسبة العمولة لازم تكون رقم بين 1 و90';
-    return;
-  }
-  if(!(discountPct>=1 && discountPct<=90)){
-    errEl.textContent = 'نسبة الخصم لازم تكون رقم بين 1 و90';
-    return;
-  }
-
-  if(employeeCodeContext.mode==='accept'){
-    const job = state.jobs.find(j=>j.id===employeeCodeContext.jobId);
-    if(!job) return;
-    if(PROMO_CODES.hasOwnProperty(code)){
-      errEl.textContent = 'هذا الكود مستخدم من قبل — اختاري كود ثاني';
-      return;
-    }
-    job.status = 'accepted';
-    createEmployeeFromJob(job, {code, commissionRate: commissionPct/100, discount: discountPct/100});
-    toast('تم قبول الطلب وربط كودها بنجاح', 'fa-user-check');
-  } else if(employeeCodeContext.mode==='edit'){
-    const emp = state.employees.find(e=>e.id===employeeCodeContext.empId);
-    if(!emp) return;
-    if(code!==emp.commissionCode && PROMO_CODES.hasOwnProperty(code)){
-      errEl.textContent = 'هذا الكود مستخدم من قبل — اختاري كود ثاني';
-      return;
-    }
-    if(code!==emp.commissionCode) delete PROMO_CODES[emp.commissionCode];
-    emp.commissionCode = code;
-    emp.commissionRate = commissionPct/100;
-    emp.codeDiscount = discountPct/100;
-    registerEmployeeCode(emp);
-    toast('تم تحديث كود العمولة', 'fa-floppy-disk');
-  }
-
-  closeModal('employee-code');
-  employeeCodeContext = null;
-  saveState();
-  renderAdmin();
-});
 function updateJobStatus(jobId, status){
   const job = state.jobs.find(j=>j.id===jobId);
   if(!job) return;
   job.status = status;
-  if(status==='rejected'){
+  if(status==='accepted' && !job.employeeCreated){
+    createEmployeeFromJob(job);
+    toast('تم قبول الطلب وإضافتها لفريق العمل تلقائياً', 'fa-user-check');
+  } else if(status==='rejected'){
     toast('تم رفض الطلب', 'fa-user-xmark');
   } else if(status==='interview'){
     toast('تم جدولة مقابلة', 'fa-calendar-check');
@@ -3687,20 +3549,17 @@ function renderAdminEmployees(){
       <td>${e.hireDate}</td>
       <td class="font-black" style="color:var(--pink-deep);">${e.attendanceCount||0}</td>
       <td><span class="font-black tracking-wide" style="color:var(--gold-deep);">${e.commissionCode||'—'}</span></td>
-      <td class="font-bold">${Math.round((e.commissionRate!=null?e.commissionRate:EMPLOYEE_COMMISSION_RATE)*100)}%</td>
-      <td class="font-bold">${Math.round((e.codeDiscount!=null?e.codeDiscount:EMPLOYEE_CODE_DISCOUNT)*100)}%</td>
       <td class="font-bold">${e.commissionOrders||0}</td>
       <td class="font-black" style="color:var(--gold);">${(e.commissionEarned||0).toFixed(2)} دج</td>
       <td><span class="text-[11px] font-bold" style="color:${statusColor[e.status]};">${statusLabel[e.status]||'نشطة'}</span></td>
       <td><div class="flex flex-wrap gap-1">
-        <button onclick="openEditEmployeeCodeModal('${e.id}')" class="btn-outline px-2 py-1 text-[10px]">تعديل الكود</button>
         ${e.status!=='terminated'?`<button onclick="checkInEmployee('${e.id}')" class="btn-sky px-2 py-1 text-[10px]">تسجيل حضور</button>`:''}
         ${e.status==='active'?`<button onclick="updateEmployeeStatus('${e.id}','leave')" class="btn-outline px-2 py-1 text-[10px]">إجازة</button>`:''}
         ${e.status==='leave'?`<button onclick="updateEmployeeStatus('${e.id}','active')" class="btn-outline px-2 py-1 text-[10px]">إنهاء الإجازة</button>`:''}
         ${e.status!=='terminated'?`<button onclick="updateEmployeeStatus('${e.id}','terminated')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">إنهاء الخدمة</button>`:''}
       </div></td>
     </tr>
-  `).join('') || '<tr><td colspan="14" class="text-center py-6 text-[var(--ink-soft)]">ما فيه موظفات بعد — تتحول المتقدمة لموظفة بعد ما تقبلي طلبها وتربطي كودها</td></tr>';
+  `).join('') || '<tr><td colspan="9" class="text-center py-6 text-[var(--ink-soft)]">ما فيه موظفات بعد — التحويل يصير تلقائياً بعد قبول طلب توظيف</td></tr>';
 }
 function updateEmployeeStatus(empId, status){
   const emp = state.employees.find(e=>e.id===empId);
@@ -3724,8 +3583,8 @@ function checkInEmployee(empId){
   toast('تم تسجيل الحضور — يوم رقم ' + emp.attendanceCount, 'fa-calendar-check');
 }
 function exportEmployeesCSV(){
-  const rows = [['رقم الموظفة','الاسم','الوظيفة','الدوام','المدينة','تاريخ التعيين','أيام الحضور','كود العمولة','نسبة العمولة %','خصم الكود %','طلبات عبر كودها','العمولة المستحقة','الحالة']];
-  state.employees.forEach(e=>rows.push([e.id,e.name,e.position,e.employmentType,e.city,e.hireDate,e.attendanceCount,e.commissionCode||'',Math.round((e.commissionRate!=null?e.commissionRate:EMPLOYEE_COMMISSION_RATE)*100),Math.round((e.codeDiscount!=null?e.codeDiscount:EMPLOYEE_CODE_DISCOUNT)*100),e.commissionOrders||0,e.commissionEarned||0,e.status]));
+  const rows = [['رقم الموظفة','الاسم','الوظيفة','الدوام','المدينة','تاريخ التعيين','أيام الحضور','كود العمولة','طلبات عبر كودها','العمولة المستحقة','الحالة']];
+  state.employees.forEach(e=>rows.push([e.id,e.name,e.position,e.employmentType,e.city,e.hireDate,e.attendanceCount,e.commissionCode||'',e.commissionOrders||0,e.commissionEarned||0,e.status]));
   downloadCSV('فريق-العمل.csv', rows);
 }
 function downloadCSV(filename, rows){
