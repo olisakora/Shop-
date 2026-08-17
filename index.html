@@ -334,6 +334,11 @@ table.data-table tbody tr:first-child td{border-top:none;}
 .music-fab .eq span:nth-child(3){animation-delay:.3s;}
 @keyframes eqBounce{0%,100%{height:4px;}50%{height:10px;}}
 .music-fab.playing{animation:musicPulse 2.4s ease-in-out infinite;}
+/* whatsapp-fab — persistent quick-order button, stacked above the music fab
+   so it never collides with it whether music is enabled or not */
+.whatsapp-fab{position:fixed;bottom:166px;right:16px;z-index:61;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px -10px rgba(35,26,28,.4);border:3px solid var(--pearl);animation:whatsappPulse 2.6s ease-in-out infinite;}
+.whatsapp-fab i{color:#fff;font-size:26px;}
+@keyframes whatsappPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
 @keyframes musicPulse{0%,100%{box-shadow:0 12px 28px -10px rgba(35,26,28,.4);}50%{box-shadow:0 12px 32px -6px rgba(169,128,63,.6);}}
 .music-track-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 12px;}
 .music-track-row.active{border-color:var(--gold);background:var(--gold-light);}
@@ -430,7 +435,8 @@ html.admin-mode body>header,
 html.admin-mode #home>*:not(#admin-panel),
 html.admin-mode body>footer,
 html.admin-mode .wheel-fab,
-html.admin-mode .music-fab{display:none !important;}
+html.admin-mode .music-fab,
+html.admin-mode .whatsapp-fab{display:none !important;}
 html.admin-mode body{overflow:hidden;}
 #admin-panel{max-width:none;padding:0;margin:0;}
 #admin-panel.hidden{display:none;}
@@ -469,6 +475,7 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   #purchase-notif{inset-inline-start:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
   .wheel-fab{left:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
   .music-fab{right:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
+  .whatsapp-fab{right:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
   .admin-sidebar{inset-inline-start:max(0px, calc(50% - var(--frame-w)/2));}
 }
 </style>
@@ -1193,6 +1200,18 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
         <label class="text-xs font-bold text-[var(--ink-soft)] block mb-1">حساب إنستغرام</label>
         <input id="set-instagram" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
       </div>
+      <div>
+        <label class="text-xs font-bold text-[var(--ink-soft)] block mb-1">رابط فيسبوك</label>
+        <input id="set-facebook" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
+      </div>
+      <div>
+        <label class="text-xs font-bold text-[var(--ink-soft)] block mb-1">حساب تيك توك (بدون @)</label>
+        <input id="set-tiktok" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
+      </div>
+      <div>
+        <label class="text-xs font-bold text-[var(--ink-soft)] block mb-1">حساب تلجرام (بدون @)</label>
+        <input id="set-telegram" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
+      </div>
     </div>
     <div class="mt-2 pt-4" style="border-top:1px dashed var(--line);">
       <div class="flex items-center gap-2 mb-2">
@@ -1448,9 +1467,11 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <div class="flex items-center gap-1.5"><span class="font-wordmark text-2xl heading-gradient">oli</span><svg class="logo-mark" width="18" height="18"><use href="#logo-oli"/></svg></div>
       <p class="text-xs text-[var(--ink-soft)] mt-3 leading-6">متجرك المفضّل لكل ما هو ناعم ومريح — بيجامات، عبايات، فساتين وأكثر.</p>
       <div class="flex gap-2 mt-4">
-        <a href="#" id="link-instagram" target="_blank" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="#" id="link-whatsapp" target="_blank" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" id="link-instagram" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" id="link-facebook" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" id="link-tiktok" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#" id="link-telegram" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" id="link-whatsapp" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-[var(--pink-deep)] focus-ring"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
     <div>
@@ -1563,6 +1584,9 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 <div class="modal-backdrop" id="orderdetails-backdrop">
   <div class="modal-sheet" id="orderdetails-sheet"></div>
 </div>
+
+<!-- ============ persistent whatsapp order fab ============ -->
+<a href="#" id="whatsapp-fab" class="whatsapp-fab focus-ring" target="_blank" rel="noopener" aria-label="راسلنا واتساب" title="اطلبي عبر واتساب"><i class="fa-brands fa-whatsapp"></i></a>
 
 <!-- ============ lucky wheel fab + modal ============ -->
 <button id="wheel-fab" class="wheel-fab focus-ring" aria-label="عجلة الحظ" title="عجلة الحظ"><i class="fa-solid fa-gift"></i></button>
@@ -1991,8 +2015,11 @@ const SETTINGS_DEFAULTS = {
   heroTitle:'أناقتك الناعمة تبدأ من هنا',
   heroSubtitle:'بيجامات، عبايات وفساتين بلمسة كيوت — توصيل لجميع الولايات',
   tickerText:'✨ شحن مجاني فوق 9000 دج  •  🎁 خصم 10% لأول طلبية بكود OLI10  •  💗 إرجاع مجاني خلال 7 أيام',
-  whatsapp:'213555000000',
-  instagram:'oli.store',
+  whatsapp:'213561368108',
+  instagram:'olishop153',
+  facebook:'https://www.facebook.com/share/1Bi7rQpYC5/',
+  tiktok:'oli.shop53',
+  telegram:'olishop76',
   showFakeViews:true,
   fakeViewsMin:8, fakeViewsMax:64,
   showPurchaseNotif:true,
@@ -4693,6 +4720,9 @@ function fillAdminSettingsForm(){
   if($('set-ticker')) $('set-ticker').value = s.tickerText;
   if($('set-whatsapp')) $('set-whatsapp').value = s.whatsapp;
   if($('set-instagram')) $('set-instagram').value = s.instagram;
+  if($('set-facebook')) $('set-facebook').value = s.facebook;
+  if($('set-tiktok')) $('set-tiktok').value = s.tiktok;
+  if($('set-telegram')) $('set-telegram').value = s.telegram;
   if($('set-site-name')) $('set-site-name').value = s.siteName;
   if($('set-delivery-fee')) $('set-delivery-fee').value = s.deliveryFee;
   if($('set-free-delivery-min')) $('set-free-delivery-min').value = s.freeDeliveryMin;
@@ -4731,6 +4761,9 @@ $('btn-save-settings')?.addEventListener('click', ()=>{
   s.tickerText = $('set-ticker').value.trim() || SETTINGS_DEFAULTS.tickerText;
   s.whatsapp = $('set-whatsapp').value.trim();
   s.instagram = $('set-instagram').value.trim();
+  s.facebook = $('set-facebook').value.trim();
+  s.tiktok = $('set-tiktok').value.trim();
+  s.telegram = $('set-telegram').value.trim();
   s.colorPink = $('set-color-pink').value || SETTINGS_DEFAULTS.colorPink;
   s.colorGold = $('set-color-gold').value || SETTINGS_DEFAULTS.colorGold;
   s.colorSky = $('set-color-sky').value || SETTINGS_DEFAULTS.colorSky;
@@ -5038,7 +5071,11 @@ function applySiteSettings(){
   if($('hero-subtitle') && s.heroSubtitle !== SETTINGS_DEFAULTS.heroSubtitle) $('hero-subtitle').textContent = s.heroSubtitle;
   if(s.tickerText) qsa('.ticker-content').forEach(el=> el.innerHTML = `<i class="fa-solid fa-sparkles"></i> ${s.tickerText} &nbsp;&nbsp;•&nbsp;&nbsp; `);
   const wa = $('link-whatsapp'); if(wa && s.whatsapp) wa.href = `https://wa.me/${s.whatsapp.replace(/[^0-9]/g,'')}`;
+  const waFab = $('whatsapp-fab'); if(waFab && s.whatsapp) waFab.href = `https://wa.me/${s.whatsapp.replace(/[^0-9]/g,'')}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن منتج من متجر '+(s.siteName||'oli'))}`;
   const ig = $('link-instagram'); if(ig && s.instagram) ig.href = `https://instagram.com/${s.instagram.replace('@','')}`;
+  const fb = $('link-facebook'); if(fb && s.facebook) fb.href = s.facebook;
+  const tt = $('link-tiktok'); if(tt && s.tiktok) tt.href = `https://www.tiktok.com/@${s.tiktok.replace('@','')}`;
+  const tg = $('link-telegram'); if(tg && s.telegram) tg.href = `https://t.me/${s.telegram.replace('@','')}`;
   if(s.siteName){
     if($('site-name-splash')) $('site-name-splash').textContent = s.siteName;
     if($('site-name-maint')) $('site-name-maint').textContent = s.siteName;
