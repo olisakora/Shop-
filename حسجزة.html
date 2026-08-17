@@ -478,42 +478,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   .whatsapp-fab{right:max(16px, calc(50% - var(--frame-w)/2 + 16px));}
   .admin-sidebar{inset-inline-start:max(0px, calc(50% - var(--frame-w)/2));}
 }
-
-/* ==== Promotion intelligence additions: uses existing oli palette/classes ==== */
-/* ==== OLI COSMOS: compact, non-overlapping intelligence UI ==== */
-.oli-cosmos-hero{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,248,250,.82));}
-.oli-cosmos-vital{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.76);padding:11px 12px;min-width:0;}
-.oli-cosmos-vital .n{font-size:20px;font-weight:900;line-height:1;color:var(--ink);}
-.oli-cosmos-vital .l{font-size:9px;font-weight:800;color:var(--ink-soft);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.oli-cosmos-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:var(--pink-pale);color:var(--pink-deep);font-size:9px;font-weight:900;}
-.oli-cosmos-item{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(255,255,255,.76);}
-.oli-cosmos-item .title{font-size:11px;font-weight:900;color:var(--ink);line-height:1.7;}
-.oli-cosmos-item .meta{font-size:10px;color:var(--ink-soft);line-height:1.75;margin-top:3px;}
-.oli-cosmos-action{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:900;color:var(--ink);}
-.oli-cosmos-action:hover{background:var(--pink-pale);color:var(--pink-deep);}
-.oli-cosmos-constellations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
-.oli-cosmos-constellation{border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.76);}
-.oli-cosmos-link{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:900;color:var(--ink);}
-.oli-cosmos-link::before{content:"";width:18px;height:1px;background:var(--line-gold);display:inline-block;flex:none;}
-@media(max-width:900px){.oli-cosmos-constellations{grid-template-columns:1fr;}}
-.oli-promo-control{display:flex;align-items:center;gap:8px;justify-content:space-between;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:11px;font-weight:800;}
-.oli-promo-control span{display:flex;align-items:center;gap:7px;color:var(--ink-soft);}
-.oli-promo-control input:not([type=checkbox]),.oli-promo-control select{min-width:78px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 8px;font-size:11px;outline:none;}
-.oli-promo-control small{font-size:9px;color:var(--ink-soft);white-space:nowrap;}
-.oli-promo-radar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
-.oli-promo-radar-card{border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.78);}
-.oli-promo-radar-card .title{font-size:11px;font-weight:900;color:var(--ink);}
-.oli-promo-radar-card .meta{font-size:10px;color:var(--ink-soft);line-height:1.7;margin-top:5px;}
-.oli-coupon-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:14px;}
-.oli-coupon-summary .item{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.78);padding:10px;text-align:center;}
-.oli-coupon-summary .n{font-size:20px;font-weight:900;color:var(--pink-deep);line-height:1;}
-.oli-coupon-summary .l{font-size:10px;font-weight:800;color:var(--ink-soft);margin-top:5px;}
-.oli-coupon-tabs{display:flex;gap:7px;overflow:auto;margin-bottom:12px;padding-bottom:2px;}
-.oli-coupon-tabs button{flex:1;min-width:110px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;font-size:11px;font-weight:900;color:var(--ink-soft);}
-.oli-coupon-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
-.oli-coupon-status{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 8px;font-size:9px;font-weight:900;}
-.oli-frozen-row{opacity:.58;background:rgba(246,241,241,.72);}
-@media(max-width:720px){.oli-promo-radar-grid{grid-template-columns:1fr;}.oli-coupon-summary{grid-template-columns:1fr 1fr 1fr;}.oli-coupon-tabs button{min-width:95px;}}
 </style>
 </head>
 <body>
@@ -880,6 +844,12 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
       <div class="font-black mt-3 text-sm">نادي oli الذهبي</div>
       <p class="text-xs text-[var(--ink-soft)] mt-1">نقاط مع كل عملية شراء تتحول لخصومات وهدايا حصرية.</p>
     </div>
+    <button type="button" id="card-referral" class="glass-card p-5 relative overflow-hidden text-start w-full focus-ring">
+      <span class="ribbon ribbon-pink"><svg class="mark" width="10" height="10"><use href="#mark-spark"/></svg> جديد</span>
+      <div class="mark-seal-frame mt-6"><svg class="mark" width="20" height="20" style="color:var(--pink-deep)"><use href="#mark-friends"/></svg></div>
+      <div class="font-black mt-3 text-sm">ادعي صديقتك</div>
+      <p class="text-xs text-[var(--ink-soft)] mt-1">خصم لكِ ولها عند أول طلب لها من رابط دعوتك.</p>
+    </button>
     <button type="button" id="card-sizeguide" class="glass-card p-5 relative overflow-hidden text-start w-full focus-ring">
       <span class="ribbon ribbon-pink"><svg class="mark" width="10" height="10"><use href="#mark-spark"/></svg> جديد</span>
       <div class="mark-seal-frame mt-6"><svg class="mark" width="20" height="20" style="color:var(--sky-deep)"><use href="#mark-ruler"/></svg></div>
@@ -960,7 +930,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
     <nav class="admin-nav" id="admin-nav">
       <button type="button" class="admin-nav-btn active" data-tab="dashboard"><i class="fa-solid fa-gauge-high"></i> لوحة القيادة</button>
       <button type="button" class="admin-nav-btn" data-tab="insights"><i class="fa-solid fa-chart-line"></i> تحليلات ذكية</button>
-      <button type="button" class="admin-nav-btn" data-tab="cosmos"><i class="fa-solid fa-atom"></i> OLI COSMOS</button>
       <button type="button" class="admin-nav-btn" data-tab="products"><i class="fa-solid fa-shirt"></i> المنتجات</button>
       <button type="button" class="admin-nav-btn" data-tab="categories"><i class="fa-solid fa-layer-group"></i> الفئات</button>
       <button type="button" class="admin-nav-btn" data-tab="reviews"><i class="fa-solid fa-comment-dots"></i> التقييمات</button>
@@ -1066,115 +1035,6 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   </div>
   </div>
 
-  <div class="admin-tab-panel" id="tab-cosmos">
-  <div class="glass-card p-6 mb-6 oli-cosmos-hero">
-    <div class="flex items-start justify-between gap-3">
-      <div>
-        <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-atom" style="color:var(--gold-deep);"></i><h3 class="font-display text-xl" style="color:var(--ink);">OLI COSMOS</h3></div>
-        <p class="text-xs leading-6" style="color:var(--ink-soft);">نواة قرار حقيقية تقرأ بيانات المتجر الموجودة، تبحث عن الفرص والمخاطر والمجهول، ثم تقترح أقل تدخل فعّال. لا توجد أرقام وهمية ولا محاكاة شكلية.</p>
-      </div>
-      <button type="button" id="btn-cosmos-refresh" class="btn-outline px-3 py-2 text-[11px] whitespace-nowrap"><i class="fa-solid fa-rotate"></i> تحديث</button>
-    </div>
-    <div class="grid sm:grid-cols-4 gap-3 mt-5" id="cosmos-vitals"></div>
-  </div>
-
-  <div class="grid lg:grid-cols-2 gap-4 mb-6">
-    <div class="glass-card p-5">
-      <div class="flex items-center justify-between mb-3"><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-compass-drafting" style="color:var(--pink-deep);"></i> الحكم الحالي</h4><span id="cosmos-confidence" class="oli-cosmos-badge">—</span></div>
-      <div id="cosmos-judgement" class="text-sm font-bold leading-7" style="color:var(--ink);"></div>
-      <div id="cosmos-decision" class="mt-4 p-4 rounded-2xl" style="background:var(--pink-pale);"></div>
-      <div class="flex flex-wrap gap-2 mt-4"><button type="button" id="cosmos-action" class="btn-cute px-4 py-2.5 text-xs"><i class="fa-solid fa-wand-magic-sparkles"></i> نفّذ الاقتراح</button><button type="button" id="cosmos-noaction" class="btn-outline px-4 py-2.5 text-xs"><i class="fa-solid fa-hand"></i> لا أغيّر شيئاً</button></div>
-    </div>
-    <div class="glass-card p-5">
-      <div class="flex items-center justify-between mb-3"><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-eye" style="color:var(--sky-deep);"></i> عين الشذوذ</h4><span id="cosmos-anomaly-count" class="oli-cosmos-badge">0</span></div>
-      <div id="cosmos-anomalies" class="space-y-2"></div>
-    </div>
-  </div>
-
-  <div class="grid lg:grid-cols-3 gap-4 mb-6">
-    <div class="glass-card p-5">
-      <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-star" style="color:var(--gold-deep);"></i> فرص حقيقية</h4>
-      <div id="cosmos-opportunities" class="space-y-3"></div>
-    </div>
-    <div class="glass-card p-5">
-      <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-wave-square" style="color:var(--pink-deep);"></i> موجات الطلب</h4>
-      <div id="cosmos-waves" class="space-y-3"></div>
-    </div>
-    <div class="glass-card p-5">
-      <h4 class="font-display text-sm mb-3" style="color:var(--ink);"><i class="fa-solid fa-circle-question" style="color:var(--sky-deep);"></i> المجهول حالياً</h4>
-      <div id="cosmos-unknowns" class="space-y-3"></div>
-    </div>
-  </div>
-
-  <div class="glass-card p-5 mb-6">
-    <div class="flex items-center justify-between mb-3"><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-network-wired" style="color:var(--pink-deep);"></i> علاقات المنتجات</h4><span class="text-[10px] font-bold" style="color:var(--ink-soft);">مبنية على الطلبات المتوفرة فقط</span></div>
-    <div id="cosmos-constellations" class="oli-cosmos-constellations"></div>
-  </div>
-
-  <div class="glass-card p-5 mb-6">
-    <div class="flex items-center justify-between mb-3"><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-scale-balanced" style="color:var(--gold-deep);"></i> ميزان القرار</h4><span id="cosmos-balance-note" class="text-[10px] font-bold" style="color:var(--ink-soft);"></span></div>
-    <div id="cosmos-balance" class="grid sm:grid-cols-4 gap-3"></div>
-  </div>
-
-  <div class="glass-card p-5 mb-6">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <div><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-shield-heart" style="color:var(--pink-deep);"></i> الحارس الحي</h4><p class="text-[10px] leading-5 mt-1" style="color:var(--ink-soft);">إجراءات حقيقية من الحالة الحالية فقط؛ لا بيانات وهمية ولا تغييرات على قاعدة البيانات.</p></div>
-      <button type="button" id="cosmos-run-guardian" class="btn-outline px-3 py-2 text-[11px]"><i class="fa-solid fa-shield-halved"></i> فحص الآن</button>
-    </div>
-    <div id="cosmos-live-actions" class="grid lg:grid-cols-2 gap-3"></div>
-  </div>
-
-  <div class="glass-card p-5 mb-6">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <div><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-brain" style="color:var(--pink-deep);"></i> طبقة الفهم العميق</h4><p class="text-[10px] leading-5 mt-1" style="color:var(--ink-soft);">تبحث عن الفجوات، الاحتكاك، والاتجاهات المستقبلية من البيانات الموجودة فقط.</p></div>
-      <span id="cosmos-scan-status" class="oli-cosmos-badge">جاهز</span>
-    </div>
-    <div id="cosmos-deep-grid" class="grid lg:grid-cols-3 gap-3"></div>
-  </div>
-
-  <div class="glass-card p-5 mb-6">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <div><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-infinity" style="color:var(--gold-deep);"></i> محركات الواقع الحي</h4><p class="text-[10px] leading-5 mt-1" style="color:var(--ink-soft);">هذه الطبقة لا تعرض محاكاة: تقرأ الحالة الحالية وتنفّذ إجراءات حقيقية قابلة للتراجع ضمن الحالة الحالية.</p></div>
-      <button type="button" id="cosmos-live-scan" class="btn-outline px-3 py-2 text-[11px]"><i class="fa-solid fa-microscope"></i> قراءة الواقع</button>
-    </div>
-    <div class="grid lg:grid-cols-3 gap-3">
-      <div class="oli-cosmos-item"><div class="title"><i class="fa-solid fa-compass" style="color:var(--pink-deep);margin-left:5px;"></i>بوصلة النية</div><div id="cosmos-intent" class="meta">—</div><button type="button" id="cosmos-intent-action" class="oli-cosmos-action mt-2">اتخذ أفضل خطوة</button></div>
-      <div class="oli-cosmos-item"><div class="title"><i class="fa-solid fa-link" style="color:var(--sky-deep);margin-left:5px;"></i>بوابة المنتج</div><div id="cosmos-portal" class="meta">—</div><button type="button" id="cosmos-portal-action" class="oli-cosmos-action mt-2">اجعل البوابة محورية</button></div>
-      <div class="oli-cosmos-item"><div class="title"><i class="fa-solid fa-shield-halved" style="color:var(--gold-deep);margin-left:5px;"></i>مناعة الترويج</div><div id="cosmos-immunity" class="meta">—</div><button type="button" id="cosmos-immunity-action" class="oli-cosmos-action mt-2">إصلاح ما يمكن إصلاحه</button></div>
-    </div>
-    <div class="grid lg:grid-cols-2 gap-3 mt-3">
-      <div class="oli-cosmos-item"><div class="title"><i class="fa-solid fa-scale-balanced" style="color:var(--pink-deep);margin-left:5px;"></i>اقتصاد الانتباه</div><div id="cosmos-attention" class="meta">—</div></div>
-      <div class="oli-cosmos-item"><div class="title"><i class="fa-solid fa-circle-question" style="color:var(--sky-deep);margin-left:5px;"></i>ماذا لا نعرف؟</div><div id="cosmos-unknown-deep" class="meta">—</div></div>
-    </div>
-  </div>
-
-  <div class="glass-card p-5">
-    <div class="flex items-center justify-between gap-3 mb-3"><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-sliders" style="color:var(--sky-deep);"></i> حدود COSMOS</h4><span class="text-[10px] font-bold" style="color:var(--ink-soft);">إعدادات محلية داخل الحالة الحالية</span></div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
-      <label class="text-[10px] font-bold" style="color:var(--ink-soft);">حد الفرصة <input id="cosmos-opportunity-threshold" type="number" min="0" max="100" class="mt-1 w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs" /></label>
-      <label class="text-[10px] font-bold" style="color:var(--ink-soft);">أيام المقارنة <input id="cosmos-short-days" type="number" min="3" max="30" class="mt-1 w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs" /></label>
-      <label class="text-[10px] font-bold" style="color:var(--ink-soft);">نافذة التاريخ <input id="cosmos-long-days" type="number" min="14" max="120" class="mt-1 w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs" /></label>
-      <button type="button" id="cosmos-save-settings" class="btn-cute px-3 py-2 text-xs self-end"><i class="fa-solid fa-check"></i> حفظ الحدود</button>
-    </div>
-  </div>
-  </div>
-
-  <div class="glass-card p-5 mt-4" id="cosmos-reality-layer">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <div><h4 class="font-display text-sm" style="color:var(--ink);"><i class="fa-solid fa-shield-halved" style="color:var(--gold-deep);"></i> حارس الواقع</h4><div class="text-[10px] mt-1" style="color:var(--ink-soft);">قراءة فعلية للبيانات الحالية — لا تخمينات ولا أرقام مصطنعة</div></div>
-      <span id="cosmos-reality-status" class="oli-cosmos-badge">—</span>
-    </div>
-    <div class="grid md:grid-cols-3 gap-3">
-      <div class="oli-cosmos-item"><div class="title">مخزون تحت الحماية</div><div id="cosmos-horizon" class="meta">—</div></div>
-      <div class="oli-cosmos-item"><div class="title">قوة العلاقات</div><div id="cosmos-gravity" class="meta">—</div></div>
-      <div class="oli-cosmos-item"><div class="title">نقد القرار</div><div id="cosmos-critique" class="meta">—</div></div>
-    </div>
-    <div class="flex flex-wrap gap-2 mt-3">
-      <button type="button" id="cosmos-reality-scan" class="btn-outline px-3 py-2 text-xs"><i class="fa-solid fa-microscope"></i> فحص الواقع</button>
-      <button type="button" id="cosmos-reality-repair" class="btn-cute px-3 py-2 text-xs"><i class="fa-solid fa-wand-magic-sparkles"></i> إصلاح آمن</button>
-    </div>
-  </div>
-
   <div class="admin-tab-panel" id="tab-products">
   <div class="glass-card p-6 mb-8">
     <div class="flex items-center gap-2 mb-1">
@@ -1272,48 +1132,39 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 
   </div>
   <div class="admin-tab-panel" id="tab-marketing">
-  <!-- ============ admin: marketing & promotion intelligence ============ -->
-  <div class="glass-card p-6 mb-6">
+  <!-- ============ admin: marketing & engagement (مزايا العرض) ============ -->
+  <div class="glass-card p-6 mb-8">
     <div class="flex items-center gap-2 mb-1">
       <i class="fa-solid fa-bullhorn text-lg" style="color:var(--pink-deep);"></i>
-      <h3 class="font-display text-xl" style="color:var(--ink);">الترويج الذكي</h3>
+      <h3 class="font-display text-xl" style="color:var(--ink);">التسويق والتفاعل</h3>
     </div>
-    <p class="text-xs text-[var(--ink-soft)] mb-4 leading-6">المحرك الجديد لا يختار منتجاً نفد مخزونه، ولا يكتب ادعاء شراء إلا إذا كان مبنياً على طلب وصل فعلياً. كل القواعد قابلة للتحكم من هنا.</p>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <label class="oli-promo-control"><span><i class="fa-solid fa-toggle-on"></i> تشغيل محرك الترويج</span><input type="checkbox" id="set-promo-engine-enabled"></label>
-      <div class="oli-promo-control"><span><i class="fa-solid fa-brain"></i> مصدر الرسالة</span><select id="set-promo-mode"><option value="smart">ذكي: حقيقي أولاً</option><option value="real">مبيعات حقيقية فقط</option><option value="curated">اقتراحات فقط</option></select></div>
-      <div class="oli-promo-control"><span><i class="fa-solid fa-clock"></i> كل</span><input id="set-promo-interval" type="number" min="5" max="120"><small>ثانية</small></div>
-      <div class="oli-promo-control"><span><i class="fa-solid fa-layer-group"></i> أقصى ظهور للجلسة</span><input id="set-promo-max-session" type="number" min="0" max="50"><small>0 = بلا حد</small></div>
-      <div class="oli-promo-control"><span><i class="fa-solid fa-box-open"></i> الحد الأدنى للمخزون</span><input id="set-promo-min-stock" type="number" min="1" max="999"><small>قطعة</small></div>
-      <div class="oli-promo-control"><span><i class="fa-solid fa-hourglass-half"></i> منع تكرار المنتج</span><input id="set-promo-cooldown" type="number" min="0" max="1440"><small>دقيقة</small></div>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-3 mt-4 pt-4" style="border-top:1px dashed var(--line);">
-      <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" id="set-promo-discounted-only"> إعطاء أولوية للمنتجات المخفّضة</label>
-      <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" id="set-promo-lowstock-only"> إعطاء أولوية لما قرب نفاده</label>
-      <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" id="set-promo-fallback"> اسمحي باقتراح آمن عند عدم وجود بيع حقيقي</label>
-      <label class="flex items-center gap-2 text-xs font-bold"><input type="checkbox" id="set-show-views"> إظهار عدد مشاهدات تقريبي على المنتجات</label>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+    <p class="text-xs text-[var(--ink-soft)] mb-4">
+      عدّاد المشاهدات وإشعارات الشراء أدوات عرض تجميلية لتنشيط الصفحة، وليست أرقام مبيعات حقيقية موثّقة. يمكنكِ إيقافها في أي وقت من هنا.
+    </p>
+    <div class="grid sm:grid-cols-2 gap-5">
       <div>
-        <div class="text-xs font-bold text-[var(--ink-soft)] mb-1">مدن الرسائل</div>
+        <label class="flex items-center gap-2 text-xs font-bold mb-2"><input type="checkbox" id="set-show-views"> إظهار "عدد المشاهدات الآن" على المنتجات</label>
+        <div class="flex items-center gap-2">
+          <input id="set-views-min" type="number" min="1" class="w-20 bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring" placeholder="أقل عدد">
+          <span class="text-xs">—</span>
+          <input id="set-views-max" type="number" min="1" class="w-20 bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring" placeholder="أعلى عدد">
+        </div>
+      </div>
+      <div>
+        <label class="flex items-center gap-2 text-xs font-bold mb-2"><input type="checkbox" id="set-show-notif"> إظهار إشعارات "شخص من ... اشترى ..."</label>
+        <div class="flex items-center gap-2">
+          <label class="text-[11px] text-[var(--ink-soft)]">كل</label>
+          <input id="set-notif-interval" type="number" min="4" class="w-20 bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
+          <label class="text-[11px] text-[var(--ink-soft)]">ثانية</label>
+        </div>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="text-xs font-bold text-[var(--ink-soft)] block mb-1">المدن المستخدمة في الإشعارات (افصلي بفاصلة)</label>
         <input id="set-notif-cities" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
       </div>
-      <div>
-        <div class="text-xs font-bold text-[var(--ink-soft)] mb-1">نطاق المشاهدات التقريبي</div>
-        <div class="flex gap-2"><input id="set-views-min" type="number" min="1" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring"><input id="set-views-max" type="number" min="1" class="w-full bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring"></div>
-      </div>
     </div>
-    <div class="mt-4">
-      <label class="flex items-center gap-2 text-xs font-bold mb-2"><input type="checkbox" id="set-show-notif"> إظهار نافذة الترويج الذكي</label>
-    </div>
-    <button id="btn-save-marketing" class="btn-gold px-6 py-2.5 text-xs mt-4"><i class="fa-solid fa-floppy-disk"></i> حفظ إعدادات الترويج</button>
+    <button id="btn-save-marketing" class="btn-gold px-6 py-2.5 text-xs mt-4"><i class="fa-solid fa-floppy-disk"></i> حفظ إعدادات التسويق</button>
     <span id="marketing-save-msg" class="text-xs font-bold mr-2" style="color:var(--pink-deep);"></span>
-  </div>
-
-  <div class="glass-card p-6 mb-8">
-    <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-wand-magic-sparkles text-lg" style="color:var(--gold);"></i><h3 class="font-display text-xl" style="color:var(--ink);">رادار الفرص</h3></div>
-    <p class="text-xs text-[var(--ink-soft)] mb-4">يعطيك اقتراحات ترويجية من بيانات المتجر الموجودة أصلاً: تخفيض، نفاد قريب، منتج قوي التقييم، أو منتج يحتاج دفعاً بصرياً.</p>
-    <div id="promo-radar-grid" class="oli-promo-radar-grid"></div>
   </div>
 
   </div>
@@ -1499,28 +1350,29 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
 
   </div>
   <div class="admin-tab-panel" id="tab-coupons">
-  <!-- ============ admin: coupon center ============ -->
+  <!-- ============ admin: coupon usage ============ -->
   <div class="glass-card p-6 mb-8">
-    <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-ticket text-lg" style="color:var(--pink-deep);"></i><h3 class="font-display text-xl" style="color:var(--ink);">مركز أكواد الخصم</h3></div>
-    <p class="text-xs text-[var(--ink-soft)] mb-4 leading-6">ثلاثة أقسام منفصلة: الموظفين، المشاهير، والمتجر. ما يزال الكود نفسه يعمل عبر نظام الأكواد الحالي؛ معلومات المجموعة والمدة والحد محفوظة داخل إعدادات المتجر الحالية فقط.</p>
-    <div id="coupon-group-summary" class="oli-coupon-summary"></div>
-    <div class="oli-coupon-tabs" id="coupon-group-tabs">
-      <button type="button" data-coupon-group="employees" class="active"><i class="fa-solid fa-users"></i> الموظفين</button>
-      <button type="button" data-coupon-group="celebrities"><i class="fa-solid fa-star"></i> المشاهير</button>
-      <button type="button" data-coupon-group="store"><i class="fa-solid fa-store"></i> المتجر</button>
+    <div class="flex items-center gap-2 mb-1">
+      <i class="fa-solid fa-ticket text-lg" style="color:var(--pink-deep);"></i>
+      <h3 class="font-display text-xl" style="color:var(--ink);">أكواد الخصم — عداد الاستخدام</h3>
     </div>
-    <form id="admin-coupon-form" class="grid sm:grid-cols-2 lg:grid-cols-6 gap-2 mb-4">
-      <input type="hidden" id="coupon-original-code">
-      <input id="coupon-code" placeholder="الكود" required class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring uppercase">
-      <input id="coupon-label" placeholder="اسم الحملة / المشهور" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
-      <input id="coupon-percent" type="number" min="0" max="90" placeholder="الخصم %" required class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
-      <input id="coupon-limit" type="number" min="0" placeholder="حد الاستخدام 0=بلا" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
-      <input id="coupon-expiry" type="date" class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring">
-      <button type="submit" class="btn-cute px-4 py-2 text-xs"><i class="fa-solid fa-floppy-disk"></i> حفظ الكود</button>
+    <p class="text-xs text-[var(--ink-soft)] mb-4">
+      العداد هنا يُحتسب <b>فقط بعد أن يصل الطلب فعلياً</b> (تضغطين "ترقية الحالة" على الطلب حتى تصل إلى حالة "تم التوصيل").
+      كود مفعّل عند الدفع ما يُحسب مباشرة — لازم الطلب يوصّل أول.
+    </p>
+    <form id="admin-coupon-form" class="flex flex-wrap gap-2 mb-4">
+      <input id="coupon-code" placeholder="الكود (مثال: SUMMER25)" required class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring w-40 uppercase">
+      <input id="coupon-percent" type="number" min="1" max="90" placeholder="نسبة الخصم %" required class="bg-white border border-[var(--line)] rounded-xl px-3 py-2 text-xs focus-ring w-32">
+      <button type="submit" class="btn-cute px-4 py-2 text-xs"><i class="fa-solid fa-plus"></i> إضافة كود</button>
     </form>
-    <div class="flex items-center justify-between mb-2 text-[11px] text-[var(--ink-soft)]"><span id="coupon-group-hint"></span><button type="button" id="coupon-cancel-edit" class="hidden btn-outline px-3 py-1.5 text-[10px]">إلغاء التعديل</button></div>
-    <div class="data-table-wrap"><table class="data-table"><thead><tr><th>الكود</th><th>الاسم</th><th>الخصم</th><th>الاستخدام</th><th>الحالة</th><th>ينتهي</th><th>إجراء</th></tr></thead><tbody id="admin-coupons-body"></tbody></table></div>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead><tr><th>الكود</th><th>نسبة الخصم</th><th>مرات الاستخدام (بعد التوصيل)</th><th>إجراء</th></tr></thead>
+        <tbody id="admin-coupons-body"></tbody>
+      </table>
+    </div>
   </div>
+
   </div>
   <div class="admin-tab-panel" id="tab-wheel">
   <!-- ============ admin: wheel settings ============ -->
@@ -1880,6 +1732,52 @@ html[dir="rtl"] .admin-sidebar{transform:translateX(110%);}
   </div>
 </div>
 
+<!-- ============ referral modal ("ادعي صديقتك") ============ -->
+<div class="modal-backdrop" id="referral-backdrop">
+  <div class="modal-sheet">
+    <div class="flex items-center justify-between p-5 pb-2">
+      <h3 class="font-display text-xl" style="color:var(--ink);"><i class="fa-solid fa-people-arrows" style="color:var(--pink-deep);"></i> ادعي صديقتك</h3>
+      <button class="modal-close w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring" data-target="referral"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="p-5 pt-2 space-y-4">
+      <p class="text-xs text-[var(--ink-soft)] leading-6">شاركي رابط دعوتك مع صديقاتك، فتحصل هي على <span class="font-black" style="color:var(--pink-deep);">خصم 15%</span> على أول طلب لها، وتحصلين أنتِ على <span class="font-black" style="color:var(--pink-deep);">600 دج</span> كرصيد مكافآت يُضاف تلقائياً بعد وصول طلبها فعلياً.</p>
+
+      <div class="glass-card p-4">
+        <div class="text-[11px] font-bold text-[var(--ink-soft)] mb-1.5">كود دعوتك</div>
+        <div class="flex items-center gap-2">
+          <div id="referral-code-display" class="flex-1 font-black text-lg tracking-widest text-center py-2 rounded-xl" style="background:var(--pink-pale); color:var(--pink-deep);">—</div>
+          <button id="btn-copy-referral-code" class="btn-outline px-3 py-2 text-xs"><i class="fa-solid fa-copy"></i></button>
+        </div>
+      </div>
+
+      <div class="glass-card p-4">
+        <div class="text-[11px] font-bold text-[var(--ink-soft)] mb-1.5">رابط دعوتك</div>
+        <div class="flex items-center gap-2">
+          <input id="referral-link-display" readonly class="flex-1 bg-white border border-[var(--line)] rounded-xl px-3 py-2.5 text-[11px] focus-ring" dir="ltr">
+          <button id="btn-copy-referral-link" class="btn-outline px-3 py-2 text-xs"><i class="fa-solid fa-copy"></i></button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <a id="btn-share-whatsapp-referral" target="_blank" class="btn-cute py-2.5 text-xs text-center"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+          <button id="btn-share-native-referral" class="btn-sky py-2.5 text-xs"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="glass-card p-4 text-center">
+          <div class="text-2xl font-black" style="color:var(--pink-deep);" id="referral-stat-count">0</div>
+          <div class="text-[10px] font-bold text-[var(--ink-soft)] mt-1">دعوات ناجحة</div>
+        </div>
+        <div class="glass-card p-4 text-center">
+          <div id="lottie-coins" class="rewards-coin-icon" aria-hidden="true"></div>
+          <div class="text-2xl font-black" style="color:var(--gold);" id="referral-stat-balance">0 دج</div>
+          <div class="text-[10px] font-bold text-[var(--ink-soft)] mt-1">رصيد مكافآتك</div>
+        </div>
+      </div>
+      <p id="referral-balance-note" class="text-[11px] font-bold hidden" style="color:var(--pink-deep);"><i class="fa-solid fa-circle-check"></i> سيُطبَّق رصيدك تلقائياً كخصم في طلبك القادم.</p>
+    </div>
+  </div>
+</div>
+
 <!-- ============ smart size guide modal ============ -->
 <div class="modal-backdrop" id="sizeguide-backdrop">
   <div class="modal-sheet">
@@ -2132,19 +2030,7 @@ const SETTINGS_DEFAULTS = {
   deliveryFee:750,
   freeDeliveryMin:9000,
   giftWrapFee:450,
-  lowStockThreshold:6,
-  promoEngine:{
-    enabled:true,
-    mode:'smart',
-    minStock:1,
-    intervalSec:11,
-    cooldownMin:8,
-    maxPerSession:8,
-    onlyDiscounted:false,
-    onlyLowStock:false,
-    allowFallback:true
-  },
-  promoMeta:{}
+  lowStockThreshold:6
 };
 
 let state = makeDefaultState();
@@ -2171,9 +2057,6 @@ function normalizeState(){
   state.settings = Object.assign({}, d.settings, state.settings || {});
   state.music = Object.assign({}, d.music, state.music || {});
   state.music.tracks = Array.isArray(state.music.tracks) ? state.music.tracks : [];
-  state.settings = Object.assign({}, d.settings, state.settings || {});
-  state.settings.promoEngine = Object.assign({}, d.settings.promoEngine || {}, state.settings.promoEngine || {});
-  state.settings.promoMeta = Object.assign({}, d.settings.promoMeta || {}, state.settings.promoMeta || {});
   state.wheel = Object.assign({}, d.wheel, state.wheel || {});
   state.wheel.segments = Array.isArray(state.wheel.segments) && state.wheel.segments.length ? state.wheel.segments : d.wheel.segments;
   state.giftWrap = Object.assign({}, d.giftWrap, state.giftWrap || {});
@@ -2464,6 +2347,7 @@ async function hydrateCloudState(adminMode=false){
   try{
     // If this is the first install, the admin seeds the public state once.
     if(!d && isAdminAuthed()) await syncCloudState('initial Supabase seed');
+    await ensureReferralAccount();
   }catch(e){ reportCloudError(e,'تهيئة بيانات Supabase الأولية'); }
 
   return true;
@@ -2599,17 +2483,10 @@ function currentList(){
   return list;
 }
 function fakeViewsFor(id){
-  const p = findProduct(id);
-  if(!p || (p.stock||0)<=0 || !state.settings.showFakeViews) return 0;
-  const min = Math.max(1, state.settings.fakeViewsMin ?? 8);
-  const max = Math.max(min, state.settings.fakeViewsMax ?? 64);
-  const v = salesVelocity(id,30);
-  const disc = p.oldPrice && p.oldPrice>p.price ? (1-p.price/p.oldPrice) : 0;
-  const signal = Math.round((p.rating||0)*4 + Math.min(10,v*5) + disc*25 + Math.min(6,p.reviews||0)/10);
+  const min = state.settings.fakeViewsMin ?? 8, max = Math.max(min+1, state.settings.fakeViewsMax ?? 64);
   let h=0; for(const c of id) h = (h*31 + c.charCodeAt(0))>>>0;
   const bucket = Math.floor(Date.now()/15000);
-  const raw = min + ((h + bucket*7 + signal) % (max-min+1));
-  return Math.min(max, raw);
+  return min + ((h + bucket*7) % (max-min+1));
 }
 function productCard(p){
   const isWished = state.wishlist.includes(p.id);
@@ -2632,7 +2509,7 @@ function productCard(p){
     <div class="p-3">
       <div class="text-[11px] font-bold line-clamp-2 h-8">${p.name}</div>
       <div class="stars flex gap-0.5 mt-1">${stars}<span class="text-[9px] text-[var(--ink-soft)] mr-1">(${p.reviews})</span></div>
-      ${state.settings.showFakeViews && !outOfStock ? `<div class="flex items-center gap-1 mt-1 text-[9px] font-bold fake-view-badge" data-fv="${p.id}" style="color:var(--pink-deep);"><i class="fa-solid fa-fire" style="font-size:8px;"></i> <span>${fakeViewsFor(p.id)}</span> اهتمام تقديري</div>` : ''}
+      ${state.settings.showFakeViews ? `<div class="flex items-center gap-1 mt-1 text-[9px] font-bold fake-view-badge" data-fv="${p.id}" style="color:var(--pink-deep);"><i class="fa-solid fa-fire" style="font-size:8px;"></i> <span>${fakeViewsFor(p.id)}</span> تشاهدنه الآن</div>` : ''}
       ${lowStock ? `<div class="text-[9px] font-bold mt-1" style="color:#c94f4f;"><i class="fa-solid fa-triangle-exclamation"></i> باقي ${p.stock} فقط</div>` : ''}
       <div class="flex items-center justify-between mt-2">
         <div class="flex items-baseline gap-1.5">
@@ -2649,7 +2526,7 @@ function productCard(p){
 }
 function refreshFakeViewBadges(){
   if(!state.settings.showFakeViews) return;
-  qsa('.fake-view-badge').forEach(el=>{ const id = el.dataset.fv; const p=findProduct(id); if(!p || (p.stock||0)<=0){ el.remove(); return; } el.querySelector('span').textContent = fakeViewsFor(id); });
+  qsa('.fake-view-badge').forEach(el=>{ const id = el.dataset.fv; el.querySelector('span').textContent = fakeViewsFor(id); });
 }
 function renderProducts(){
   const list = currentList().slice(0, visibleCount);
@@ -2733,20 +2610,13 @@ state.coupons = PROMO_CODES;
 const POSITIONS = ['مندوبة مبيعات','مندوبة توصيل','خدمة عميلات','تسويق ومحتوى','إدارة مخزون'];
 
 function addToCart(id, qty){
-  const p = findProduct(id);
-  qty = Math.max(1, Number(qty)||1);
-  if(!p || (p.stock||0)<=0){ toast('هذا المنتج نفد من المخزون حالياً', 'fa-box-open'); return; }
-  const current = Number(state.cart[id]||0);
-  const next = Math.min(p.stock, current + qty);
-  state.cart[id] = next;
+  qty = qty || 1;
+  state.cart[id] = (state.cart[id]||0) + qty;
   saveStateDebounced('إضافة للسلة'); updateCounts(); renderCartDrawer();
-  toast(next < current + qty ? `المتاح الآن ${p.stock} قطعة فقط` : 'أُضيف للسلة', next < current + qty ? 'fa-box-open' : 'fa-bag-shopping');
+  toast('أُضيف للسلة', 'fa-bag-shopping');
 }
 function setQty(id, qty){
-  const p = findProduct(id);
-  qty = Math.floor(Number(qty)||0);
-  if(!p || (p.stock||0)<=0 || qty<=0){ delete state.cart[id]; }
-  else { state.cart[id] = Math.min(qty, p.stock); }
+  if(qty<=0){ delete state.cart[id]; } else { state.cart[id] = qty; }
   saveStateDebounced('تعديل الكمية'); updateCounts(); renderCartDrawer();
 }
 function cartLines(){
@@ -2758,9 +2628,9 @@ function cartTotals(){
   const delivery = subtotal===0 ? 0 : ((subtotal >= FREE_DELIVERY_MIN_() || activePromoIsFreeShip()) ? 0 : DELIVERY_FEE_());
   const discount = (activePromo && !activePromoIsFreeShip()) ? Math.round(subtotal * activePromo.rate) : 0;
   const giftWrapFee = (subtotal>0 && state.giftWrap && state.giftWrap.enabled) ? GIFT_WRAP_FEE_() : 0;
-  const rewardAvailable = 0; // referral program removed from storefront; legacy account data is kept untouched
-  const rewardApplied = 0;
-  const total = Math.max(0, subtotal - discount + delivery + giftWrapFee);
+  const rewardAvailable = getReferralBalance();
+  const rewardApplied = subtotal>0 ? Math.min(rewardAvailable, Math.max(0, subtotal - discount)) : 0;
+  const total = Math.max(0, subtotal - discount - rewardApplied + delivery + giftWrapFee);
   return {subtotal, delivery, discount, giftWrapFee, rewardApplied, total};
 }
 function renderCartDrawer(){
@@ -2859,7 +2729,7 @@ let _coPurchaseCache = null;
 function invalidateCoPurchaseCache(){ _coPurchaseCache = null; }
 function computeCoPurchaseMap(){
   const map = {};
-  accountedOrders().filter(o=>Number(o.status)===3).forEach(o=>{
+  (state.orders||[]).forEach(o=>{
     const ids = (Array.isArray(o.items)?o.items:[]).map(it=>it.id).filter(Boolean);
     for(let i=0;i<ids.length;i++){
       for(let j=0;j<ids.length;j++){
@@ -3215,7 +3085,7 @@ function toggleAdmin(){
   openAdminLogin();
 }
 const ADMIN_TAB_LABELS = {
-  dashboard:'لوحة القيادة', insights:'تحليلات ذكية', cosmos:'OLI COSMOS', products:'المنتجات', categories:'الفئات', reviews:'التقييمات',
+  dashboard:'لوحة القيادة', insights:'تحليلات ذكية', products:'المنتجات', categories:'الفئات', reviews:'التقييمات',
   marketing:'التسويق والتفاعل', settings:'إعدادات الموقع', jobs:'طلبات التوظيف',
   employees:'فريق العمل', coupons:'أكواد الخصم', wheel:'عجلة الحظ', music:'موسيقى الخلفية', security:'الأمان'
 };
@@ -3385,373 +3255,85 @@ $('btn-wheel-save').addEventListener('click', ()=>{
   setTimeout(()=>{ $('wheel-save-msg').textContent=''; }, 2500);
 });
 
-
-/* ---------------------------------------------------------------
-   Promotion intelligence core — uses only the existing PRODUCTS/orders/state.
-   No new tables, columns, RPCs or Supabase calls are introduced.
---------------------------------------------------------------- */
-const PROMO_GROUPS = ['employees','celebrities','store'];
-let promoSessionCount = 0;
-const promoSeenAt = {};
-
-function promoSettings(){
-  const p = state.settings.promoEngine || {};
-  return Object.assign({enabled:true,mode:'smart',minStock:1,intervalSec:11,cooldownMin:8,maxPerSession:8,onlyDiscounted:false,onlyLowStock:false,allowFallback:false},p);
-}
-
-function cosmosSettings(){
-  const c=state.settings.cosmos || (state.settings.cosmos={featuredProductId:null,blockedProductIds:[],lastDecision:null,threshold:70,shortDays:7,longDays:30});
-  if(!Array.isArray(c.blockedProductIds)) c.blockedProductIds=[];
-  if(!Number.isFinite(Number(c.threshold))) c.threshold=70;
-  if(!Number.isFinite(Number(c.shortDays))) c.shortDays=7;
-  if(!Number.isFinite(Number(c.longDays))) c.longDays=30;
-  c.shortDays=Math.max(3,Math.min(30,Number(c.shortDays)||7));
-  c.longDays=Math.max(14,Math.min(120,Number(c.longDays)||30));
-  return c;
-}
-function cosmosDeepScan(){
-  const c=cosmosSettings(), profiles=cosmosAllProfiles(), active=accountedOrders(), delivered=deliveredActiveOrders();
-  const totalItems=active.reduce((n,o)=>n+(o.items||[]).reduce((a,it)=>a+(Number(it.qty)||0),0),0);
-  const sold=delivered.reduce((n,o)=>n+(o.items||[]).reduce((a,it)=>a+(Number(it.qty)||0),0),0);
-  const stock=PRODUCTS.reduce((n,p)=>n+Math.max(0,Number(p.stock)||0),0);
-  const strong=profiles.filter(x=>x.opportunity>=Number(c.threshold)).length;
-  const noSales=profiles.filter(x=>Number(x.p.stock)>0&&x.s30.qty===0).sort((a,b)=>b.opportunity-a.opportunity).slice(0,3);
-  const fading=profiles.filter(x=>x.s30.qty>0&&x.s7.qty===0).sort((a,b)=>b.s30.qty-a.s30.qty).slice(0,3);
-  const pressure=stock>0?Math.round(Math.min(100,(sold/Math.max(1,sold+stock))*100)):100;
-  const recentOrders=delivered.filter(o=>{const t=new Date((o.date||'')+'T23:59:59').getTime();return t&&Date.now()-t<=c.shortDays*86400000;}).length;
-  const olderOrders=Math.max(0,delivered.length-recentOrders);
-  const orderTrend=olderOrders>0?Math.round((recentOrders/Math.max(1,olderOrders))*100):recentOrders?100:0;
-  const cards=[];
-  cards.push({icon:'fa-circle-half-stroke',title:'فجوة الاهتمام',text:noSales.length?`هناك ${noSales.length} منتجات متوفرة بلا مبيعات موصلة ضمن النافذة الطويلة، رغم وجود إشارات جودة/سعر.`:'لا توجد فجوة واضحة بين توفر المنتجات وبيانات المبيعات الحالية.'});
-  cards.push({icon:'fa-route',title:'احتكاك القرار',text:fading.length?`${fading[0].p.name} يملك مبيعات سابقة لكن لا توجد مبيعات موصلة حديثاً؛ يحتاج فحصاً قبل زيادة الترويج.`:'لا توجد إشارة قوية على احتكاك من بيانات الطلبات المتاحة.'});
-  cards.push({icon:'fa-forward',title:'ظل المستقبل',text:`زخم الطلبات القصيرة ${orderTrend}/100، وضغط المخزون ${pressure}/100. ${strong} منتجات تتجاوز عتبة الفرصة.`});
-  cards.push({icon:'fa-scale-balanced',title:'أقل تدخل',text:strong?`بدلاً من دفع كل المنتجات، ابدأ بأعلى فرصة فقط ثم راقب النتيجة.`:'لا توجد فرصة قوية تستحق تدخلاً الآن.'});
-  return {cards,totalItems,sold,stock,orderTrend,pressure,strong};
-}
-function cosmosClamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
-function cosmosDaysAgo(dateStr){ const t=new Date((dateStr||'')+'T23:59:59').getTime(); if(!t) return null; return Math.max(0,(Date.now()-t)/86400000); }
-function cosmosProductStats(p,days){
-  const cutoff=Date.now()-days*86400000;
-  let qty=0, orders=0, revenue=0;
-  accountedOrders().forEach(o=>{
-    if(Number(o.status)!==3) return;
-    const t=new Date((o.date||'')+'T23:59:59').getTime(); if(!t || t<cutoff) return;
-    let hit=0;
-    (o.items||[]).forEach(it=>{ if(it.id===p.id) hit+=Number(it.qty)||0; });
-    if(hit){ qty+=hit; orders++; revenue += hit*(Number((o.items||[]).find(it=>it.id===p.id)?.price)||0); }
-  });
-  return {qty,orders,revenue,velocity:qty/days};
-}
-function cosmosProductProfile(p){
-  const c=cosmosSettings(); const s7=cosmosProductStats(p,c.shortDays), s30=cosmosProductStats(p,c.longDays);
-  const acceleration = s30.velocity>0 ? (s7.velocity/s30.velocity) : (s7.velocity>0 ? 2 : 0);
-  const disc=p.oldPrice&&p.oldPrice>p.price?(1-p.price/p.oldPrice):0;
-  const low=Number(p.stock)>0 && Number(p.stock)<=Number(state.settings.lowStockThreshold||6);
-  const interest=Math.min(20,(Number(p.rating)||0)*3.4)+Math.min(15,(Number(p.reviews)||0)/12)+Math.min(25,s7.velocity*8)+Math.min(15,disc*100)+(low?8:0);
-  const opportunity=cosmosClamp(Math.round(interest + Math.min(17,Math.max(0,(acceleration-0.75))*20)),0,100);
-  let weather='مستقر';
-  if(acceleration>=1.6) weather='موجة صاعدة'; else if(acceleration>=1.15) weather='يتحرك للأعلى'; else if(acceleration>0 && acceleration<=0.55) weather='يهدأ'; else if(s7.velocity===0 && s30.velocity===0) weather='ساكن';
-  const recent=recentRealSaleForProduct(p.id);
-  return {p,s7,s30,acceleration,disc,low,interest,opportunity,weather,recent};
-}
-function cosmosAllProfiles(){ return PRODUCTS.map(cosmosProductProfile); }
-function cosmosOpportunity(){
-  const cs=cosmosSettings();
-  return cosmosAllProfiles().filter(x=>Number(x.p.stock)>0&&!cs.blockedProductIds.includes(x.p.id)).sort((a,b)=>b.opportunity-a.opportunity);
-}
-function cosmosAnomalies(){
-  const out=[];
-  cosmosAllProfiles().forEach(x=>{
-    if(Number(x.p.stock)<=0) out.push({level:'critical',title:`${x.p.name} خرج من الترويج`,meta:'المخزون صفر؛ أي عرض للمنتج يجب أن يتوقف فوراً.'});
-    else if(x.s30.velocity>0 && x.s7.velocity===0) out.push({level:'warning',title:`${x.p.name} فقد الزخم`,meta:'كان له بيع خلال 30 يوماً لكن لا توجد مبيعات موصلة خلال آخر 7 أيام.'});
-    else if(x.s7.velocity>0 && x.acceleration>=2) out.push({level:'opportunity',title:`${x.p.name} في موجة مفاجئة`,meta:'سرعة آخر 7 أيام أعلى بكثير من متوسط 30 يوماً.'});
-    else if((Number(x.p.rating)||0)>=4.7 && x.s30.velocity===0 && Number(x.p.stock)>0) out.push({level:'unknown',title:`${x.p.name} كتلة مظلمة`,meta:'تقييم قوي ومخزون موجود، لكن لا توجد مبيعات موصلة كافية بعد.'});
-  });
-  return out.slice(0,6);
-}
-function cosmosConstellations(){
-  const map={};
-  accountedOrders().filter(o=>Number(o.status)===3).forEach(o=>{
-    const ids=[...new Set((o.items||[]).map(it=>it.id).filter(Boolean))];
-    ids.forEach(a=>ids.forEach(b=>{ if(a===b) return; map[a]=map[a]||{}; map[a][b]=(map[a][b]||0)+1; }));
-  });
-  const edges=[];
-  Object.entries(map).forEach(([a,row])=>Object.entries(row).forEach(([b,n])=>{ if(String(a)<String(b)) edges.push({a,b,n}); }));
-  return edges.sort((x,y)=>y.n-x.n).slice(0,6).map(e=>({a:findProduct(e.a),b:findProduct(e.b),n:e.n})).filter(e=>e.a&&e.b);
-}
-function cosmosBalance(){
-  const profiles=cosmosAllProfiles(), active=accountedOrders(), revenue=active.reduce((s,o)=>s+Number(o.total||0),0);
-  const stock=PRODUCTS.reduce((s,p)=>s+Math.max(0,Number(p.stock)||0),0);
-  const frozen=(state.orders||[]).filter(o=>o.frozen).length;
-  const momentum=profiles.length?Math.round(profiles.reduce((s,x)=>s+x.opportunity,0)/profiles.length):0;
-  const risk=Math.min(100,Math.round((profiles.filter(x=>x.p.stock<=0).length/Math.max(1,profiles.length))*100 + (frozen>0?Math.min(10,frozen):0)));
-  return {orders:active.length,revenue,stock,momentum,risk,frozen};
-}
-function cosmosJudgement(){
-  const opp=cosmosOpportunity()[0]||null, anomalies=cosmosAnomalies(), bal=cosmosBalance();
-  if(!PRODUCTS.length) return {title:'لا توجد منتجات كافية للحكم.',action:null,confidence:0,reason:'أضيفي منتجات أولاً.'};
-  if(anomalies.some(a=>a.level==='critical')) return {title:'هناك حالة حرجة يجب تنظيفها قبل زيادة النشاط.',action:null,confidence:96,reason:anomalies.find(a=>a.level==='critical')?.title||'مخزون غير صالح للترويج.'};
-  if(opp && opp.opportunity>=Number(cosmosSettings().threshold||70)) return {title:`أقوى فرصة حالية: ${opp.p.name}.`,action:opp,confidence:Math.min(96,Math.max(72,opp.opportunity)),reason:`مخزون ${opp.p.stock} · سرعة 7 أيام ${opp.s7.velocity.toFixed(2)} قطعة/يوم · ${opp.weather}.`};
-  if(anomalies.length) return {title:'المتجر يحتاج فهماً قبل أي دفع جديد.',action:null,confidence:74,reason:anomalies[0].title};
-  return {title:'المتجر مستقر ولا توجد فرصة قوية تستحق تدخلاً كبيراً الآن.',action:null,confidence:68,reason:`${bal.orders} طلب نشط · ${fmtDZD(bal.revenue)} دج مبيعات محسوبة.`};
-}
-function cosmosApplyFeatured(id){
-  const p=findProduct(id); if(!p || Number(p.stock)<=0) { toast('لا يمكن اختيار منتج غير متوفر','fa-circle-exclamation'); return; }
-  const cs=cosmosSettings(); cs.featuredProductId=id; cs.blockedProductIds=cs.blockedProductIds.filter(x=>x!==id); cs.lastDecision={type:'feature',productId:id,at:new Date().toISOString()};
-  saveState('OLI COSMOS: اختيار فرصة');
-  initHeroSpotlight();
-  toast(`تمت ترقية «${p.name}» إلى الفرصة المحورية في العرض`,'fa-compass');
-  oliLogActivity('COSMOS: ترقية منتج',p.name);
-}
-function cosmosProtect(id){
-  const p=findProduct(id); if(!p) return;
-  const cs=cosmosSettings(); if(!cs.blockedProductIds.includes(id)) cs.blockedProductIds.push(id); if(cs.featuredProductId===id) cs.featuredProductId=null; cs.lastDecision={type:'protect',productId:id,at:new Date().toISOString()};
-  saveState('OLI COSMOS: حماية منتج'); initHeroSpotlight();
-  toast(`تمت حماية «${p.name}» من محرك الترويج`,'fa-shield-halved');
-  oliLogActivity('COSMOS: حماية منتج',p.name);
-}
-function cosmosLiveAudit(){
-  const c=cosmosSettings(), products=PRODUCTS;
-  const actions=[];
-  const featured=findProduct(c.featuredProductId);
-  if(c.featuredProductId && (!featured || Number(featured.stock)<=0)) actions.push({id:'clear-featured',title:'محور ترويج غير صالح',text:featured?`«${featured.name}» أصبح بلا مخزون.`:'المنتج المحوري لم يعد موجوداً.',button:'إزالة المحور'});
-  const deadBlocked=products.filter(p=>Number(p.stock)<=0 && c.blockedProductIds.includes(p.id)).length;
-  if(deadBlocked) actions.push({id:'clean-blocked',title:'تنظيف الحماية',text:`${deadBlocked} منتجات نافدة ما زالت محفوظة في قائمة الحماية.`,button:'تنظيف'});
-  const delivered=deliveredActiveOrders();
-  const recent=delivered.filter(o=>{const t=new Date((o.date||'')+'T23:59:59').getTime();return t&&Date.now()-t<=7*86400000;});
-  if(delivered.length && !recent.length) actions.push({id:'no-recent-sales',title:'منطقة صمت',text:'لا توجد طلبات موصلة خلال آخر 7 أيام. لا ترفع الترويج تلقائياً.',button:'تحديث الحكم'});
-  const cart=Array.isArray(state.cart)?state.cart:[];
-  if(cart.length && cosmosConstellations().some(x=>cart.some(i=>i.id===x.a.id||i.id===x.b.id))) actions.push({id:'cart-opportunity',title:'مسار سلة حقيقي',text:'هناك علاقة شراء حقيقية يمكن استخدامها لاقتراح منتج مكمل.',button:'عرض العلاقات'});
-  const expiring=Object.keys(PROMO_CODES||{}).filter(couponIsActive).filter(code=>{const e=promoMeta()[code]?.expiresAt;if(!e)return false;const t=new Date(e+'T23:59:59').getTime();return t>Date.now()&&t-Date.now()<=72*3600000;});
-  if(expiring.length) actions.push({id:'coupon-window',title:'نافذة كوبونات حقيقية',text:`${expiring.length} أكواد فعالة تنتهي خلال 72 ساعة.`,button:'مراجعة الأكواد'});
-  return actions.slice(0,6);
-}
-function cosmosApplyLiveAction(id){
-  const c=cosmosSettings();
-  if(id==='clear-featured'){c.featuredProductId=null;c.lastDecision={type:'guardian-clear-featured',at:new Date().toISOString()};saveState('COSMOS Guardian: إزالة محور غير صالح');initHeroSpotlight();renderCosmos();toast('تمت إزالة المنتج غير المتوفر من محور الترويج','fa-shield-halved');return;}
-  if(id==='clean-blocked'){c.blockedProductIds=c.blockedProductIds.filter(pid=>{const p=findProduct(pid);return p&&Number(p.stock)>0;});saveState('COSMOS Guardian: تنظيف الحماية');renderCosmos();toast('تم تنظيف الحماية من المنتجات النافدة','fa-broom');return;}
-  if(id==='no-recent-sales'){renderCosmos();toast('تم تحديث الحكم من الطلبات الموصلة فقط','fa-compass');return;}
-  if(id==='cart-opportunity'){document.getElementById('cosmos-constellations')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
-  if(id==='coupon-window'){document.querySelector('[data-tab="coupons"]')?.click();return;}
-}
-function cosmosIntentProfile(){
-  const cart=Object.values(state.cart||{}).filter(x=>x&&x.product).map(x=>findProduct(x.product.id)||findProduct(x.productId)).filter(Boolean);
-  const wishlist=(state.wishlist||[]).map(findProduct).filter(Boolean);
-  let recent=[];
-  try{ recent=JSON.parse(localStorage.getItem(OLI_RECENT_KEY)||'[]').map(findProduct).filter(Boolean); }catch(e){}
-  if(cart.length){ return {state:'نية شراء مرتفعة',score:92,reason:`السلة تحتوي ${cart.length} منتجاً؛ تقليل التشتيت أهم من دفع عروض جديدة.`,action:cart[0]}; }
-  if(wishlist.length){ return {state:'تقييم ومقارنة',score:74,reason:`لديك ${wishlist.length} منتجاً في المفضلة؛ الأفضل دفع أقرب تطابق بدلاً من ترويج عشوائي.`,action:wishlist.find(p=>Number(p.stock)>0)||wishlist[0]}; }
-  if(recent.length){ return {state:'استكشاف',score:48,reason:`آخر اهتمام فعلي كان حول ${recent[0].name}؛ يمكن فتح مسار مشابه دون إزعاج الزائرة.`,action:recent[0]}; }
-  return {state:'اكتشاف جديد',score:20,reason:'لا توجد إشارات محلية كافية لتحديد نية؛ لا يوجد مبرر لتدخل قوي.',action:null};
-}
-function cosmosPortalCandidate(){
-  const profiles=cosmosAllProfiles().filter(x=>Number(x.p.stock)>0&&!cosmosSettings().blockedProductIds.includes(x.p.id));
-  const co=cosmosConstellations();
-  const counts={}; co.forEach(c=>{ counts[c.a.id]=(counts[c.a.id]||0)+c.n; counts[c.b.id]=(counts[c.b.id]||0)+c.n; });
-  return profiles.sort((a,b)=>((counts[b.p.id]||0)*8+b.opportunity)-((counts[a.p.id]||0)*8+a.opportunity))[0]||null;
-}
-function cosmosImmunity(){
-  const issues=[];
-  const c=cosmosSettings();
-  const invalidBlocked=c.blockedProductIds.filter(id=>{const p=findProduct(id);return !p||Number(p.stock)<=0;});
-  if(invalidBlocked.length) issues.push({type:'blocked',count:invalidBlocked.length});
-  const featured=c.featuredProductId?findProduct(c.featuredProductId):null;
-  if(c.featuredProductId&&(!featured||Number(featured.stock)<=0)) issues.push({type:'featured',count:1});
-  const promos=Object.keys(PROMO_CODES||{}).filter(code=>!couponIsActive(code));
-  if(promos.length) issues.push({type:'coupons',count:promos.length});
-  return {issues,featured,promos};
-}
-function cosmosAttention(){
-  const ps=promoSettings(); const intent=cosmosIntentProfile();
-  let pressure=Math.min(100,(promoSessionCount/Math.max(1,Number(ps.maxPerSession)||8))*100);
-  if(intent.score>=90) pressure=Math.min(100,pressure+30);
-  const budget=Math.round(100-pressure);
-  const decision=budget<25?'امتنع عن ترويج إضافي الآن':budget<55?'استخدم رسالة واحدة منخفضة الإزعاج':'يمكن استخدام ترويج واحد ذي قيمة عالية';
-  return {pressure,budget,decision};
-}
-function cosmosDeepReality(){
-  const intent=cosmosIntentProfile(), portal=cosmosPortalCandidate(), immune=cosmosImmunity(), attention=cosmosAttention();
-  const unknowns=cosmosAnomalies().filter(x=>x.level==='unknown'||x.level==='warning');
-  return {intent,portal,immune,attention,unknowns};
-}
-function cosmosExecuteIntent(){
-  const x=cosmosIntentProfile();
-  if(!x.action){toast('لا توجد خطوة حقيقية مبررة حالياً','fa-circle-question');return;}
-  const c=cosmosSettings();
-  if(Number(x.action.stock)<=0){toast('المنتج غير متاح، لم يتم اتخاذ إجراء','fa-ban');return;}
-  c.featuredProductId=x.action.id;
-  c.lastDecision={type:'intent-action',productId:x.action.id,at:new Date().toISOString(),reason:x.reason};
-  saveState('OLI COSMOS: قرار نية العميل');
-  initHeroSpotlight(); renderCosmos(); toast(`تم جعل ${x.action.name} محوراً فعلياً`, 'fa-compass');
-}
-function cosmosExecutePortal(){
-  const x=cosmosPortalCandidate(); if(!x){toast('لا توجد بوابة منتج حقيقية حالياً','fa-link-slash');return;}
-  const c=cosmosSettings(); c.featuredProductId=x.p.id; c.lastDecision={type:'portal',productId:x.p.id,at:new Date().toISOString()}; saveState('OLI COSMOS: بوابة المنتج'); initHeroSpotlight(); renderCosmos(); toast(`تم جعل ${x.p.name} بوابة محورية`, 'fa-link');
-}
-function cosmosExecuteImmunity(){
-  const c=cosmosSettings(), before=c.blockedProductIds.length; c.blockedProductIds=c.blockedProductIds.filter(id=>{const p=findProduct(id);return p&&Number(p.stock)>0;});
-  if(c.featuredProductId){const p=findProduct(c.featuredProductId);if(!p||Number(p.stock)<=0)c.featuredProductId=null;}
-  rebuildPromotionAccounting(); saveState('OLI COSMOS: إصلاح المناعة'); initHeroSpotlight(); renderCosmos(); toast('تم تنظيف الحالات غير الصالحة دون لمس Supabase','fa-shield-halved');
-}
-function renderCosmos(){
-  const root=$('tab-cosmos'); if(!root) return;
-  const bal=cosmosBalance(), j=cosmosJudgement(), an=cosmosAnomalies(), opp=cosmosOpportunity(), waves=cosmosAllProfiles().filter(x=>x.s7.velocity>0||x.s30.velocity>0).sort((a,b)=>b.acceleration-a.acceleration).slice(0,5), cons=cosmosConstellations();
-  $('cosmos-vitals').innerHTML=[['orders',bal.orders,'طلبات محسوبة'],['revenue',fmtDZD(bal.revenue)+' دج','مبيعات محسوبة'],['momentum',bal.momentum+'/100','زخم المتجر'],['frozen',bal.frozen,'طلبات مجمدة خارج الحساب']].map(x=>`<div class="oli-cosmos-vital"><div class="n">${x[1]}</div><div class="l">${x[2]}</div></div>`).join('');
-  $('cosmos-confidence').textContent=`ثقة ${j.confidence}%`;
-  $('cosmos-judgement').textContent=j.title;
-  $('cosmos-decision').innerHTML=j.action ? `<div class="font-black text-xs">${j.action.p.name}</div><div class="text-[10px] leading-5 mt-1" style="color:var(--ink-soft);">${j.reason}</div>` : `<div class="font-black text-xs">لا يوجد تدخل ضروري</div><div class="text-[10px] leading-5 mt-1" style="color:var(--ink-soft);">${j.reason}</div>`;
-  const act=$('cosmos-action'); act.disabled=!j.action; act.style.opacity=j.action?'1':'.5'; act.innerHTML=j.action?'<i class="fa-solid fa-compass"></i> نفّذ الاقتراح':'<i class="fa-solid fa-check"></i> لا يوجد إجراء';
-  act.onclick=()=>{ if(j.action) cosmosApplyFeatured(j.action.p.id); };
-  $('cosmos-noaction').onclick=()=>{ const cs=cosmosSettings(); cs.lastDecision={type:'no-action',at:new Date().toISOString()}; saveState('OLI COSMOS: لا إجراء'); toast('تم تسجيل قرار عدم التدخل','fa-hand'); renderCosmos(); };
-  $('cosmos-anomaly-count').textContent=an.length;
-  $('cosmos-anomalies').innerHTML=an.map(a=>`<div class="oli-cosmos-item"><div class="title">${a.title}</div><div class="meta">${a.meta}</div></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">لا توجد شذوذات بارزة الآن.</div>';
-  $('cosmos-opportunities').innerHTML=opp.slice(0,5).map(x=>`<div class="oli-cosmos-item"><div class="title">${x.p.name}</div><div class="meta">Opportunity ${x.opportunity}/100 · ${x.weather} · مخزون ${x.p.stock}</div><div class="flex flex-wrap gap-1 mt-2"><button type="button" class="oli-cosmos-action" data-cosmos-feature="${x.p.id}"><i class="fa-solid fa-compass"></i> جعلها محورية</button><button type="button" class="oli-cosmos-action" data-cosmos-open="${x.p.id}"><i class="fa-solid fa-eye"></i> عرض</button></div></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">لا توجد فرصة قوية حالياً.</div>';
-  $('cosmos-waves').innerHTML=waves.map(x=>`<div class="oli-cosmos-item"><div class="title">${x.p.name}</div><div class="meta">${x.weather} · 7 أيام ${x.s7.qty} قطعة · 30 يوماً ${x.s30.qty} قطعة</div></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">لا توجد موجة واضحة بعد.</div>';
-  $('cosmos-unknowns').innerHTML=an.filter(a=>a.level==='unknown'||a.level==='warning').map(a=>`<div class="oli-cosmos-item"><div class="title">${a.title}</div><div class="meta">${a.meta}</div></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">المتجر لا يملك مجهولاً مهماً بهذه البيانات الحالية.</div>';
-  $('cosmos-constellations').innerHTML=cons.map(c=>`<div class="oli-cosmos-constellation"><div class="text-[10px] font-black" style="color:var(--pink-deep);">كوكبة شراء</div><div class="oli-cosmos-link mt-2">${c.a.name}</div><div class="oli-cosmos-link mt-2">${c.b.name}</div><div class="text-[9px] mt-2" style="color:var(--ink-soft);">ظهرا معاً في ${c.n} طلبات موصلة</div></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">لا توجد طلبات متعددة المنتجات كافية لبناء كوكبات.</div>';
-  $('cosmos-balance').innerHTML=[['المبيعات',fmtDZD(bal.revenue)+' دج'],['المخزون',bal.stock+' قطعة'],['الزخم',bal.momentum+'/100'],['المخاطر',bal.risk+'/100']].map(x=>`<div class="oli-cosmos-vital"><div class="n" style="font-size:16px;">${x[1]}</div><div class="l">${x[0]}</div></div>`).join('');
-  $('cosmos-balance-note').textContent=bal.risk>40?'هناك ضغط يحتاج انتباه':'التوازن الحالي مريح';
-  const deep=cosmosDeepScan();
-  $('cosmos-scan-status').textContent=`مسح ${new Date().toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit'})}`;
-  $('cosmos-deep-grid').innerHTML=deep.cards.map(x=>`<div class="oli-cosmos-item"><div class="title"><i class="fa-solid ${x.icon}" style="color:var(--pink-deep);margin-left:5px;"></i>${x.title}</div><div class="meta">${x.text}</div></div>`).join('');
-  const live=cosmosLiveAudit();
-  $('cosmos-live-actions').innerHTML=live.map(x=>`<div class="oli-cosmos-item"><div class="title">${x.title}</div><div class="meta">${x.text}</div><button type="button" class="oli-cosmos-action mt-2" data-cosmos-live="${x.id}">${x.button}</button></div>`).join('')||'<div class="text-xs text-[var(--ink-soft)] py-3">لا توجد إجراءات وقائية ضرورية الآن.</div>';
-  qsa('[data-cosmos-live]',root).forEach(b=>b.onclick=()=>cosmosApplyLiveAction(b.dataset.cosmosLive));
-  $('cosmos-opportunity-threshold').value=cosmosSettings().threshold;
-  $('cosmos-short-days').value=cosmosSettings().shortDays;
-  $('cosmos-long-days').value=cosmosSettings().longDays;
-  qsa('[data-cosmos-feature]',root).forEach(b=>b.onclick=()=>cosmosApplyFeatured(b.dataset.cosmosFeature));
-  qsa('[data-cosmos-open]',root).forEach(b=>b.onclick=()=>openQuickview(b.dataset.cosmosOpen));
-  const reality=cosmosDeepReality();
-  $('cosmos-intent').textContent=`${reality.intent.state} · ${reality.intent.score}/100 — ${reality.intent.reason}`;
-  $('cosmos-portal').textContent=reality.portal?`${reality.portal.p.name} · فرصة ${reality.portal.opportunity}/100 — بوابة مبنية على علاقات شراء فعلية.`:'لا توجد بوابة مؤكدة من البيانات الحالية.';
-  $('cosmos-immunity').textContent=reality.immune.issues.length?`وجد ${reality.immune.issues.length} حالة قابلة للإصلاح الآن.`:'الحالة سليمة: لا توجد حالة ترويجية غير صالحة.';
-  $('cosmos-attention').textContent=`ميزانية الانتباه ${reality.attention.budget}/100 · ضغط ${reality.attention.pressure}/100 — ${reality.attention.decision}`;
-  $('cosmos-unknown-deep').textContent=reality.unknowns.length?reality.unknowns.slice(0,2).map(x=>x.title).join(' · '):'لا يوجد مجهول حرج من البيانات الحالية.';
-  $('cosmos-intent-action').onclick=cosmosExecuteIntent;
-  $('cosmos-portal-action').onclick=cosmosExecutePortal;
-  $('cosmos-immunity-action').onclick=cosmosExecuteImmunity;
-}
-$('btn-cosmos-refresh')?.addEventListener('click',()=>{ renderCosmos(); toast('تم تحديث حكم COSMOS من البيانات الحالية','fa-atom'); });
-$('cosmos-live-scan')?.addEventListener('click',()=>{renderCosmos();toast('تمت قراءة الواقع الحالي: النية، البوابات، المناعة، والانتباه','fa-microscope');});
-$('cosmos-run-guardian')?.addEventListener('click',()=>{const a=cosmosLiveAudit();renderCosmos();toast(a.length?`تم العثور على ${a.length} نقطة تستحق الانتباه`:'لا توجد مشكلة وقائية حالياً','fa-shield-halved');});
-$('cosmos-save-settings')?.addEventListener('click',()=>{ const c=cosmosSettings(); c.threshold=Math.max(0,Math.min(100,Number($('cosmos-opportunity-threshold').value)||70)); c.shortDays=Math.max(3,Math.min(30,Number($('cosmos-short-days').value)||7)); c.longDays=Math.max(14,Math.min(120,Number($('cosmos-long-days').value)||30)); if(c.longDays<=c.shortDays) c.longDays=Math.min(120,c.shortDays+7); saveState('OLI COSMOS: حدود التحليل'); renderCosmos(); toast('تم حفظ حدود COSMOS','fa-sliders'); });
-function promoMeta(){ return state.settings.promoMeta || (state.settings.promoMeta = {}); }
-function couponGroup(code){
-  const meta = promoMeta()[code] || {};
-  if(meta.group && PROMO_GROUPS.includes(meta.group)) return meta.group;
-  if((state.employees||[]).some(e=>e.commissionCode===code) || /^REP/i.test(code||'')) return 'employees';
-  if(/^CELEB[-_]/i.test(code||'') || /^STAR[-_]/i.test(code||'')) return 'celebrities';
-  return 'store';
-}
-function couponIsExpired(code){
-  const exp = promoMeta()[code]?.expiresAt;
-  if(!exp) return false;
-  const end = new Date(exp+'T23:59:59');
-  return !isNaN(end.getTime()) && Date.now()>end.getTime();
-}
-function couponUsageCount(code){ return Number(state.couponUsage?.[code]||0); }
-function couponLimitReached(code){ const l=Number(promoMeta()[code]?.limit||0); return l>0 && couponUsageCount(code)>=l; }
-function couponIsActive(code){
-  if(!Object.prototype.hasOwnProperty.call(PROMO_CODES,code)) return false;
-  const m=promoMeta()[code];
-  if(m && m.active===false) return false;
-  if(couponIsExpired(code) || couponLimitReached(code)) return false;
-  return true;
-}
-function deliveredActiveOrders(){ return (state.orders||[]).filter(o=>Number(o.status)===3 && !o.frozen); }
-function activeOrdersOnly(){ return (state.orders||[]).filter(o=>!o.frozen); }
-function accountedOrders(){ return activeOrdersOnly(); }
-function isFrozenOrder(order){ return !!order?.frozen; }
-function rebuildPromotionAccounting(){
-  state.couponUsage = {};
-  (state.employees||[]).forEach(e=>{ e.commissionOrders=0; e.commissionEarned=0; });
-  (state.orders||[]).forEach(o=>{
-    if(Number(o.status)!==3 || o.frozen) { if(o.status!==3) o.couponCounted=false; return; }
-    if(o.promoCode){
-      state.couponUsage[o.promoCode]=(state.couponUsage[o.promoCode]||0)+1;
-      o.couponCounted=true;
-      const emp=state.employees.find(e=>e.commissionCode===o.promoCode);
-      if(emp){ const rate=emp.commissionRate!=null?Number(emp.commissionRate):EMPLOYEE_COMMISSION_RATE; emp.commissionOrders=(emp.commissionOrders||0)+1; emp.commissionEarned=Math.round(((emp.commissionEarned||0)+(Number(o.total)||0)*rate)*100)/100; }
-    }
-  });
-}
-function activePromoProducts(){
-  const ps=promoSettings();
-  const cs=cosmosSettings();
-  let list=PRODUCTS.filter(p=>(Number(p.stock)||0)>=Math.max(1,Number(ps.minStock)||1) && !cs.blockedProductIds.includes(p.id));
-  if(ps.onlyDiscounted) list=list.filter(p=>p.oldPrice && p.oldPrice>p.price);
-  if(ps.onlyLowStock) list=list.filter(p=>p.stock<=(state.settings.lowStockThreshold||6));
-  return list;
-}
-function promoScore(p){
-  const disc=p.oldPrice&&p.oldPrice>p.price?(1-p.price/p.oldPrice):0;
-  const vel=salesVelocity(p.id,30);
-  const low=p.stock<=(state.settings.lowStockThreshold||6)?1:0;
-  return (p.rating||0)*2 + Math.min(12,vel*4) + Math.min(8,(p.reviews||0)/20) + disc*18 + low*5;
-}
-function recentRealSaleForProduct(id){
-  const delivered=deliveredActiveOrders().filter(o=>(o.items||[]).some(it=>it.id===id));
-  delivered.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-  return delivered[0]||null;
-}
-function pickSmartPromo(){
-  const ps=promoSettings();
-  const candidates=activePromoProducts().sort((a,b)=>promoScore(b)-promoScore(a));
-  const now=Date.now(), cooldown=Math.max(0,Number(ps.cooldownMin)||0)*60000;
-  const eligible=candidates.filter(p=>!promoSeenAt[p.id] || now-promoSeenAt[p.id]>=cooldown);
-  const list=eligible.length?eligible:candidates;
-  if(!list.length) return null;
-  const p=list[0];
-  promoSeenAt[p.id]=now;
-  return p;
-}
-function formatSmartPromo(){
-  const ps=promoSettings();
-  const realFirst=ps.mode!=='curated';
-  if(realFirst){
-    const cutoff=Date.now()-30*86400000;
-    const delivered=deliveredActiveOrders().filter(o=>{ const t=new Date((o.date||'')+'T23:59:59').getTime(); return t && t>=cutoff && (o.items||[]).some(it=>(findProduct(it.id)?.stock||0)>0); });
-    if(delivered.length){
-      delivered.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-      for(const order of delivered){
-        const it=(order.items||[]).find(x=>(findProduct(x.id)?.stock||0)>0);
-        if(!it) continue;
-        const p=findProduct(it.id);
-        if(!p) continue;
-        const age=Math.max(0,Math.floor((Date.now()-new Date((order.date||'')+'T23:59:59').getTime())/86400000));
-        const when=age===0?'تم توصيله اليوم':age===1?'تم توصيله أمس':`تم توصيله قبل ${age} أيام`;
-        return {kind:'real',product:p,city:order.city||'الجزائر',when};
-      }
-    }
-  }
-  if(ps.mode==='real' || !ps.allowFallback) return null;
-  const p=pickSmartPromo();
-  if(!p) return null;
-  const discount=p.oldPrice&&p.oldPrice>p.price?Math.round((1-p.price/p.oldPrice)*100):0;
-  const low=p.stock<=(state.settings.lowStockThreshold||6);
-  return {kind:'curated',product:p,badge:discount?`خصم ${discount}%`:low?`متبقي ${p.stock}`:'مختارة لكِ',when:low?'عرض يستحق الانتباه':'اقتراح من oli'};
-}
-
 /* ---------------------------------------------------------------
    Promo codes
 --------------------------------------------------------------- */
 $('btn-apply-promo').addEventListener('click', ()=>{
   const code = $('promo-input').value.trim().toUpperCase();
   const msg = $('promo-msg');
-  if(couponIsActive(code)){
-    activePromo = {code, rate:Number(PROMO_CODES[code]||0)};
-    msg.textContent = code==='WHEELSHIP' ? 'تم تفعيل كود الشحن المجاني' : `تم تفعيل الكود، خصم ${Math.round(Number(PROMO_CODES[code]||0)*100)}%`;
+  if(PROMO_CODES[code]){
+    activePromo = {code, rate:PROMO_CODES[code]};
+    msg.textContent = code==='WHEELSHIP' ? 'تم تفعيل كود الشحن المجاني' : `تم تفعيل الكود، خصم ${Math.round(PROMO_CODES[code]*100)}%`;
     msg.style.color = 'var(--pink-deep)';
     toast('تم تفعيل كود الخصم', 'fa-tags');
   } else {
     activePromo = null;
-    msg.textContent = couponLimitReached(code) ? 'هذا الكود وصل للحد المسموح باستخدامه' : (couponIsExpired(code) ? 'انتهت صلاحية هذا الكود' : 'الكود غير متاح حالياً');
+    msg.textContent = 'الكود غير صحيح، جرّبي OLI10';
     msg.style.color = '#c94f4f';
   }
+  // Persist to Supabase too — this used to only live in the local
+  // `activePromo` variable, so it silently vanished if the visitor
+  // reloaded the page or reopened the site later before checking out.
   state.activePromo = activePromo;
   saveState('تطبيق كود الخصم');
   renderCartDrawer();
+});
+
+/* ---------------------------------------------------------------
+   Referral program — account/ledger lives in Supabase.
+--------------------------------------------------------------- */
+const REFERRAL_REWARD_RIYAL = 20;
+const REFERRAL_FRIEND_DISCOUNT = 0.15;
+function getReferralBalance(){ return Math.max(0, Number(state.referral?.balance||0)); }
+async function ensureReferralAccount(){
+  if(!OLI_SB || !oliCurrentUser) return;
+  try{
+    const {data,error}=await OLI_SB.rpc('oli_get_my_referral_account');
+    if(error) throw error;
+    if(data) state.referral=Object.assign({},state.referral,data);
+  }catch(e){ console.warn('Referral account load failed',e); }
+}
+async function spendReferralBalance(amount){
+  if(amount<=0 || !OLI_SB || !oliCurrentUser) return;
+  try{
+    const {data,error}=await OLI_SB.rpc('oli_spend_referral',{p_amount:Number(amount)});
+    if(error) throw error;
+    if(data) state.referral=Object.assign({},state.referral,data);
+  }catch(e){ reportCloudError(e,'خصم رصيد الإحالة'); }
+}
+function getPendingReferral(){ return state.pendingReferral || null; }
+function setPendingReferral(code){ state.pendingReferral=code; syncCloudState('referral pending'); }
+function clearPendingReferral(){ state.pendingReferral=null; syncCloudState('referral cleared'); }
+function detectReferralParam(){
+  const params = new URLSearchParams(location.search);
+  const urlRef = (params.get('ref')||'').toUpperCase().trim();
+  const existingPending = getPendingReferral();
+  const ref = urlRef || existingPending;
+  if(!ref || ref===state.referral.code) return;
+  const isNew = urlRef && urlRef!==existingPending;
+  setPendingReferral(ref);
+  PROMO_CODES['REF-'+ref] = REFERRAL_FRIEND_DISCOUNT;
+  activePromo = {code:'REF-'+ref, rate:REFERRAL_FRIEND_DISCOUNT};
+  state.activePromo = activePromo;
+  syncCloudState('referral promo');
+  if(isNew) toast('🎉 مرحباً بك! فعّلنا لك خصم 15% هدية ترحيب من صديقتك', 'fa-gift');
+}
+function referralLink(){ return location.origin + location.pathname + '?ref=' + state.referral.code; }
+function renderReferralModal(){
+  const entry = state.referral || {redeemed:0,earnedRiyal:0,spentRiyal:0,balance:0};
+  $('referral-code-display').textContent = entry.code || '—';
+  $('referral-link-display').value = entry.code ? referralLink() : 'جارٍ تجهيز رابط الدعوة...';
+  $('btn-share-whatsapp-referral').href = 'https://wa.me/?text=' + encodeURIComponent('جربي متجر oli وخذي خصم 15% على أول طلب من رابط دعوتي 💕 ' + referralLink());
+  $('referral-stat-count').textContent = entry.redeemed || 0;
+  $('referral-stat-balance').textContent = fmtDZD(getReferralBalance()) + ' دج';
+  $('referral-balance-note').classList.toggle('hidden',getReferralBalance()<=0);
+}
+$('card-referral').addEventListener('click', async ()=>{ await ensureReferralAccount(); renderReferralModal(); openModal('referral'); });
+$('btn-copy-referral-code').addEventListener('click', ()=> navigator.clipboard?.writeText(state.referral.code).then(()=> toast('تم نسخ الكود', 'fa-copy')));
+$('btn-copy-referral-link').addEventListener('click', ()=> navigator.clipboard?.writeText(referralLink()).then(()=> toast('تم نسخ الرابط', 'fa-copy')));
+$('btn-share-native-referral').addEventListener('click', ()=>{
+  if(navigator.share) navigator.share({title:'oli', text:'جربي متجر oli وخذي خصم 15% من رابط دعوتي', url:referralLink()}).catch(()=>{});
+  else navigator.clipboard?.writeText(referralLink()).then(()=> toast('تم نسخ الرابط للمشاركة', 'fa-copy'));
 });
 
 /* ---------------------------------------------------------------
@@ -3884,7 +3466,7 @@ $('checkout-form').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const fd = new FormData(e.target);
   const t = cartTotals();
-  const pendingRef = null;
+  const pendingRef = getPendingReferral();
   const order = {
     id: 'OLI-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase(),
     name: fd.get('fullname'), phone: fd.get('phone'), city: fd.get('city'), address: fd.get('address'),
@@ -3902,6 +3484,10 @@ $('checkout-form').addEventListener('submit', async (e)=>{
       enabled:true, color: state.giftWrap.color, from: state.giftWrap.from,
       to: state.giftWrap.to, message: state.giftWrap.message, fee: t.giftWrapFee
     } : null,
+    // كود الدعوة اللي جاء منه هذا الطلب (إن وجد) — يُحتسب رصيد المُحيلة
+    // فقط بعد توصيل الطلب فعلياً، مثل باقي أكواد الخصم
+    referredByCode: pendingRef || null,
+    referralCredited: false,
     rewardApplied: t.rewardApplied
   };
 
@@ -3935,6 +3521,12 @@ $('checkout-form').addEventListener('submit', async (e)=>{
   invalidateCoPurchaseCache();
   state.cart = {}; activePromo = null;
   state.giftWrap = {enabled:false, color:'pink', from:'', to:'', message:''};
+  // NOTE: spendReferralBalance() calls a server-side RPC that only ever
+  // *deducts* — it has no matching "credit back" path. Spending it before
+  // we know the order actually saved meant a failed save (no order,
+  // cleared cart) still permanently burned the customer's reward balance.
+  // So it's now only spent AFTER saveState() confirms success below.
+
   let saved = false;
   try{
     saved = await saveState('إنشاء طلب');
@@ -3960,6 +3552,8 @@ $('checkout-form').addEventListener('submit', async (e)=>{
     return;
   }
 
+  if(t.rewardApplied>0) await spendReferralBalance(t.rewardApplied);
+  clearPendingReferral();
   updateCounts(); renderCartDrawer();
   btn.disabled = false;
   btn.textContent = originalBtnText;
@@ -3978,9 +3572,8 @@ $('checkout-form').addEventListener('submit', async (e)=>{
      لو الأدمن ضغط الزر أكثر من مرة أو رجع للطلب لاحقاً.
 --------------------------------------------------------------- */
 function countDeliveredCouponUsage(order){
-  if(!order || !order.promoCode || order.frozen || Number(order.status)!==3 || order.couponCounted) return;
+  if(!order || !order.promoCode || order.couponCounted) return;
   const code = order.promoCode;
-  if(couponLimitReached(code)) return;
   state.couponUsage[code] = (state.couponUsage[code] || 0) + 1;
   order.couponCounted = true;
   creditEmployeeCommission(order, code);
@@ -3996,6 +3589,14 @@ function creditEmployeeCommission(order, code){
   emp.commissionOrders = (emp.commissionOrders||0) + 1;
   emp.commissionEarned = Math.round(((emp.commissionEarned||0) + order.total*rate) * 100)/100;
 }
+// تُحتسب مكافأة "ادعي صديقتك" فقط بعد ما يوصّل طلب صديقتك فعلياً، بنفس
+// منطق أكواد الخصم أعلاه — يمنع اللعب بالنظام عبر إلغاء الطلب لاحقاً.
+async function creditReferralOnDelivery(order){
+  if(!order || order.referralCredited || !OLI_SB) return;
+  const {data,error}=await OLI_SB.rpc('oli_credit_referral_for_order',{p_order_id:order.id,p_code:order.referredByCode||null,p_reward:Number(REFERRAL_REWARD_RIYAL)});
+  if(error) throw error;
+  if(data?.credited===true || data?.already_credited===true) order.referralCredited=!!order.referredByCode;
+}
 async function updateOrderStatus(orderId, newStatus){
   const order = state.orders.find(o=>o.id===orderId);
   if(!order) return;
@@ -4003,6 +3604,7 @@ async function updateOrderStatus(orderId, newStatus){
   order.status = newStatus;
   if(newStatus === 3 && !wasDelivered){
     countDeliveredCouponUsage(order);
+    try{ await creditReferralOnDelivery(order); }catch(e){ reportCloudError(e,'مكافأة الإحالة'); return; }
     const emp = state.employees.find(e=>e.commissionCode===order.promoCode);
     toast('تم تسجيل توصيل الطلب' + (order.promoCode ? ' — واحتُسب استخدام كود ' + order.promoCode + (emp ? ` (عمولة ${emp.name})` : '') : ''), 'fa-truck-fast');
   }
@@ -4029,7 +3631,7 @@ function openOrderDetails(orderId){
     <div class="flex items-center justify-between p-5 pb-2">
       <div>
         <h3 class="font-display text-lg" style="color:var(--ink);">تفاصيل الطلب ${order.id}</h3>
-        <p class="text-[11px] text-[var(--ink-soft)] mt-0.5">${order.date} — ${isFrozenOrder(order)?'مجمّد (لا يدخل الحسابات)':(statusLabels[order.status]||'قيد التجهيز')}</p>
+        <p class="text-[11px] text-[var(--ink-soft)] mt-0.5">${order.date} — ${statusLabels[order.status]||'قيد التجهيز'}</p>
       </div>
       <div class="flex items-center gap-1">
         <button onclick="printOrderInvoice('${order.id}')" title="طباعة فاتورة" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--pink-pale)] focus-ring"><i class="fa-solid fa-print"></i></button>
@@ -4091,7 +3693,7 @@ $('btn-coupon-check')?.addEventListener('click', ()=>{
   const emptyEl = $('coupon-check-empty');
   if(!code){ toast('اكتبي كود الخصم أولاً','fa-ticket'); return; }
   const rate = PROMO_CODES[code];
-  if(!couponIsActive(code)){
+  if(rate===undefined){
     resultEl.classList.add('hidden');
     emptyEl.classList.remove('hidden');
     return;
@@ -4220,7 +3822,7 @@ function salesVelocity(productId, windowDays){
   windowDays = windowDays || 30;
   const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - windowDays);
   let qty = 0;
-  activeOrdersOnly().forEach(o=>{
+  state.orders.forEach(o=>{
     const d = new Date(o.date);
     if(isNaN(d.getTime()) || d < cutoff) return;
     (o.items||[]).forEach(it=>{ if(it.id===productId) qty += (it.qty||0); });
@@ -4247,7 +3849,7 @@ function normalizePhone(ph){ return (ph||'').replace(/[^0-9]/g,''); }
 function detectSuspiciousOrders(){
   const flags = {}; // orderId -> سبب
   const byPhone = {};
-  activeOrdersOnly().forEach(o=>{
+  state.orders.forEach(o=>{
     const ph = normalizePhone(o.phone);
     if(!ph) return;
     (byPhone[ph] = byPhone[ph] || []).push(o);
@@ -4264,7 +3866,7 @@ function detectSuspiciousOrders(){
       list.forEach(o=> flags[o.id] = 'نفس رقم الهاتف استُخدم بأكثر من اسم مختلف');
     }
   });
-  activeOrdersOnly().forEach(o=>{
+  state.orders.forEach(o=>{
     const ph = normalizePhone(o.phone);
     if(ph && !flags[o.id] && (ph.length<9 || /^(\d)\1+$/.test(ph))){
       flags[o.id] = 'رقم الهاتف يبدو غير حقيقي';
@@ -4337,7 +3939,7 @@ function parseArabicShoppingQuery(qRaw){
 
 /* ---- 5) تحليلات ذكية للأدمن: أفضل الفئات/المدن/المنتجات + نمط أيام الأسبوع + نصائح تلقائية ---- */
 function computeStoreInsights(){
-  const orders = activeOrdersOnly();
+  const orders = state.orders;
   const catQty = {}, productQty = {}, productRevenue = {}, cityCount = {}, cityRevenue = {};
   const weekdayNames = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   const weekdayCount = [0,0,0,0,0,0,0];
@@ -4364,7 +3966,7 @@ function computeStoreInsights(){
 }
 function renderInsights(){
   if(!$('tab-insights')) return;
-  const hasOrders = activeOrdersOnly().length>0;
+  const hasOrders = state.orders.length>0;
   $('insights-empty').classList.toggle('hidden', hasOrders);
   $('insights-body').classList.toggle('hidden', !hasOrders);
   if(!hasOrders) return;
@@ -4406,28 +4008,9 @@ function renderInsights(){
 // جديدة" (0) عشان الأدمن يشوف أول شي الطلبات اللي ما زالت ما اتفتحش،
 // منفصلة تماماً عن اللي بدأ تجهيزها أو وصلت.
 let adminOrderStatusFilter = '0';
-
-/* ---------------------------------------------------------------
-   Frozen delivered orders — kept as history, excluded from all store
-   totals/analytics/promotion accounting. No database schema changes.
---------------------------------------------------------------- */
-async function toggleOrderFreeze(orderId){
-  const order=state.orders.find(o=>o.id===orderId);
-  if(!order || Number(order.status)!==3) return;
-  order.frozen=!order.frozen;
-  rebuildPromotionAccounting();
-  const ok=await saveState(order.frozen?'تجميد طلب تم توصيله':'إلغاء تجميد طلب');
-  if(!ok){ order.frozen=!order.frozen; rebuildPromotionAccounting(); toast('تعذر حفظ حالة التجميد','fa-triangle-exclamation',5000); return; }
-  toast(order.frozen?'تم تجميد الطلب — أُزيل من جميع الحسابات':'تم إلغاء تجميد الطلب — عاد إلى الحسابات','fa-snowflake');
-  renderAdmin();
-}
-window.toggleOrderFreeze = toggleOrderFreeze;
-
 function renderAdmin(){
-  rebuildPromotionAccounting();
-  const accountedOrders = activeOrdersOnly();
-  $('kpi-orders').textContent = accountedOrders.length;
-  $('kpi-sales').textContent = fmtDZD(accountedOrders.reduce((s,o)=>s+o.total,0)) + ' دج';
+  $('kpi-orders').textContent = state.orders.length;
+  $('kpi-sales').textContent = fmtDZD(state.orders.reduce((s,o)=>s+o.total,0)) + ' دج';
   $('kpi-wishlist').textContent = state.wishlist.length;
   $('kpi-jobs').textContent = state.jobs.length;
   renderInsights();
@@ -4469,14 +4052,13 @@ function renderAdmin(){
     {key:'1', label:'يُجهّز', icon:'fa-box'},
     {key:'2', label:'في الطريق', icon:'fa-truck-fast'},
     {key:'3', label:'تم التوصيل', icon:'fa-circle-check'},
-    {key:'frozen', label:'المجمدة', icon:'fa-snowflake'},
     {key:'all', label:'الكل', icon:'fa-layer-group'}
   ];
-  if(!['0','1','2','3','frozen','all'].includes(adminOrderStatusFilter)) adminOrderStatusFilter = '0';
+  if(!['0','1','2','3','all'].includes(adminOrderStatusFilter)) adminOrderStatusFilter = '0';
   const tabsEl = $('orders-status-tabs');
   if(tabsEl){
     tabsEl.innerHTML = statusTabs.map(t=>{
-      const count = t.key==='all' ? activeOrdersOnly().length : (t.key==='frozen' ? state.orders.filter(o=>!!o.frozen).length : activeOrdersOnly().filter(o=>String(o.status)===t.key).length);
+      const count = t.key==='all' ? state.orders.length : state.orders.filter(o=>String(o.status)===t.key).length;
       return `<button type="button" class="cat-chip pill px-4 py-2 text-xs font-bold shrink-0 ${adminOrderStatusFilter===t.key?'active':''}" data-order-status-tab="${t.key}">
         <i class="fa-solid ${t.icon}"></i> ${t.label} <span class="font-black" style="color:var(--pink-deep);">(${count})</span>
       </button>`;
@@ -4485,8 +4067,8 @@ function renderAdmin(){
       btn.addEventListener('click', ()=>{ adminOrderStatusFilter = btn.dataset.orderStatusTab; renderAdmin(); });
     });
   }
-  let orderList = (adminOrderStatusFilter==='frozen' ? state.orders.filter(o=>!!o.frozen) : activeOrdersOnly()).slice().reverse();
-  if(adminOrderStatusFilter!=='all' && adminOrderStatusFilter!=='frozen') orderList = orderList.filter(o=>String(o.status)===adminOrderStatusFilter);
+  let orderList = state.orders.slice().reverse();
+  if(adminOrderStatusFilter!=='all') orderList = orderList.filter(o=>String(o.status)===adminOrderStatusFilter);
   if(orderSearch){
     orderList = orderList.filter(o =>
       (o.id||'').toLowerCase().includes(orderSearch) ||
@@ -4502,7 +4084,7 @@ function renderAdmin(){
     const moreCount = items.length - shownThumbs.length;
     const suspiciousReason = suspiciousFlags[o.id];
     return `
-    <tr class="${o.frozen?'oli-frozen-row':''}"${suspiciousReason && !o.frozen?' style="background:#fff8ee;"':''}>
+    <tr${suspiciousReason?' style="background:#fff8ee;"':''}>
       <td class="font-bold">${o.id}${suspiciousReason?` <i class="fa-solid fa-triangle-exclamation" style="color:#a15c00;" title="${suspiciousReason}"></i>`:''}</td><td>${o.name}</td><td>${o.city}</td>
       <td style="white-space:normal;max-width:220px;">
         ${items.length ? `
@@ -4516,7 +4098,7 @@ function renderAdmin(){
       <td>
         <div class="flex items-center gap-1.5">
           <button onclick="openOrderDetails('${o.id}')" class="btn-outline px-3 py-1.5 text-[11px]">التفاصيل</button>
-          ${o.frozen ? `<button onclick="toggleOrderFreeze('${o.id}')" class="btn-gold px-3 py-1.5 text-[11px]"><i class="fa-solid fa-snowflake"></i> إلغاء التجميد</button>` : (o.status<3 ? `<button onclick="updateOrderStatus('${o.id}', ${o.status+1})" class="btn-sky px-3 py-1.5 text-[11px]">ترقية الحالة</button>` : `<button onclick="toggleOrderFreeze('${o.id}')" class="btn-outline px-3 py-1.5 text-[11px]"><i class="fa-solid fa-snowflake"></i> تجميد</button>`)}
+          ${o.status<3 ? `<button onclick="updateOrderStatus('${o.id}', ${o.status+1})" class="btn-sky px-3 py-1.5 text-[11px]">ترقية الحالة</button>` : '<span class="text-[11px] font-bold" style="color:var(--gold);">مكتمل</span>'}
           <button onclick="printOrderInvoice('${o.id}')" title="طباعة فاتورة" class="w-7 h-7 rounded-full flex items-center justify-center focus-ring" style="background:var(--pink-pale);color:var(--pink-deep);"><i class="fa-solid fa-print text-[11px]"></i></button>
           <button onclick="copyOrderDetails('${o.id}')" title="نسخ تفاصيل الطلب" class="w-7 h-7 rounded-full flex items-center justify-center focus-ring" style="background:var(--pink-pale);color:var(--pink-deep);"><i class="fa-solid fa-copy text-[11px]"></i></button>
         </div>
@@ -4541,7 +4123,6 @@ function renderAdmin(){
   renderAdminReviews();
   fillAdminSettingsForm();
   renderAdminMusic();
-  renderPromoRadar();
 }
 
 /* ---------------------------------------------------------------
@@ -4874,112 +4455,37 @@ $('emp-search')?.addEventListener('input', renderAdminEmployees);
 $('emp-status-filter')?.addEventListener('change', renderAdminEmployees);
 $('btn-export-employees')?.addEventListener('click', exportEmployeesCSV);
 
-function renderPromoRadar(){
-  const el=$('promo-radar-grid');
-  if(!el) return;
-  const ps=promoSettings();
-  const list=activePromoProducts().sort((a,b)=>promoScore(b)-promoScore(a)).slice(0,6);
-  const cards=[];
-  list.forEach(p=>{
-    const vel=salesVelocity(p.id,30);
-    const disc=p.oldPrice&&p.oldPrice>p.price?Math.round((1-p.price/p.oldPrice)*100):0;
-    const low=p.stock<=(state.settings.lowStockThreshold||6);
-    const reason=disc?`خصم ${disc}%`:low?`باقي ${p.stock} فقط`:vel>0?`سرعة بيع ${vel.toFixed(1)} قطعة/يوم`:`تقييم ${Number(p.rating||0).toFixed(1)}`;
-    cards.push(`<div class="oli-promo-radar-card"><div class="title">${p.name}</div><div class="meta"><i class="fa-solid fa-box"></i> المخزون: ${p.stock} · ${reason}</div><div class="meta"><i class="fa-solid fa-wand-magic-sparkles"></i> ${disc?'مرشح لحملة خصم':low?'مرشح لرسالة استعجال':'مرشح للعرض التحريري'}</div></div>`);
-  });
-  el.innerHTML=cards.join('')||'<p class="text-xs text-[var(--ink-soft)]">لا توجد منتجات آمنة للترويج الآن وفق القواعد الحالية.</p>';
-}
-
-let activeCouponGroup='employees';
-function couponLabel(code){ return promoMeta()[code]?.label || (couponGroup(code)==='employees' ? ((state.employees||[]).find(e=>e.commissionCode===code)?.name||'موظف/ة') : couponGroup(code)==='celebrities' ? 'مشهور/ة' : 'المتجر'); }
-function couponStatusHTML(code){
-  const m=promoMeta()[code]||{};
-  const active=couponIsActive(code);
-  const expired=couponIsExpired(code);
-  const limited=couponLimitReached(code);
-  const label=active?'نشط':(expired?'منتهي':(limited?'اكتمل الحد':'موقوف'));
-  return `<span class="oli-coupon-status" style="background:${active?'#e8f7ef':'#fde3e3'};color:${active?'#287a4d':'#b42318'};"><i class="fa-solid ${active?'fa-circle-check':'fa-circle-pause'}"></i>${label}</span>`;
-}
-function renderCouponSummary(){
-  const el=$('coupon-group-summary'); if(!el) return;
-  const groups=[['employees','الموظفين'],['celebrities','المشاهير'],['store','المتجر']];
-  el.innerHTML=groups.map(([g,label])=>{
-    const codes=Object.keys(PROMO_CODES).filter(c=>couponGroup(c)===g);
-    const active=codes.filter(c=>couponIsActive(c)).length;
-    return `<div class="item"><div class="n">${codes.length}</div><div class="l">${label} · ${active} نشط</div></div>`;
-  }).join('');
-}
 function renderAdminCoupons(){
-  const tbody=$('admin-coupons-body'); if(!tbody) return;
-  renderCouponSummary();
-  qsa('[data-coupon-group]', $('coupon-group-tabs')).forEach(btn=>btn.classList.toggle('active',btn.dataset.couponGroup===activeCouponGroup));
-  const codes=Object.keys(PROMO_CODES).filter(code=>couponGroup(code)===activeCouponGroup);
-  $('coupon-group-hint').textContent = activeCouponGroup==='employees' ? 'أكواد الموظفين ترتبط تلقائياً بكود العمولة الموجود للموظفة.' : activeCouponGroup==='celebrities' ? 'للمشاهير: حددي الاسم/الحملة وتاريخ الانتهاء والحد.' : 'أكواد المتجر العامة والعروض الموسمية.';
-  tbody.innerHTML=codes.map(code=>{
-    const m=promoMeta()[code]||{};
-    const usage=couponUsageCount(code); const limit=Number(m.limit||0);
-    return `<tr>
+  const tbody = $('admin-coupons-body');
+  if(!tbody) return;
+  const codes = Object.keys(PROMO_CODES);
+  tbody.innerHTML = codes.map(code=>`
+    <tr>
       <td class="font-bold">${code}</td>
-      <td>${couponLabel(code)}</td>
-      <td>${code==='WHEELSHIP'?'شحن مجاني':Math.round(Number(PROMO_CODES[code]||0)*100)+'%'}</td>
-      <td class="font-black" style="color:var(--pink-deep);">${usage}${limit?` / ${limit}`:''}</td>
-      <td>${couponStatusHTML(code)}</td>
-      <td>${m.expiresAt||'—'}</td>
-      <td><div class="flex flex-wrap gap-1">
-        <button onclick="editCoupon('${code}')" class="btn-outline px-2 py-1 text-[10px]">تعديل</button>
-        <button onclick="toggleCoupon('${code}')" class="btn-sky px-2 py-1 text-[10px]">${m.active===false?'تفعيل':'إيقاف'}</button>
-        <button onclick="deleteCoupon('${code}')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">حذف</button>
-      </div></td>
-    </tr>`;
-  }).join('') || '<tr><td colspan="7" class="text-center py-6 text-[var(--ink-soft)]">لا توجد أكواد في هذا القسم</td></tr>';
-}
-function resetCouponForm(){
-  $('admin-coupon-form')?.reset();
-  if($('coupon-original-code')) $('coupon-original-code').value='';
-  $('coupon-cancel-edit')?.classList.add('hidden');
-}
-function editCoupon(code){
-  const m=promoMeta()[code]||{};
-  $('coupon-original-code').value=code;
-  $('coupon-code').value=code;
-  $('coupon-label').value=m.label||'';
-  $('coupon-percent').value=Math.round(Number(PROMO_CODES[code]||0)*100);
-  $('coupon-limit').value=m.limit||'';
-  $('coupon-expiry').value=m.expiresAt||'';
-  $('coupon-cancel-edit').classList.remove('hidden');
-  $('coupon-code').focus();
-}
-function toggleCoupon(code){
-  const m=promoMeta()[code]||(promoMeta()[code]={group:couponGroup(code),active:true});
-  m.active=m.active===false;
-  saveState(); renderAdminCoupons();
+      <td>${code==='WHEELSHIP' ? 'شحن مجاني' : Math.round((PROMO_CODES[code]||0)*100) + '%'}</td>
+      <td class="font-black" style="color:var(--pink-deep);">${state.couponUsage[code] || 0}</td>
+      <td><button onclick="deleteCoupon('${code}')" class="px-2 py-1 text-[10px] rounded-full font-bold" style="background:#fde3e3;color:#c94f4f;">حذف</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" class="text-center py-6 text-[var(--ink-soft)]">لا توجد أكواد بعد</td></tr>';
 }
 function deleteCoupon(code){
   if(!confirm('هل تريدين حذف كود الخصم «'+code+'»؟')) return;
-  delete PROMO_CODES[code]; delete promoMeta()[code];
-  saveState(); resetCouponForm(); renderAdminCoupons(); toast('تم حذف الكود','fa-ticket');
+  delete PROMO_CODES[code];
+  saveState();
+  renderAdminCoupons();
+  toast('تم حذف الكود', 'fa-ticket');
 }
-$('coupon-group-tabs')?.addEventListener('click',(e)=>{
-  const btn=e.target.closest('[data-coupon-group]'); if(!btn) return;
-  activeCouponGroup=btn.dataset.couponGroup; resetCouponForm(); renderAdminCoupons();
-});
-$('coupon-cancel-edit')?.addEventListener('click',()=>{ resetCouponForm(); renderAdminCoupons(); });
-$('admin-coupon-form')?.addEventListener('submit',(e)=>{
+$('admin-coupon-form')?.addEventListener('submit', (e)=>{
   e.preventDefault();
-  const original=($('coupon-original-code').value||'').trim().toUpperCase();
-  const code=($('coupon-code').value||'').trim().toUpperCase();
-  const label=($('coupon-label').value||'').trim();
-  const pct=Math.max(0,Math.min(90,parseFloat($('coupon-percent').value)||0));
-  const limit=Math.max(0,parseInt($('coupon-limit').value)||0);
-  const expiry=$('coupon-expiry').value||'';
-  if(!code){ toast('اكتبي الكود أولاً','fa-ticket'); return; }
-  if(original && original!==code) delete PROMO_CODES[original];
-  PROMO_CODES[code]=pct/100;
-  promoMeta()[code]=Object.assign({},promoMeta()[code]||{}, {group:activeCouponGroup,label:label||undefined,limit,expiresAt:expiry,active:true});
-  saveState(); resetCouponForm(); renderAdminCoupons(); toast('تم حفظ الكود','fa-ticket');
+  const code = $('coupon-code').value.trim().toUpperCase();
+  const pct = parseFloat($('coupon-percent').value);
+  if(!code || !pct) return;
+  PROMO_CODES[code] = pct/100;
+  saveState();
+  $('admin-coupon-form').reset();
+  renderAdminCoupons();
+  toast('تمت إضافة الكود', 'fa-ticket');
 });
-window.editCoupon=editCoupon;
-window.toggleCoupon=toggleCoupon;
 
 /* ---------------------------------------------------------------
    Admin: products CRUD
@@ -5108,7 +4614,7 @@ $('order-search')?.addEventListener('input', renderAdmin);
 $('btn-export-orders')?.addEventListener('click', ()=>{
   const rows = [['رقم الطلب','العميلة','الجوال','المدينة','العنوان','المنتجات','الإجمالي','رسوم التوصيل','كود الخصم','الحالة','التاريخ']];
   const statusLabels = ['قيد التجهيز','يُجهّز','في الطريق','تم التوصيل'];
-  activeOrdersOnly().forEach(o=>{
+  state.orders.forEach(o=>{
     const productsText = (Array.isArray(o.items)?o.items:[]).map(it=>`${it.name||'منتج'} ×${it.qty||1}`).join(' / ');
     rows.push([o.id,o.name,o.phone||'',o.city,o.address||'',productsText,o.total,o.delivery||0,o.promoCode||'',statusLabels[o.status]||'قيد التجهيز',o.date]);
   });
@@ -5203,22 +4709,12 @@ $('admin-review-form')?.addEventListener('submit', (e)=>{
 --------------------------------------------------------------- */
 function fillAdminSettingsForm(){
   const s = state.settings;
-  const p = promoSettings();
   if($('set-show-views')) $('set-show-views').checked = !!s.showFakeViews;
   if($('set-views-min')) $('set-views-min').value = s.fakeViewsMin;
   if($('set-views-max')) $('set-views-max').value = s.fakeViewsMax;
   if($('set-show-notif')) $('set-show-notif').checked = !!s.showPurchaseNotif;
-  if($('set-notif-cities')) $('set-notif-cities').value = (state.notifCities||[]).join('، ');
-  if($('set-promo-engine-enabled')) $('set-promo-engine-enabled').checked = p.enabled!==false;
-  if($('set-promo-mode')) $('set-promo-mode').value = p.mode || 'smart';
-  if($('set-promo-interval')) $('set-promo-interval').value = p.intervalSec || 11;
-  if($('set-promo-max-session')) $('set-promo-max-session').value = p.maxPerSession ?? 8;
-  if($('set-promo-min-stock')) $('set-promo-min-stock').value = p.minStock ?? 1;
-  if($('set-promo-cooldown')) $('set-promo-cooldown').value = p.cooldownMin ?? 8;
-  if($('set-promo-discounted-only')) $('set-promo-discounted-only').checked = !!p.onlyDiscounted;
-  if($('set-promo-lowstock-only')) $('set-promo-lowstock-only').checked = !!p.onlyLowStock;
-  if($('set-promo-fallback')) $('set-promo-fallback').checked = p.allowFallback!==false;
-  // Existing site settings fields remain fully intact.
+  if($('set-notif-interval')) $('set-notif-interval').value = s.notifIntervalSec;
+  if($('set-notif-cities')) $('set-notif-cities').value = state.notifCities.join('، ');
   if($('set-hero-title')) $('set-hero-title').value = s.heroTitle;
   if($('set-hero-sub')) $('set-hero-sub').value = s.heroSubtitle;
   if($('set-ticker')) $('set-ticker').value = s.tickerText;
@@ -5240,25 +4736,15 @@ function fillAdminSettingsForm(){
 }
 $('btn-save-marketing')?.addEventListener('click', ()=>{
   const s = state.settings;
-  const p = s.promoEngine || (s.promoEngine={});
-  s.showFakeViews = !!$('set-show-views')?.checked;
-  s.fakeViewsMin = Math.max(1, parseInt($('set-views-min')?.value)||8);
-  s.fakeViewsMax = Math.max(s.fakeViewsMin, parseInt($('set-views-max')?.value)||64);
-  s.showPurchaseNotif = !!$('set-show-notif')?.checked;
-  const cities = ($('set-notif-cities')?.value||'').split(/[,،]/).map(c=>c.trim()).filter(Boolean);
+  s.showFakeViews = $('set-show-views').checked;
+  s.fakeViewsMin = parseInt($('set-views-min').value)||8;
+  s.fakeViewsMax = parseInt($('set-views-max').value)||64;
+  s.showPurchaseNotif = $('set-show-notif').checked;
+  s.notifIntervalSec = Math.max(4, parseInt($('set-notif-interval').value)||9);
+  const cities = $('set-notif-cities').value.split(/[,،]/).map(c=>c.trim()).filter(Boolean);
   if(cities.length) state.notifCities = cities;
-  p.enabled = !!$('set-promo-engine-enabled')?.checked;
-  p.mode = $('set-promo-mode')?.value || 'smart';
-  p.intervalSec = Math.max(5, parseInt($('set-promo-interval')?.value)||11);
-  p.maxPerSession = Math.max(0, parseInt($('set-promo-max-session')?.value)||8);
-  p.minStock = Math.max(1, parseInt($('set-promo-min-stock')?.value)||1);
-  p.cooldownMin = Math.max(0, parseInt($('set-promo-cooldown')?.value)||8);
-  p.onlyDiscounted = !!$('set-promo-discounted-only')?.checked;
-  p.onlyLowStock = !!$('set-promo-lowstock-only')?.checked;
-  p.allowFallback = $('set-promo-fallback')?.checked!==false;
   saveState();
   renderProducts();
-  renderPromoRadar();
   startPurchaseNotifCycle();
   $('marketing-save-msg').textContent = 'تم الحفظ ✓';
   setTimeout(()=> $('marketing-save-msg').textContent='', 2000);
@@ -5283,7 +4769,6 @@ $('btn-save-settings')?.addEventListener('click', ()=>{
   s.colorSky = $('set-color-sky').value || SETTINGS_DEFAULTS.colorSky;
   saveState();
   applySiteSettings();
-  renderPromoRadar();
   applyColorTheme();
   $('settings-save-msg').textContent = 'تم الحفظ ✓';
   setTimeout(()=> $('settings-save-msg').textContent='', 2000);
@@ -5487,17 +4972,14 @@ function renderReviews(){
 --------------------------------------------------------------- */
 let heroSpotlightTimer = null, heroSpotlightIdx = 0, heroSpotlightList = [];
 function pickHeroSpotlightProducts(){
-  const cs=cosmosSettings();
-  const featured=findProduct(cs.featuredProductId);
-  const ranked=PRODUCTS
-    .filter(p=>(p.stock||0) > 0 && !cs.blockedProductIds.includes(p.id))
+  return PRODUCTS
+    .filter(p=>(p.stock||0) > 0)
     .sort((a,b)=>{
-      // The live spotlight follows the same real opportunity engine used by COSMOS.
-      // No fabricated views, clicks, purchases or random ranking are introduced.
-      return cosmosProductProfile(b).opportunity - cosmosProductProfile(a).opportunity;
-    });
-  if(featured && Number(featured.stock)>0 && !cs.blockedProductIds.includes(featured.id)) return [featured,...ranked.filter(p=>p.id!==featured.id)].slice(0,5);
-  return ranked.slice(0,5);
+      const discA = a.oldPrice ? (a.oldPrice-a.price)/a.oldPrice : 0;
+      const discB = b.oldPrice ? (b.oldPrice-b.price)/b.oldPrice : 0;
+      return (discB*2 + (b.rating||0)*0.3) - (discA*2 + (a.rating||0)*0.3);
+    })
+    .slice(0, 5);
 }
 function renderHeroSpotlightSlide(){
   const el = $('hero-spotlight');
@@ -5540,24 +5022,14 @@ function initHeroSpotlight(){
    Countdown timer
 --------------------------------------------------------------- */
 function startCountdown(){
-  // Never display a fabricated countdown. Show a timer only when an actual
-  // active coupon has a real expiration date in the current store state.
-  const box=$('countdown');
-  if(!box) return;
-  const tick=()=>{
-    const now=Date.now();
-    const expiries=Object.keys(PROMO_CODES||{}).map(code=>promoMeta()[code]?.expiresAt).filter(Boolean)
-      .map(d=>new Date(d+'T23:59:59').getTime()).filter(t=>Number.isFinite(t)&&t>now);
-    if(!expiries.length){ box.classList.add('hidden'); return; }
-    const total=Math.max(0,Math.min(...expiries)-now);
-    box.classList.remove('hidden');
-    const h=Math.floor(total/3600000), m=Math.floor((total%3600000)/60000), sec=Math.floor((total%60000)/1000);
-    $('cd-h').textContent=String(h).padStart(2,'0');
-    $('cd-m').textContent=String(m).padStart(2,'0');
-    $('cd-s').textContent=String(sec).padStart(2,'0');
-  };
-  tick();
-  setInterval(tick,1000);
+  let total = 12*3600 + 45*60 + 30;
+  setInterval(()=>{
+    total = total>0 ? total-1 : 12*3600+45*60+30;
+    const h = Math.floor(total/3600), m = Math.floor((total%3600)/60), s = total%60;
+    $('cd-h').textContent = String(h).padStart(2,'0');
+    $('cd-m').textContent = String(m).padStart(2,'0');
+    $('cd-s').textContent = String(s).padStart(2,'0');
+  }, 1000);
 }
 
 /* ---------------------------------------------------------------
@@ -5571,37 +5043,21 @@ function startCountdown(){
 let notifTimer = null;
 const NOTIF_TIMES = ['قبل دقيقتين','قبل 5 دقائق','قبل 12 دقيقة','قبل ساعة','قبل 20 دقيقة','منذ قليل'];
 function showPurchaseNotif(){
-  const ps=promoSettings();
-  const att=cosmosAttention();
-  if(att.budget<25) return;
-  if(!state.settings.showPurchaseNotif || !ps.enabled) return;
-  if(Number(ps.maxPerSession)>0 && promoSessionCount>=Number(ps.maxPerSession)) return;
-  const promo=formatSmartPromo();
-  if(!promo) return;
-  const el=$('purchase-notif');
-  const p=promo.product;
-  let title='';
-  let sub='';
-  if(promo.kind==='real'){
-    title=`طلب حقيقي من ${promo.city}`;
-    sub=`${p.name} — ${promo.when}`;
-  }else{
-    title=promo.badge || 'مختارة لكِ';
-    sub=`${p.name} — ${promo.when}`;
-  }
-  el.innerHTML=`<span class="pn-close" id="pn-close"><i class="fa-solid fa-xmark"></i></span>
+  if(!state.settings.showPurchaseNotif || !PRODUCTS.length) return;
+  const p = PRODUCTS[Math.floor(Math.random()*PRODUCTS.length)];
+  const city = state.notifCities[Math.floor(Math.random()*state.notifCities.length)];
+  const when = NOTIF_TIMES[Math.floor(Math.random()*NOTIF_TIMES.length)];
+  const el = $('purchase-notif');
+  el.innerHTML = `<span class="pn-close" id="pn-close"><i class="fa-solid fa-xmark"></i></span>
     <img src="${p.img}" alt="" onerror="${OLI_IMG_ONERROR}">
-    <div class="text-[11px] leading-5"><span class="font-bold">${title}</span><br><span class="font-bold" style="color:var(--pink-deep);">${p.name}</span><br><span class="text-[var(--ink-soft)]">${promo.kind==='real'?'بيع موثّقاً ضمن الطلبات الموصلة':sub}</span></div>`;
-  $('pn-close').addEventListener('click',()=>el.classList.remove('show'));
+    <div class="text-[11px] leading-5"><span class="font-bold">شخص من ${city}</span> اقتنت للتو<br><span class="font-bold" style="color:var(--pink-deep);">${p.name}</span><br><span class="text-[var(--ink-soft)]">${when}</span></div>`;
+  $('pn-close').addEventListener('click', ()=> el.classList.remove('show'));
   el.classList.add('show');
-  promoSessionCount++;
-  setTimeout(()=>el.classList.remove('show'),5200);
+  setTimeout(()=> el.classList.remove('show'), 5200);
 }
-
 function startPurchaseNotifCycle(){
   if(notifTimer) clearInterval(notifTimer);
-  promoSessionCount=0;
-  const sec = Math.max(5, Number(state.settings.promoEngine?.intervalSec || state.settings.notifIntervalSec || 11));
+  const sec = Math.max(4, state.settings.notifIntervalSec||9);
   notifTimer = setInterval(showPurchaseNotif, sec*1000);
   setTimeout(showPurchaseNotif, 3000);
 }
@@ -5627,7 +5083,6 @@ function applySiteSettings(){
     document.title = document.title.replace(/^[^•]+/, s.siteName + ' ');
   }
   renderProducts();
-  renderPromoRadar();
 }
 /* ---------------------------------------------------------------
    Command palette
@@ -5654,7 +5109,7 @@ function renderCmdk(q){
   if(adminOn){
     adminTabs = Object.entries(ADMIN_TAB_LABELS).filter(([id,label])=> !q || label.toLowerCase().includes(q) || id.includes(q));
     if(q){
-      adminOrders = activeOrdersOnly().filter(o=>
+      adminOrders = (state.orders||[]).filter(o=>
         (o.id||'').toLowerCase().includes(q) || (o.name||'').toLowerCase().includes(q) || (o.city||'').toLowerCase().includes(q)
       ).slice(0,5);
     }
@@ -5761,6 +5216,7 @@ async function init(){
   // First establish the Supabase identity, then hydrate every piece of persistent state.
   await restoreSupabaseSession();
   await hydrateCloudState(isAdminAuthed());
+  detectReferralParam();
   if(state.activePromo) activePromo = state.activePromo;
   renderCategories();
   renderChips();
@@ -5865,9 +5321,7 @@ function printOrderInvoice(orderId){
     <div class="totals">${order.delivery?`<div class="muted">التوصيل: ${fmtDZD(order.delivery)} دج</div>`:''}<b>الإجمالي الكلي: ${fmtDZD(order.total)} دج</b></div>
     <p class="no-print" style="margin-top:20px;"><button onclick="window.print()">طباعة</button></p>
     ${scriptTag}
-    
-
-</body></html>`);
+    </body></html>`);
   win.document.close();
 }
 function copyOrderDetails(orderId){
@@ -6078,7 +5532,7 @@ function renderSalesTrend(){
   }
   const byKey = {};
   buckets.forEach(b=> byKey[b.key]=b);
-  activeOrdersOnly().forEach(o=>{
+  state.orders.forEach(o=>{
     const key = (o.date||'').slice(0,10);
     if(byKey[key]) byKey[key].total += (o.total||0);
   });
@@ -6321,167 +5775,6 @@ setTimeout(()=>{ const s=document.getElementById('splash'); if(s) s.classList.ad
 
 })();
 
-</script>
-
-<script>
-(function () {
-  "use strict";
-  window.OLI_AUTO = {
-    getState: function () { return window.OLI_STATE || window.state || window.appState || {}; },
-    getProducts: function () {
-      var s=this.getState();
-      return Array.isArray(s.products) ? s.products : (Array.isArray(window.PRODUCTS) ? window.PRODUCTS : []);
-    },
-    getOrders: function () { var s=this.getState(); return Array.isArray(s.orders) ? s.orders : []; },
-    stock: function (p) {
-      var n=Number(p && (p.stock != null ? p.stock : (p.inventory != null ? p.inventory : p.quantity)));
-      return Number.isFinite(n) ? n : 0;
-    },
-    id: function (p) { return String(p && (p.id != null ? p.id : p.product_id) || ""); },
-    delivered: function (o) {
-      var st=String(o && (o.status != null ? o.status : o.order_status) || "").toLowerCase();
-      return ["delivered","completed","تم التوصيل","مكتمل"].indexOf(st)>=0 && !(o && (o.frozen || o.is_frozen));
-    },
-    bestOpportunity: function () {
-      var self=this, products=this.getProducts(), orders=this.getOrders(), ranked=[];
-      products.forEach(function(p){
-        var id=self.id(p), stock=self.stock(p); if(!id || stock<=0) return;
-        var sales=0;
-        orders.forEach(function(o){
-          if(!self.delivered(o)) return;
-          var items=Array.isArray(o.items)?o.items:(Array.isArray(o.products)?o.products:[]);
-          if(items.some(function(x){return String(x && (x.id!=null?x.id:x.product_id) || "")===id;})) sales++;
-        });
-        ranked.push({product:p,score:sales*10+Math.min(stock,10)+Number(p.rating||0)*3+Number(p.discount||p.discountPercent||0)*0.5});
-      });
-      ranked.sort(function(a,b){return b.score-a.score;});
-      return ranked.length?ranked[0]:null;
-    },
-    health: function () {
-      var products=this.getProducts(), orders=this.getOrders();
-      return {availableProducts:products.filter(function(p){return this.stock(p)>0;},this).length, deliveredOrders:orders.filter(this.delivered.bind(this)).length, frozenOrders:orders.filter(function(o){return !!(o&&(o.frozen||o.is_frozen));}).length};
-    },
-    executeBest: function () {
-      var hit=this.bestOpportunity(); if(!hit) return {ok:false,reason:"لا توجد فرصة حقيقية قابلة للتنفيذ حالياً."};
-      var s=this.getState(); s.settings=s.settings||{}; s.settings.heroProductId=this.id(hit.product); s.settings.heroProductPinned=true;
-      if(typeof window.OLI_SAVE_STATE==="function"){try{window.OLI_SAVE_STATE(s);}catch(e){}}
-      window.dispatchEvent(new CustomEvent("oli:auto-action",{detail:{type:"hero-product",productId:this.id(hit.product)}}));
-      return {ok:true,product:hit.product,score:hit.score};
-    }
-  };
-})();
-</script>
-
-<script>
-(function(){
-  'use strict';
-  function OLIReality(){
-    const products=Array.isArray(PRODUCTS)?PRODUCTS:[];
-    const orders=Array.isArray(state.orders)?state.orders:[];
-    const activeDelivered=orders.filter(o=>{
-      const st=String(o?.status??o?.order_status??'').toLowerCase();
-      return ['delivered','completed','تم التوصيل','مكتمل'].includes(st) && !o?.frozen && !o?.is_frozen;
-    });
-    const items=o=>Array.isArray(o?.items)?o.items:(Array.isArray(o?.products)?o.products:[]);
-    const pid=x=>String(x?.id??x?.product_id??'');
-    const qty=x=>Math.max(1,Number(x?.qty??x?.quantity??1)||1);
-    const date=o=>new Date(o?.date||o?.created_at||o?.createdAt||0).getTime();
-    const now=Date.now();
-    const inDays=(o,d)=>{const t=date(o);return t>0&&now-t<=d*86400000;};
-    const salesFor=(p,days)=>activeDelivered.reduce((n,o)=>inDays(o,days)?n+items(o).reduce((a,x)=>a+(pid(x)===String(p.id)?qty(x):0),0):n,0);
-    function horizon(){
-      const rows=products.filter(p=>Number(p.stock)>0).map(p=>{const s30=salesFor(p,30);return {p,s30,days:s30>0?(Number(p.stock)/s30*30):null};});
-      return rows.filter(x=>x.days!==null).sort((a,b)=>a.days-b.days)[0]||null;
-    }
-    function gravity(){
-      const map=new Map();
-      activeDelivered.forEach(o=>{
-        const ids=[...new Set(items(o).map(pid).filter(Boolean))];
-        for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){
-          const k=ids[i]<ids[j]?ids[i]+'|'+ids[j]:ids[j]+'|'+ids[i];
-          map.set(k,(map.get(k)||0)+1);
-        }
-      });
-      let best=null; for(const [k,n] of map){if(!best||n>best.n)best={k,n};}
-      if(!best)return null;
-      const [a,b]=best.k.split('|');
-      return {a:products.find(p=>String(p.id)===a),b:products.find(p=>String(p.id)===b),n:best.n};
-    }
-    function critique(){
-      const recent=activeDelivered.filter(o=>inDays(o,7)).length;
-      const prior=activeDelivered.filter(o=>{const t=date(o);return t>0&&now-t>7*86400000&&now-t<=14*86400000;}).length;
-      if(!recent&&!prior)return {label:'UNKNOWN',text:'لا توجد بيانات كافية للحكم على اتجاه الطلب.'};
-      if(recent>prior)return {label:'UP',text:'المبيعات الموصلة الأخيرة أعلى من الأسبوع السابق.'};
-      if(recent<prior)return {label:'DOWN',text:'المبيعات الموصلة الأخيرة أقل من الأسبوع السابق؛ لا ترفع الترويج تلقائياً.'};
-      return {label:'FLAT',text:'المبيعات الموصلة متقاربة بين الفترتين.'};
-    }
-    function audit(){
-      const c=cosmosSettings(); const issues=[];
-      const hero=c.featuredProductId?findProduct(c.featuredProductId):null;
-      if(hero&&Number(hero.stock)<=0)issues.push({type:'hero',id:hero.id});
-      const invalid=c.blockedProductIds.filter(id=>{const p=findProduct(id);return !p||Number(p.stock)<=0;});
-      if(invalid.length)issues.push({type:'blocked',ids:invalid});
-      const promo=promoSettings();
-      if(promo.minStock<1)issues.push({type:'promo-min-stock'});
-      products.filter(p=>Number(p.stock)<=0).forEach(p=>{
-        if(c.featuredProductId===p.id||c.blockedProductIds.includes(p.id))issues.push({type:'stock',id:p.id});
-      });
-      return issues;
-    }
-    function repair(){
-      const c=cosmosSettings();
-      c.blockedProductIds=c.blockedProductIds.filter(id=>{const p=findProduct(id);return p&&Number(p.stock)>0;});
-      if(c.featuredProductId){const p=findProduct(c.featuredProductId);if(!p||Number(p.stock)<=0)c.featuredProductId=null;}
-      const pe=promoSettings(); pe.minStock=Math.max(1,Number(pe.minStock)||1);
-      rebuildPromotionAccounting();
-      saveState('OLI COSMOS: حارس الواقع — إصلاح آمن');
-      if(typeof initHeroSpotlight==='function')initHeroSpotlight();
-      if(typeof renderCosmos==='function')renderCosmos();
-      toast('تم إصلاح الحالات غير الصالحة فقط — بدون تغيير Supabase أو بنية النظام','fa-shield-halved');
-    }
-    function render(){
-      const h=horizon(),g=gravity(),cr=critique(),issues=audit();
-      const hs=document.getElementById('cosmos-horizon'),gs=document.getElementById('cosmos-gravity'),cs=document.getElementById('cosmos-critique'),ss=document.getElementById('cosmos-reality-status');
-      if(hs)hs.textContent=h?'أقرب نفاد تقديري: '+h.p.name+' خلال ~'+Math.max(1,Math.round(h.days))+' يوم من سرعة البيع الموصلة.':'UNKNOWN — لا توجد مبيعات موصلة كافية لحساب أفق المخزون.';
-      if(gs)gs.textContent=g?g.a.name+' + '+g.b.name+' ظهرا معاً في '+g.n+' طلبات موصلة.':'UNKNOWN — لا توجد علاقة شراء مشتركة كافية.';
-      if(cs)cs.textContent=cr.text;
-      if(ss){ss.textContent=issues.length?issues.length+' نقطة تحتاج انتباهاً':'الحالة سليمة';ss.style.background=issues.length?'var(--pink-pale)':'rgba(220,245,232,.8)';}
-      return {h,g,cr,issues};
-    }
-    window.OLI_REALITY={scan:render,repair,decisionCritique:critique,inventoryHorizon:horizon,purchaseGravity:gravity,audit};
-    document.getElementById('cosmos-reality-scan')?.addEventListener('click',()=>{render();toast('تم فحص الواقع من البيانات الموصلة الحالية','fa-microscope');});
-    document.getElementById('cosmos-reality-repair')?.addEventListener('click',repair);
-    setTimeout(render,700);
-  }
-  if(typeof PRODUCTS!=='undefined'&&typeof state!=='undefined')OLIReality();
-})();
-</script>
-<script>
-(function(){
-'use strict';
-const CORE={
- state(){return window.OLI_STATE||window.state||window.appState||{}},
- products(){const s=this.state();return Array.isArray(s.products)?s.products:(Array.isArray(window.PRODUCTS)?window.PRODUCTS:[])},
- orders(){const s=this.state();return Array.isArray(s.orders)?s.orders:[]},
- id(x){return String(x&&(x.id!=null?x.id:x.product_id)||'')},
- stock(p){const n=Number(p&&(p.stock!=null?p.stock:p.inventory!=null?p.inventory:p.quantity));return Number.isFinite(n)?n:0},
- delivered(o){const st=String(o&&(o.status!=null?o.status:o.order_status)||'').toLowerCase();return ['delivered','completed','تم التوصيل','مكتمل'].includes(st)&&!(o&&(o.frozen||o.is_frozen))},
- items(o){return Array.isArray(o&&o.items)?o.items:(Array.isArray(o&&o.products)?o.products:[])},
- facts(){const ps=this.products(),os=this.orders(),ds=os.filter(o=>this.delivered(o));return{products:ps.length,availableProducts:ps.filter(p=>this.stock(p)>0).length,deliveredOrders:ds.length,frozenOrders:os.filter(o=>o&&(o.frozen||o.is_frozen)).length,zeroStock:ps.filter(p=>this.stock(p)<=0).length}},
- sales(id){let n=0;this.orders().forEach(o=>{if(this.delivered(o)&&this.items(o).some(x=>this.id(x)===String(id)))n++});return n},
- gravity(){const m=new Map();this.orders().filter(o=>this.delivered(o)).forEach(o=>{const ids=[...new Set(this.items(o).map(x=>this.id(x)).filter(Boolean))];ids.forEach(a=>ids.forEach(b=>{if(a!==b){const k=a+'::'+b;m.set(k,(m.get(k)||0)+1)}}))});return[...m].map(([k,count])=>{const [from,to]=k.split('::');return{from,to,count}}).sort((a,b)=>b.count-a.count)},
- opportunity(){return this.products().map(p=>{const id=this.id(p),stock=this.stock(p);if(!id||stock<=0)return null;const sales=this.sales(id),rating=Number(p.rating||0),discount=Number(p.discount??p.discountPercent??0);return{id,product:p,stock,sales,score:sales*10+Math.min(stock,10)+rating*3+discount*.5}}).filter(Boolean).sort((a,b)=>b.score-a.score)[0]||null},
- contradictions(){const s=this.state(),h=s.settings&&s.settings.heroProductId;if(!h)return[];const p=this.products().find(x=>this.id(x)===String(h));return(!p||this.stock(p)<=0)?[{type:'hero_stock',severity:'critical',message:'المنتج المحوري غير متاح.'}]:[]},
- unknowns(){const f=this.facts(),u=[];if(!f.deliveredOrders)u.push('لا توجد طلبات موصلة كافية لاستخراج نمط شراء موثوق.');if(!f.products)u.push('لا توجد منتجات متاحة للتحليل.');return u},
- judge(){const f=this.facts(),c=this.contradictions(),o=this.opportunity();if(c.length)return{state:'CRITICAL',action:'REPAIR',confidence:.99,reason:c[0].message,facts:f,contradictions:c,unknowns:this.unknowns()};if(!o)return{state:'WATCH',action:'OBSERVE',confidence:1,reason:'لا توجد فرصة قابلة للتنفيذ من البيانات الحالية.',facts:f,contradictions:c,unknowns:this.unknowns()};if(o.stock<=2)return{state:'WARNING',action:'PROTECT',confidence:.93,reason:'الفرصة موجودة لكن المخزون منخفض.',opportunity:o,facts:f,contradictions:c,unknowns:this.unknowns()};return{state:'CALM',action:'TEST',confidence:Math.min(.98,.55+o.score/200),reason:'هناك فرصة حقيقية قابلة للاختبار.',opportunity:o,facts:f,contradictions:c,unknowns:this.unknowns()}},
- execute(){const j=this.judge(),s=this.state();if(j.action!=='TEST'||!j.opportunity)return{ok:false,...j};s.settings=s.settings||{};s.settings.heroProductId=j.opportunity.id;s.settings.heroProductPinned=true;if(typeof window.OLI_SAVE_STATE==='function'){try{window.OLI_SAVE_STATE(s)}catch(e){}}window.dispatchEvent(new CustomEvent('oli:auto-action',{detail:{type:'core-opportunity',productId:j.opportunity.id,confidence:j.confidence}}));return{ok:true,...j}}
-};
-window.OLI_INFINITY_CORE=CORE;window.OLI_CORE=CORE;
-window.addEventListener('oli:core-execute',()=>{let r;try{r=CORE.execute()}catch(e){r={ok:false,state:'ERROR',reason:'تعذر تنفيذ القرار بأمان.'}}window.dispatchEvent(new CustomEvent('oli:core-result',{detail:r}))});
-})();
-</script>
-<script>
-(function(){"use strict";const C=window.OLI_INFINITY_CORE;if(!C)return;C.scan=function(){const facts=this.facts(),contradictions=this.contradictions(),unknowns=this.unknowns(),opportunity=this.opportunity(),gravity=this.gravity(),actions=[];if(contradictions.length)actions.push({id:"repair-contradiction",priority:100,action:"REPAIR",reason:contradictions[0].message});if(opportunity&&opportunity.stock>2)actions.push({id:"protect-and-test",priority:70,action:"TEST",productId:opportunity.id,reason:"فرصة حقيقية مع مخزون قابل للاختبار."});if(gravity.length)actions.push({id:"gravity-recommendation",priority:40,action:"DISCOVER",from:gravity[0].from,to:gravity[0].to,reason:"علاقة شراء حقيقية ظهرت داخل الطلبات الموصلة."});return{facts,contradictions,unknowns,opportunity,gravity,actions};};C.safeExecute=function(){const scan=this.scan();if(scan.contradictions.length)return{ok:false,executed:false,state:"BLOCKED",reason:scan.contradictions[0].message,scan};if(!scan.opportunity)return{ok:false,executed:false,state:"UNKNOWN",reason:"لا توجد فرصة حقيقية كافية للتنفيذ.",scan};if(scan.opportunity.stock<=2)return{ok:false,executed:false,state:"PROTECTED",reason:"تم منع الدفع الترويجي لأن المخزون منخفض.",scan};const s=this.state();s.settings=s.settings||{};s.settings.heroProductId=scan.opportunity.id;s.settings.heroProductPinned=true;if(typeof window.OLI_SAVE_STATE==="function"){try{window.OLI_SAVE_STATE(s);}catch(e){}}window.dispatchEvent(new CustomEvent("oli:auto-action",{detail:{type:"core-safe-execution",productId:scan.opportunity.id,source:"real-data"}}));return{ok:true,executed:true,state:"EXECUTED",productId:scan.opportunity.id,scan};};C.explain=function(){const x=this.scan();return{reality:x.facts,contradictions:x.contradictions,unknowns:x.unknowns,opportunity:x.opportunity,strongestGravity:x.gravity[0]||null,nextAction:x.actions[0]||null};};window.OLI_INFINITY_CORE=C;})();
 </script>
 </body>
 </html>
